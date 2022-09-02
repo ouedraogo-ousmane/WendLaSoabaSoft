@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 /** Error when invalid control is dirty, touched, or submitted. */
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -12,15 +14,28 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-authentification',
+  templateUrl: './authentification.component.html',
+  styleUrls: ['./authentification.component.css']
 })
-export class AppComponent {
+export class AuthentificationComponent implements OnInit {
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   matcher = new MyErrorStateMatcher();
   hide = true;
-}
 
+  constructor(
+    private router:Router,
+    private route:ActivatedRoute
+  ) { }
+
+  ngOnInit(): void {
+  }
+
+
+  login(){
+    this.router.navigate(['liste-exercices'])
+  }
+
+}

@@ -1,0 +1,84 @@
+<div class="main">
+    <div class="entete">
+        <mat-toolbar color="primary">
+
+            <span>WendLa Soaba Transport</span>
+
+            <span class="spacer"></span>
+            <div class="barre">
+                <input matInput type="search">
+            </div>
+            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                <mat-icon>search</mat-icon>
+            </button>
+
+
+
+
+        </mat-toolbar>
+
+    </div>
+
+    <mat-drawer-container class="container">
+        <mat-drawer mode="side" opened> <strong>Menu</strong>
+            <mat-nav-list>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <a href="home">
+                        <span><mat-icon matListIcon>home</mat-icon>Accueil</span> </a>
+
+                </mat-list-item>
+                <mat-list-item>
+                    <a href="stat">
+                        <span><mat-icon matListIcon>bar_chart</mat-icon>
+                            Statistiques
+                        </span>
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <a href="account">
+                        <span><mat-icon matListIcon>person</mat-icon>Compte</span>
+                    </a>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <a href="deconnexion">
+                        <span><mat-icon matListIcon>logout</mat-icon>Se deconnecter</span>
+                    </a>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div class="content">
+
+                <mat-card class="card">
+                    <mat-card-title>Exercice 2021 --- 2022</mat-card-title>
+                    <mat-card-content>
+                        <p>En cours </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="openPage('mission')">Missions</button>
+                        <button mat-raised-button (click)="openPage('maintenance')">Maintenance</button>
+                        <button mat-raised-button color="warn" (click)="openPage('bilan')">Bilan</button>
+                    </mat-card-actions>
+                </mat-card>
+
+                <mat-card class="card">
+                    <mat-card-title>Exercice 2020 --- 2021</mat-card-title>
+                    <mat-card-content>
+                        <p>Terminé </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="openPage('mission')">Missions</button>
+                        <button mat-raised-button (click)="openPage('maintenance')">Maintenance</button>
+                        <button mat-raised-button color="warn" (click)="openPage('bilan')">Bilan</button>
+                    </mat-card-actions>
+                </mat-card>
+
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+
+</div>
