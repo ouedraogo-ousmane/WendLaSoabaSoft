@@ -24,8 +24,8 @@ mat-drawer-container {
 }
 
 mat-drawer {
-    height: 100%;
-    width: 220px;
+    width: 240px;
+    background-color: darkgray !important;
 }
 
 mat-drawer-content {
@@ -71,5 +71,12 @@ mat-drawer-content {
 /* Mise en forme du menu */
 
 mat-list-item:hover {
-    background-color: darkgray !important;
+    background-color: white !important;
+}
+
+mat-toolbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }

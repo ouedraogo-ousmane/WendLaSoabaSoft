@@ -1,0 +1,2 @@
+********* Installation d'une bibliothèque de creation de graphique ******
+npm install @swimlane/ngx-charts --save

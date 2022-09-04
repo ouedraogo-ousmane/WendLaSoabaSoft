@@ -45,7 +45,8 @@ mat-drawer-content .button-div {
 }
 
 .button-div button {
-    margin-right: 50px;
+    position: absolute;
+    left: 70%;
     margin-bottom: 65px;
     padding: 5px;
     width: 225px;
@@ -56,7 +57,7 @@ mat-drawer-content .button-div {
 
 table {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 55px;
 }
 
 .table {

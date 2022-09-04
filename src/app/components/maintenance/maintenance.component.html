@@ -4,34 +4,86 @@
 
             <span>WendLa Soaba Transport</span>
 
-            <span class="example-spacer"></span>
-            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-            <mat-icon>logout</mat-icon>
-          </button>
 
         </mat-toolbar>
     </div>
 
-    <mat-sidenav-container class="example-container">
-        <mat-sidenav opened>
+    <mat-drawer-container class="example-container">
+        <mat-drawer mode="side" opened>
             Menu
             <mat-nav-list>
                 <mat-divider></mat-divider>
                 <mat-list-item>
-                    <a href="home">
-                        <span><mat-icon matListIcon>home</mat-icon>Accueil</span> </a>
-
+                    <a href="liste-exercices">
+                        <span><mat-icon matListIcon>home</mat-icon>Accueil</span>
+                    </a>
                 </mat-list-item>
                 <mat-list-item>
-                    <a href="programmation">
-                        <span><mat-icon matListIcon>folder</mat-icon>Maintenance</span> </a>
+                    <a href="maintenance">
+                        <span><mat-icon matListIcon>build</mat-icon>Maintenance</span> </a>
                 </mat-list-item>
-                <mat-divider></mat-divider>
-            </mat-nav-list>
-        </mat-sidenav>
-        <mat-sidenav-content>
 
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+                <mat-list-item>
+                    <a href="deconnection">
+                        <span><mat-icon matListIcon>logout</mat-icon>Se deconnecter</span>
+                    </a>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div class="button-div">
+                <button id="firstButton" mat-raised-button type="submit" (click)="openDialogue()">Ajouter une depense</button>
+            </div>
+            <div class="table">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Weight </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                    </tr>
+                </table>
+                <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+                </mat-paginator>
+
+
+
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
 
 </div>

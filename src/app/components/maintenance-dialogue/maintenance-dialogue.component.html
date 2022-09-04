@@ -1,0 +1,116 @@
+<h1 mat-dialog-title>Enregistrement d'une maintenance</h1>
+<div mat-dialog-content>
+    <div class="col">
+
+
+        <mat-vertical-stepper [linear]="true" #stepper>
+            <!-- Première etape -->
+
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Informations sur la maintenance</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Date</mat-label>
+                                <input matInput formControlName="dateEntree" [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Vehicule</mat-label>
+                                <mat-select formControlName="vehicule">
+                                    <mat-option value="HJJK526">HJJK526</mat-option>
+                                    <mat-option value="DFGDG895">DFGDG895</mat-option>
+                                    <mat-option value="DJHSDJH325">DJHSDJH325</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Motif</mat-label>
+                                <input matInput formControlName="motif" type="text" placeholder="reparation">
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Main d'oeuvre</mat-label>
+                                <input matInput formControlName="coutMaint" type="number">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>References</mat-label>
+                                <input matInput formControlName="reference" type="number">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <button mat-raised-button (click)="saveMaintenance()" matStepperNext>Ajouter</button>
+                    <button mat-raised-button color="primary" matStepperNext>Next</button>
+
+                </div>
+            </mat-step>
+
+            <!-- Deuxième etape -->
+
+            <mat-step [stepControl]="secondFormGroup">
+                <form [formGroup]="secondFormGroup">
+                    <ng-template matStepLabel>Informations sur les pièces</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <!-- La pièce  -->
+                            <mat-form-field appearance="fill">
+                                <mat-label>Piece</mat-label>
+                                <mat-select formControlName="piece">
+                                    <mat-option value="piston">Piston</mat-option>
+                                    <mat-option value="pneu">Pneu</mat-option>
+                                    <mat-option value="carburateur">Carburateur</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- La quantite  -->
+                            <mat-form-field appearance="fill">
+                                <mat-label>Quantite</mat-label>
+                                <input matInput formControlName="quantite" type="number">
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Prix</mat-label>
+                                <input matInput formControlName="prix" type="number">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Duree de vie</mat-label>
+                                <input matInput formControlName="dureeDevie" type="number">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <button mat-raised-button color="warn" matStepperPrevious>Back</button>
+                    <button mat-raised-button (click)="savePiece()" matStepperPrevious>Ajouter</button>
+                    <button mat-raised-button color="primary" matStepperNext>Next</button>
+                </div>
+            </mat-step>
+
+            <!-- Dernière etape -->
+
+
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+
+                <div>
+
+                    <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
+                    <button mat-raised-button matStepperPrevious>Back</button>
+                    <button mat-raised-button color="primary" (click)="endSaving()" type="submit">Enregistrer</button>
+                </div>
+            </mat-step>
+
+        </mat-vertical-stepper>
+    </div>
+
+</div>

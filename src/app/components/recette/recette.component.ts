@@ -5,8 +5,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ProgrammerDialogueComponent } from '../programmer-dialogue/programmer-dialogue.component';
 import { MaintenanceDialogueComponent } from '../maintenance-dialogue/maintenance-dialogue.component';
-import { MaintenanceService } from '../../services/maintenance.service';
-import { Maintenances } from '../../folderModels/modelGestMaintenance/maintenance';
 
 export interface PeriodicElement {
   name: string;
@@ -25,32 +23,23 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
   
 ];
+
 @Component({
-  selector: 'app-maintenance',
-  templateUrl: './maintenance.component.html',
-  styleUrls: ['./maintenance.component.css']
+  selector: 'app-recette',
+  templateUrl: './recette.component.html',
+  styleUrls: ['./recette.component.css']
 })
-export class MaintenanceComponent implements OnInit {
-
-  /**
-   * Declaration des variables à utiliser
-   */
-
-  listeMaintenance : Maintenances[] = [];
+export class RecetteComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
 
    constructor(
-    private dialog : MatDialog,
-    private serviceMaintenance :MaintenanceService
+    private dialog : MatDialog
   ) { }
 
   ngOnInit(): void {
-
-    // Lors du demarrage du component il faut charger les données
-    //this.getAllMaintenance();
   }
   
 
@@ -90,26 +79,6 @@ export class MaintenanceComponent implements OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  }
-
-  /**
-   * Cette methode ci-dessous permet de recuperer
-   *  toutes les maintenances
-   */
-   getAllMaintenance(){
-    this.serviceMaintenance.getMaintenance().subscribe(
-      (dataGetted:any)=>{
-
-        this.listeMaintenance = dataGetted.data;
-
-      },
-      (error)=>{
-        console.log(error);
-      },
-      ()=>{
-        console.log("données totalement recupérés");
-      }
-    )
   }
 
 }

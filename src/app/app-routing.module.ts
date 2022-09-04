@@ -9,6 +9,8 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
 import { BilanComponent } from './components/bilan/bilan.component';
 import { BilanDepenseComponent } from './components/bilan-depense/bilan-depense.component';
 import { BilanRecetteComponent } from './components/bilan-recette/bilan-recette.component';
+import { RecetteComponent } from './components/recette/recette.component';
+import { ListeMissionComponent } from './components/liste-mission/liste-mission.component';
 
 const routes: Routes = [
   {path:'',component:AuthentificationComponent},
@@ -22,7 +24,8 @@ const routes: Routes = [
 {path:'mission',component:MissionComponent,
 children :[
   {path:'programmation',component:ProgrammationComponent},
-  {path:'depense',component:DepenseMissionComponent}
+  {path:'liste-mission',component:ListeMissionComponent},
+  {path:'recette',component:RecetteComponent}
 ]},
 
 // Les maintenances

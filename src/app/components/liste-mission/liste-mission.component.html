@@ -1,0 +1,47 @@
+<div id="kl-contenu">
+
+    <div class="kl-main-content">
+        <div class="missionsList-actions">
+
+            <section>
+                <mat-form-field class="example-full-width">
+                    <mat-label>filtre</mat-label>
+                    <input type="text" aria-label="filtre" matInput>
+
+                </mat-form-field>
+            </section>
+
+            <section>
+                <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color">
+                    <mat-button-toggle value="red">Terminer</mat-button-toggle>
+                    <mat-button-toggle value="green">En cours</mat-button-toggle>
+                </mat-button-toggle-group>
+            </section>
+
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="missions-data">
+            <mat-selection-list #shoesMulti>
+                <mat-list-option *ngFor="let shoe of typesOfShoes">
+                    {{shoe}}
+                </mat-list-option>
+
+            </mat-selection-list>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="missionsList-actions">
+            <section>
+                Selections: {{shoesMulti.selectedOptions.selected.length}}
+            </section>
+
+            <section>
+                <button mat-button> Detail</button>
+                <button mat-button>Supprimer </button>
+                <button mat-button> Terminer</button>
+            </section>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+</div>

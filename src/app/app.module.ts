@@ -21,6 +21,9 @@ import { BilanComponent } from './components/bilan/bilan.component';
 import { BilanDepenseComponent } from './components/bilan-depense/bilan-depense.component';
 import { BilanRecetteComponent } from './components/bilan-recette/bilan-recette.component';
 import { ProgrammerDialogueComponent } from './components/programmer-dialogue/programmer-dialogue.component';
+import { MaintenanceDialogueComponent } from './components/maintenance-dialogue/maintenance-dialogue.component';
+import { RecetteComponent } from './components/recette/recette.component';
+import { ListeMissionComponent } from './components/liste-mission/liste-mission.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +36,10 @@ import { ProgrammerDialogueComponent } from './components/programmer-dialogue/pr
     BilanComponent,
     BilanDepenseComponent,
     BilanRecetteComponent,
-    ProgrammerDialogueComponent
+    ProgrammerDialogueComponent,
+    MaintenanceDialogueComponent,
+    RecetteComponent,
+    ListeMissionComponent
     
   ],
   imports: [

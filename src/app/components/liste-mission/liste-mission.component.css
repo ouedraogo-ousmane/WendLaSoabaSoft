@@ -1,0 +1,47 @@
+/*  footer table */
+
+#kl-contenu {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.kl-side-bar {
+    border-right: 2px solid rgba(0, 0, 0, 0.216);
+    border-radius: 5px;
+    flex: 1 1 auto;
+    height: 100vh;
+}
+
+.kl-main-content {
+    flex: 6 1 auto;
+    padding: 20px;
+}
+
+.kl-main-content .missions-data {
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.kl-main-content .missionsList-actions {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    background-color: ghostwhite;
+}
+
+.missionsList-actions section {
+    flex: 16 1 auto;
+}
+
+.missionsList-actions section+section {
+    flex: 1 1 auto;
+}
+
+
+/* filter */
+
+.example-full-width {
+    width: 200px;
+}
