@@ -24,6 +24,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 
 
@@ -53,7 +54,10 @@ const materialComponents = [
     MatGridListModule,
     MatProgressBarModule,
     MatAutocompleteModule,
-     
+    GoogleChartsModule
+
+
+    
     
 ]
 

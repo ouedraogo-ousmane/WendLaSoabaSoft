@@ -17,7 +17,7 @@ export class MaintenanceService {
   public token:any;
   readonly urlMaintenance = "http://127.0.0.1:8000/maintenances/";
   readonly urlPiece = "http://127.0.0.1:8000/maintenances/pieces/";
-  readonly urlInfosEnreg = "http://127.0.0.1:8000/maintenances/coutPieces/";
+  readonly urlInfosEnreg = "htt p://127.0.0.1:8000/maintenances/coutPieces/";
 
   constructor(private http:HttpClient) {
     this.token = localStorage.getItem("token")
