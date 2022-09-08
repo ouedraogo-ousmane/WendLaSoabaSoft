@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DepenseMission } from '../folderModels/modelGestRecette/depenses-mission';
-import { InfosDepenseMission } from '../folderModels/modelGestRecette/infos-depenses-mission';
 import { Maintenances } from '../folderModels/modelGestMaintenance/maintenance';
 import { Piece } from '../folderModels/modelGestMaintenance/pieces';
 import { InfosEnregPiece } from '../folderModels/modelGestMaintenance/infos-enreg-pieces';
@@ -11,26 +9,44 @@ import { InfosEnregPiece } from '../folderModels/modelGestMaintenance/infos-enre
 })
 export class MaintenanceService {
 
+  /***
+   * Declaration des urls
+   */
   
-  constructor(private http:HttpClient) { }
+  httpOptions = {}
+  public token:any;
+  readonly urlMaintenance = "http://127.0.0.1:8000/maintenances/";
+  readonly urlPiece = "http://127.0.0.1:8000/maintenances/pieces/";
+  readonly urlInfosEnreg = "http://127.0.0.1:8000/maintenances/coutPieces/";
 
-  readonly baseURL = 'http://localhost:3500/depenseMission'
-  readonly infosDepenseURL = 'http://localhost:3500/infosDepense'
+  constructor(private http:HttpClient) {
+    this.token = localStorage.getItem("token")
+    console.log(this.token)
+    this.httpOptions = {
+       headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': "WEND-PANGA " + this.token
+        }) 
+    }
+  }
+
+ 
+
 
   /**
    * Cette methode permet de recuperer la liste de toutes les maintenances
    */
   getMaintenance():Observable<Maintenances[]>{
-
-    return this.http.get<Maintenances[]>(this.baseURL);
+  
+    return this.http.get<Maintenances[]>(this.urlMaintenance,this.httpOptions);
   }
 
   /**
    * Cette methode permet de recuperer la liste de toutes les pieces
    */
    getPieces():Observable<Piece[]>{
-
-    return this.http.get<Piece[]>(this.baseURL);
+   
+    return this.http.get<Piece[]>(this.urlPiece,this.httpOptions);
   }
 
 
@@ -41,13 +57,18 @@ export class MaintenanceService {
    sendOrDeleteMaintenance(data:Maintenances,method:string="post"):Observable<Maintenances>{
 
     if(method==="post"){
-      return this.http.post<Maintenances>(this.baseURL + "/depense",data);
+       
+     
+      return this.http.post<Maintenances>(this.urlMaintenance,data,this.httpOptions);
     }
     else if(method==="put"){
-      return this.http.put<Maintenances>(this.baseURL + "/depense",data);
+      
+     
+      return this.http.put<Maintenances>(this.urlMaintenance + `${data.id}/detail`,this.httpOptions);
     }
+    
 
-    return this.http.delete<Maintenances>(this.baseURL + `/${data.id_maint}`);
+    return this.http.delete<Maintenances>(this.urlMaintenance + `${data.id}/detail`,this.httpOptions);
 
   }
 
@@ -58,11 +79,14 @@ export class MaintenanceService {
    sendOrDeletePiece(data:Piece,method:string="post"):Observable<Piece>{
 
     if(method==="post"){
-      return this.http.post<Piece>(this.baseURL + "/depense",data);
+      
+      return this.http.post<Piece>(this.urlPiece ,data,this.httpOptions);
     }else if(method==="put"){
-      return this.http.put<Piece>(this.baseURL + "/depense",data);
+      
+      return this.http.put<Piece>(this.urlPiece + `${data.id}/detail`,this.httpOptions);
     }
-    return this.http.delete<Piece>(this.baseURL + "/depense"+`/${data.id_piece}`);
+    
+    return this.http.delete<Piece>(this.urlPiece + `${data.id}/detail`,this.httpOptions);
 
   }
 
@@ -73,13 +97,15 @@ export class MaintenanceService {
    sendOrDeleteInfosEnregistrement(data:InfosEnregPiece,method:string="post"):Observable<InfosEnregPiece>{
 
     if(method==="post"){
-      return this.http.post<InfosEnregPiece>(this.baseURL + "/depense",data);
+      
+      return this.http.post<InfosEnregPiece>(this.urlInfosEnreg ,data,this.httpOptions);
     }
     else if(method==="put"){
-      return this.http.put<InfosEnregPiece>(this.baseURL + "/depense",data);
+      
+      return this.http.put<InfosEnregPiece>(this.urlInfosEnreg + `${data.maintenanceConcernee}/${data.nomPiece}/detail`,this.httpOptions);
     }
     
-    return this.http.delete<InfosEnregPiece>(this.baseURL + `/${data.id_maint}`);
+    return this.http.delete<InfosEnregPiece>(this.urlInfosEnreg + `${data.maintenanceConcernee}`,this.httpOptions);
       
 
   }
@@ -95,7 +121,7 @@ export class MaintenanceService {
 
   sendImage(data:any,id_depense:number,id_mission:number):Observable<any>{
 
-    return this.http.put<any>(this.baseURL+ `/${id_depense}`+`/${id_mission}`,data);
+    return this.http.put<any>(this.urlMaintenance+ `${id_depense}`+`${id_mission}`,data);
 
   }
 

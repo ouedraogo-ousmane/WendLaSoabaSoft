@@ -26,7 +26,6 @@ mat-drawer-container {
 mat-drawer {
     height: 100%;
     width: 220px;
-    background-color: darkgray !important;
 }
 
 mat-drawer-content {
@@ -73,4 +72,22 @@ mat-drawer-content {
 
 mat-list-item:hover {
     background-color: white !important;
+}
+
+.demo-table {
+    width: 100%;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
 }

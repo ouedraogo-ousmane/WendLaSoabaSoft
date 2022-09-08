@@ -2,11 +2,11 @@
     <div class="entete">
         <mat-toolbar color="primary">
 
-            <span>WendLa Soaba Transport</span>
+            <span class="logo">WendLa Soaba Transport</span>
 
             <span class="spacer"></span>
             <div class="barre">
-                <input matInput type="search">
+                <input style="color:white" matInput type="search">
             </div>
             <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
                 <mat-icon>search</mat-icon>
@@ -24,19 +24,19 @@
             <mat-nav-list>
                 <mat-divider></mat-divider>
                 <mat-list-item>
-                    <a href="home">
+                    <a href="accueil">
                         <span><mat-icon matListIcon>home</mat-icon>Accueil</span> </a>
 
                 </mat-list-item>
                 <mat-list-item>
-                    <a href="stat">
+                    <a href="exercice/statistique">
                         <span><mat-icon matListIcon>bar_chart</mat-icon>
                             Statistiques
                         </span>
                     </a>
                 </mat-list-item>
                 <mat-list-item>
-                    <a href="account">
+                    <a href="exercice/account">
                         <span><mat-icon matListIcon>person</mat-icon>Compte</span>
                     </a>
                 </mat-list-item>
@@ -50,33 +50,7 @@
             </mat-nav-list>
         </mat-drawer>
         <mat-drawer-content>
-            <div class="content">
-
-                <mat-card class="card">
-                    <mat-card-title>Exercice 2021 --- 2022</mat-card-title>
-                    <mat-card-content>
-                        <p>En cours </p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-raised-button color="primary" (click)="openPage('mission')">Missions</button>
-                        <button mat-raised-button (click)="openPage('maintenance')">Maintenance</button>
-                        <button mat-raised-button color="warn" (click)="openPage('bilan')">Bilan</button>
-                    </mat-card-actions>
-                </mat-card>
-
-                <mat-card class="card">
-                    <mat-card-title>Exercice 2020 --- 2021</mat-card-title>
-                    <mat-card-content>
-                        <p>Terminé </p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-raised-button color="primary" (click)="openPage('mission')">Missions</button>
-                        <button mat-raised-button (click)="openPage('maintenance')">Maintenance</button>
-                        <button mat-raised-button color="warn" (click)="openPage('bilan')">Bilan</button>
-                    </mat-card-actions>
-                </mat-card>
-
-            </div>
+            <router-outlet></router-outlet>
         </mat-drawer-content>
     </mat-drawer-container>
 

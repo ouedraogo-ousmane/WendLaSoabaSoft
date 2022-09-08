@@ -1,21 +1,21 @@
 interface Maintenance {
-  id_maint             :number,
-  id_exercice          :number,
-  id_vehicule          :number,
-  motif_maint          :string,
-  cout_maint           :number,
-  dateEntree           :Date,
-  formData             : FormData
+  id                        :number,
+  exerciceConcerne          :Number,
+  vehiculeConcerne          :Number,
+  motif                     :String,
+  montant                   :Number,
+  date_maintenance          :Date,
+  reference                  :FormData
 }
 
 export class Maintenances implements Maintenance{
-  id_maint!: number;
-  id_exercice!: number;
-  id_vehicule!: number;
-  motif_maint!: string;
-  cout_maint!: number;
-  dateEntree!: Date;
-  formData!   : FormData;
+  id!: number;
+  exerciceConcerne!: number;
+  vehiculeConcerne!: number;
+  motif!: string;
+  montant!: number;
+  date_maintenance! :Date;
+  reference! : FormData;
 
 
 }

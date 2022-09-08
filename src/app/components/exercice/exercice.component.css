@@ -34,55 +34,17 @@ mat-drawer-content {
     flex-direction: column;
 }
 
-mat-drawer,
-mat-drawer-content {
-    padding: 10px;
-}
-
-mat-drawer-content {
-    /*background-color: darkgrey;*/
-    opacity: 1;
-}
-
-.card {
-    max-width: 400px;
-    width: 400px;
-    height: 150px;
-    margin-bottom: 70px;
-}
-
-.content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    position: absolute;
-    top: 15px;
-    left: 150px;
-}
-
-.content mat-card {
-    margin-right: 50px;
-    margin-left: 10px;
-    margin-top: 20px;
-    background-color: white;
-}
-
-.mat-form-field+.mat-form-field {
-    margin-left: 8px;
-}
-
-mat-card-actions {
-    margin-top: 20px;
-}
-
-button {
-    margin-top: 20px;
-    margin-right: 35px !important;
-}
-
 
 /* Mise en forme des liens*/
 
 mat-list-item:hover {
     background-color: darkgray !important;
+}
+
+span {
+    color: blue;
+}
+
+.logo {
+    color: white;
 }

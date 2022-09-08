@@ -19,9 +19,19 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatRadioModule} from '@angular/material/radio';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
+
+
 
 const materialComponents = [
     MatCheckboxModule,
+    MatRadioModule,
+    ScrollingModule,
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
@@ -39,7 +49,11 @@ const materialComponents = [
     MatNativeDateModule,
     MatExpansionModule,
     MatStepperModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatGridListModule,
+    MatProgressBarModule,
+    MatAutocompleteModule,
+     
     
 ]
 

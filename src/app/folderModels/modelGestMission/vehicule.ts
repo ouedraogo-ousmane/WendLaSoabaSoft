@@ -1,21 +1,20 @@
  interface Vehicule {
-  id_vehicule          :number,
-  id_categorie         :number,
-  immat_car            :string,
-  poids_car            :number,
+  categorie            :number,
+  id                   :number,
+  poids_vide           :number,
   marque               :string,
-  disponibilite_car    :boolean,
+  est_disponible       :boolean,
   couleur              :string,
-  fonction            :string,
+  fonction             :string
 
 }
 export class Vehicules implements Vehicule{
-  id_vehicule!: number;
-  id_categorie!: number;
-  immat_car!: string;
-  poids_car!: number;
+  id!: number;
+  categorie!: number;
+  immat!: string;
+  poids_vide!: number;
   marque!: string;
-  disponibilite_car!: boolean;
+  est_disponible!: boolean;
   couleur!: string;
   fonction!: string;
 

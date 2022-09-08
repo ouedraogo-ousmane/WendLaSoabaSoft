@@ -1,0 +1,51 @@
+/* positionement du titre generale de la page */
+
+#kl-info-title {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+
+/* modification de la taille des form field angular materiel*/
+
+ :host ::ng-deep .mat-form-field-infix {
+    height: 10px;
+    font-size: 15px;
+}
+
+
+/* section info gerale sur la mission*/
+
+#kl-info-Mission {
+    padding-bottom: 20px;
+}
+
+
+/* couleur arriere plan des boutons de soumission */
+
+#kl-submit-btn {
+    background-color: ghostwhite;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+}
+
+#kl-submit-btn>button {
+    padding: 5px;
+    margin-right: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+#kl-submit-btn>button:hover {
+    border: 2px solid blue;
+}
+
+
+/* section dds motif missions */
+
+.kl-motif-mission {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

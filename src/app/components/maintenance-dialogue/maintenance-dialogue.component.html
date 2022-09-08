@@ -21,34 +21,35 @@
                             <mat-form-field appearance="fill">
                                 <mat-label>Vehicule</mat-label>
                                 <mat-select formControlName="vehicule">
-                                    <mat-option value="HJJK526">HJJK526</mat-option>
-                                    <mat-option value="DFGDG895">DFGDG895</mat-option>
-                                    <mat-option value="DJHSDJH325">DJHSDJH325</mat-option>
+                                    <mat-option *ngFor="let data of listeVehicule;let i=index" [value]="data.id">{{data.immat}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
+
+
+                        </div>
+                        <div class="col">
 
                             <mat-form-field appearance="fill">
                                 <mat-label>Motif</mat-label>
                                 <input matInput formControlName="motif" type="text" placeholder="reparation">
                             </mat-form-field>
-                        </div>
-                        <div class="col">
 
                             <mat-form-field appearance="fill">
                                 <mat-label>Main d'oeuvre</mat-label>
                                 <input matInput formControlName="coutMaint" type="number">
                             </mat-form-field>
 
-                            <mat-form-field appearance="fill">
+                            <!-- <mat-form-field appearance="fill">
                                 <mat-label>References</mat-label>
                                 <input matInput formControlName="reference" type="number">
-                            </mat-form-field>
+                            </mat-form-field> -->
                         </div>
                     </div>
                 </form>
                 <div>
-                    <button mat-raised-button (click)="saveMaintenance()" matStepperNext>Ajouter</button>
-                    <button mat-raised-button color="primary" matStepperNext>Next</button>
+                    <button mat-raised-button color="warn" [disabled]="maintenanceAdded ==0" (click)="deleteMaintenance()">Annuler</button>
+                    <button mat-raised-button (click)="saveMaintenance()" [disabled]="!isValid">Ajouter</button>
+                    <button mat-raised-button color="primary" [disabled]="maintenanceAdded ==0" matStepperNext>Next</button>
 
                 </div>
             </mat-step>
@@ -63,11 +64,7 @@
                             <!-- La pièce  -->
                             <mat-form-field appearance="fill">
                                 <mat-label>Piece</mat-label>
-                                <mat-select formControlName="piece">
-                                    <mat-option value="piston">Piston</mat-option>
-                                    <mat-option value="pneu">Pneu</mat-option>
-                                    <mat-option value="carburateur">Carburateur</mat-option>
-                                </mat-select>
+                                <input matInput formControlName="piece" type="text">
                             </mat-form-field>
                             <!-- La quantite  -->
                             <mat-form-field appearance="fill">
@@ -90,25 +87,21 @@
                     </div>
                 </form>
                 <div>
-                    <button mat-raised-button color="warn" matStepperPrevious>Back</button>
-                    <button mat-raised-button (click)="savePiece()" matStepperPrevious>Ajouter</button>
-                    <button mat-raised-button color="primary" matStepperNext>Next</button>
+                    <button mat-raised-button [disabled]="pieceAdded ==0" (click)="deletePiece()" color="warn" matStepperPrevious>Annuler</button>
+                    <button mat-raised-button [disabled]="!isValidSecondForm" (click)="savePiece()">Ajouter</button>
+                    <button mat-raised-button [disabled]="pieceAdded ==0" matStepperNext color="primary">Next</button>
                 </div>
             </mat-step>
-
-            <!-- Dernière etape -->
-
 
             <mat-step>
                 <ng-template matStepLabel>Done</ng-template>
-
                 <div>
 
-                    <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
-                    <button mat-raised-button matStepperPrevious>Back</button>
-                    <button mat-raised-button color="primary" (click)="endSaving()" type="submit">Enregistrer</button>
+                    <button mat-raised-button (click)="endSaving()" color="primary">Tout enregistrer</button>
                 </div>
             </mat-step>
+
+
 
         </mat-vertical-stepper>
     </div>

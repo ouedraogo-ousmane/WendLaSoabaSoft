@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthenService } from 'src/app/services/authen.service';
 
-
-/** Error when invalid control is dirty, touched, or submitted. */
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
+export interface Iuser{
+  username : String,
+  password:String,
 }
+
 
 @Component({
   selector: 'app-authentification',
@@ -20,22 +16,61 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AuthentificationComponent implements OnInit {
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  httpOptions = {}
 
-  matcher = new MyErrorStateMatcher();
-  hide = true;
+  userLoginForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+  })
 
+  invalid_Hint = false;
   constructor(
-    private router:Router,
-    private route:ActivatedRoute
-  ) { }
+    private authService:AuthenService,
+    private route:Router
+    ){}
 
-  ngOnInit(): void {
-  }
+    ngOnInit() {
+      this.logout()
+    }
 
+    // methode d'obtention du token (connexion)
+    onLoginAction(userData: any) {
 
-  login(){
-    this.router.navigate(['liste-exercices'])
-  }
+      const utilisateur = {
+         'username': userData.username,
+         'password': userData.password
+        }
+
+      this.authService.login(utilisateur);
+      this.onConnected()
+    }
+   // ralentie pour attendre la reponse du backend: (ameliorable avec un subscribe)
+    onConnected(){
+      setTimeout(()=>{
+        if (this.authService.isAuthenticated()){
+          this.userLoginForm.reset()
+          //this.authService.refreshToken()
+          this.route.navigate(['exercice/liste-exercices']) // navigation
+
+        }else{
+          this.invalid_Hint = true;
+        }
+      }, 1000)
+    }
+
+    // methodes de rafraichissement et de suppression (deconnexion) du token
+    // refreshToken() {
+    //   this.authService.refreshToken();
+    // }
+
+    logout() {
+      this.authService.logout();
+    }
+
+    // necessaire pour tout attaque a la Bd
+  //   this.httpOptions = {
+  //     headers: new HttpHeaders({
+  //    'Authorization': "WEND-PANGA" + this.authService.token
+  //  })}
 
 }

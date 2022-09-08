@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,10 @@ import { ProgrammerDialogueComponent } from './components/programmer-dialogue/pr
 import { MaintenanceDialogueComponent } from './components/maintenance-dialogue/maintenance-dialogue.component';
 import { RecetteComponent } from './components/recette/recette.component';
 import { ListeMissionComponent } from './components/liste-mission/liste-mission.component';
+import {  HttpClientModule } from '@angular/common/http';
+import { StatistiqueComponent } from './components/statistique/statistique.component';
+import { ListeExerciceComponent } from './components/liste-exercice/liste-exercice.component';
+import { SettingsComponent } from './components/settings/settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,9 +43,13 @@ import { ListeMissionComponent } from './components/liste-mission/liste-mission.
     ProgrammerDialogueComponent,
     MaintenanceDialogueComponent,
     RecetteComponent,
-    ListeMissionComponent
+    ListeMissionComponent,
+    StatistiqueComponent,
+    ListeExerciceComponent,
+    SettingsComponent
     
   ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -49,7 +57,9 @@ import { ListeMissionComponent } from './components/liste-mission/liste-mission.
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

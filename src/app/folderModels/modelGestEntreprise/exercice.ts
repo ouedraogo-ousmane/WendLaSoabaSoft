@@ -1,19 +1,12 @@
- interface Exercice {
-  ID_EXERCICE          :number,
-  IDEMP               :number,
-  ANNEE               :string
-  date_debut           :string,
-  date_fin             :string,
-  ETAT                 :boolean
-
+export interface IResults{
+  id:number,
+  year:Number,
+  etat_exercice:Boolean
 }
 
-export class Exercices implements Exercice{
-  IDEMP!: number;
-  ID_EXERCICE!: number;
-  ANNEE!  :string;
-  date_debut!: string;
-  date_fin!: string;
-  ETAT!: boolean;
-
+export interface IExercices {
+  count:number,
+  next:string,
+  previous:string,
+  results:IResults[]
 }

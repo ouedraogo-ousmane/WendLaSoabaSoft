@@ -11,13 +11,22 @@ import { BilanDepenseComponent } from './components/bilan-depense/bilan-depense.
 import { BilanRecetteComponent } from './components/bilan-recette/bilan-recette.component';
 import { RecetteComponent } from './components/recette/recette.component';
 import { ListeMissionComponent } from './components/liste-mission/liste-mission.component';
+import { StatistiqueComponent } from './components/statistique/statistique.component';
+import { ListeExerciceComponent } from './components/liste-exercice/liste-exercice.component';
 
 const routes: Routes = [
   {path:'',component:AuthentificationComponent},
-  {path:'acceuil',component:AuthentificationComponent},
+  {path:'accueil',component:AuthentificationComponent},
 
   //exercices
-{path:'liste-exercices',component:ExerciceComponent},
+{path:'exercice',component:ExerciceComponent,
+children :[
+ // {path:'statistique',component:StatistiqueComponent},
+  {path:'liste-exercices',component:ListeExerciceComponent},
+  {path:'compte',component:ListeMissionComponent}
+]},
+{path:'statistique',component:StatistiqueComponent},
+
 
 // Les missions
 

@@ -25,7 +25,6 @@ mat-drawer-container {
 
 mat-drawer {
     width: 240px;
-    background-color: darkgray !important;
 }
 
 mat-drawer-content {

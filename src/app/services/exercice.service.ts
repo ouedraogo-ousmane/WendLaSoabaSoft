@@ -1,63 +1,55 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { Exercices } from 'src/app/folderModels/modelGestEntreprise/exercice';
+import { Observable } from 'rxjs';
+import { IExercices, IResults } from '../folderModels/modelGestEntreprise/exercice';
 
-
-interface statusResp{
-  status:boolean;
-}
-
-interface dlteExercice{
-
-  state:[
-    {
-      exercices:Exercices[],
-      error:string,
-      status:boolean;
-    }
-  ];
-
-}
-
-interface result{
-  result:Exercices[];
-}
 @Injectable({
   providedIn: 'root'
 })
-export class ExerciceService {
+export class ExercicesService {
+  httpOptions = {}
+  public token:any;
+  readonly endpointListCreate = "http://127.0.0.1:8000/exercices/";
 
-  
-  //url de la table exercice
-  readonly baseUrl = 'http://localhost:3500/exercices';
-  readonly baseUrl1 = '../assets/TestBD/checkCreateExercice.json';
+  constructor(private http:HttpClient) {
+    this.token = localStorage.getItem("token")
+    console.log(this.token)
+    this.httpOptions = {
+       headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': "WEND-PANGA " + this.token
+        },) }
+      }
+
+  getListeExercices():Observable<IExercices>{
+    this.httpOptions = {
+      method:'GET',
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         'Authorization': "WEND-PANGA " + this.token
+       },) }
+    return this.http.get<IExercices>(this.endpointListCreate, this.httpOptions);
+  }
+
+  putExercices(data:IResults):Observable<any[]>{
+    this.httpOptions = {
+      method : 'PUT',
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         'Authorization': "WEND-PANGA " + this.token
+       },)} 
+    return this.http.put<any[]>(this.endpointListCreate + `/${data.id}/detail`,this.httpOptions);
+  }
+
+  deleteExercices(data:IResults):Observable<any[]>{
+    this.httpOptions = {
+      method : 'DELETE',
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         'Authorization': "WEND-PANGA " + this.token
+       },)} 
+    return this.http.delete<any[]>(this.endpointListCreate + `/${data.id}/detail`,this.httpOptions);
+  }
 
 
-  constructor(
-    private http : HttpClient
-  ) {}
-
-
-    checkCreateExercice():Observable<statusResp[]>{
-      return this.http.get<statusResp[]>(this.baseUrl1);
-    }
-
-   //Methode de recuperation de toutes les exercices
-
-   getAllExericeFromServer():Observable<result>{
-      return this.http.get<result>(this.baseUrl);
-    }
-
-    createExercice(exercice:any):Observable<result>{
-
-      return this.http.post<result>(this.baseUrl, exercice);
-
-    }
-
-
-    //Methode de suppression d'une données dans Exercice
-    DeletesExercice(exercices:string[]):Observable<statusResp>{
-      return this.http.delete<statusResp>(this.baseUrl+`/${exercices}`);
-    } 
 }
