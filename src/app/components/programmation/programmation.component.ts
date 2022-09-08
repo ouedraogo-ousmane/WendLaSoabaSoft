@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-programmation',
@@ -11,7 +11,7 @@ export class ProgrammationComponent implements OnInit {
   exercice_id!:number;
   constructor(
     private route: ActivatedRoute,
-    private fb:FormBuilder
+    private fb:UntypedFormBuilder
     ) { }
 
     formMission = this.fb.group({
@@ -37,7 +37,7 @@ export class ProgrammationComponent implements OnInit {
     motifs_mission:any[]=['Approvissionnement', 'Livraision']
     listeTrajets:any[]=['Bobo-Ouaga', 'Ouaga-Abidjan', 'Bobo-Abidjan']
 
-    toppings = new FormControl('');
+    toppings = new UntypedFormControl('');
     toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
 
@@ -66,7 +66,7 @@ export class ProgrammationComponent implements OnInit {
     {intitule:'Carburant'},
     {intitule:'frais de douane'}
     ];
-  depenseSelectionnes = new FormControl('');
+  depenseSelectionnes = new UntypedFormControl('');
 
   onSelectionDepenseTeminer(){
     this.AjouterDepenseField();
@@ -74,7 +74,7 @@ export class ProgrammationComponent implements OnInit {
 
   get depensesFieldAsFormArray():any{
     //methode d'obtention au champs dans le form comme un FormArray
-    return this.formMission.get('liste_depenses') as FormArray
+    return this.formMission.get('liste_depenses') as UntypedFormArray
   }
 
   depenseControleur():any{
@@ -109,7 +109,7 @@ export class ProgrammationComponent implements OnInit {
     {name:'clinker', unite:'tonne'}
   ]
 
-  produitSelectionnes = new FormControl('');
+  produitSelectionnes = new UntypedFormControl('');
 
   onSelectionTeminer(){
    this.AjouterProduitField();
@@ -117,7 +117,7 @@ export class ProgrammationComponent implements OnInit {
 
   get produitsFieldAsFormArray():any{
     //methode d'obtention au champs dans le form comme un FormArray
-    return this.formMission.get('liste_produits') as FormArray
+    return this.formMission.get('liste_produits') as UntypedFormArray
   }
 
   produitsControleur(nom="", quantite=0, cout_unitaire=0):any{

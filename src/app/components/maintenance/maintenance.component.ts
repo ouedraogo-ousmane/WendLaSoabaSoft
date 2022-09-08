@@ -8,7 +8,7 @@ import { MaintenanceDialogueComponent } from '../maintenance-dialogue/maintenanc
 import { MaintenanceService } from '../../services/maintenance.service';
 import { Maintenances } from '../../folderModels/modelGestMaintenance/maintenance';
 import { Piece } from 'src/app/folderModels/modelGestMaintenance/pieces';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 export interface PeriodicElement {
@@ -53,7 +53,7 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
   }
 
   selection = new SelectionModel<Maintenances>(true, []);
-  myControl = new FormControl('');
+  myControl = new UntypedFormControl('');
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
 

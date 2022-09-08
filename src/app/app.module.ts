@@ -28,6 +28,7 @@ import {  HttpClientModule } from '@angular/common/http';
 import { StatistiqueComponent } from './components/statistique/statistique.component';
 import { ListeExerciceComponent } from './components/liste-exercice/liste-exercice.component';
 import { SettingsComponent } from './components/settings/settings.component';
+
 @NgModule({
   declarations: [
     AppComponent,
