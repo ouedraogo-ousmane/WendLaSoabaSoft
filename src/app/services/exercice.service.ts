@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { NumberCardModule } from 'ngx-charts';
 import { Observable } from 'rxjs';
 import { IExercices, IResults } from '../folderModels/modelGestEntreprise/exercice';
 
@@ -29,6 +30,16 @@ export class ExercicesService {
          'Authorization': "WEND-PANGA " + this.token
        },) }
     return this.http.get<IExercices>(this.endpointListCreate, this.httpOptions);
+  }
+
+  getExerciceStat(id:NumberCardModule):Observable<IExercices>{
+    this.httpOptions = {
+      method:'GET',
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         'Authorization': "WEND-PANGA " + this.token
+       },) }
+    return this.http.get<IExercices>(this.endpointListCreate + `/${id}/detail`, this.httpOptions);
   }
 
   putExercices(data:IResults):Observable<any[]>{

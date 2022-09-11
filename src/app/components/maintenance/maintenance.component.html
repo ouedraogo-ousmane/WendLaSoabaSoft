@@ -14,7 +14,7 @@
             <mat-nav-list>
                 <mat-divider></mat-divider>
                 <mat-list-item>
-                    <a href="liste-exercices">
+                    <a href="exercice/liste-exercices">
                         <span><mat-icon matListIcon>home</mat-icon>Accueil</span>
                     </a>
                 </mat-list-item>
@@ -31,21 +31,15 @@
             </mat-nav-list>
         </mat-drawer>
         <mat-drawer-content>
-            <form class="example-form">
-                <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Number</mat-label>
-                    <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                            {{option}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </form>
+
+            <mat-form-field>
+                <input matInput #box (keyup)="applyFiltrer(box.value)" placeholder="Filtrer">
+            </mat-form-field>
+
 
             <div class="button-div">
-                <button id="firstButton" mat-raised-button type="submit" *ngIf="this.selection.selected.length<=0" (click)="openDialogue()">Ajouter une depense</button>
-                <button id="firstButton" mat-raised-button type="submit" color="warn" *ngIf="this.selection.selected.length>0" (click)="deleteMaintenance()">Supprimer</button>
+                <button id="firstButton" mat-strocked-button type="submit" color="primary" *ngIf="this.selection.selected.length<=0" (click)="openDialogue()">Ajouter une depense</button>
+                <button id="firstButton" mat-strocked-button type="submit" color="warn" *ngIf="this.selection.selected.length>0" (click)="deleteMaintenance()">Supprimer</button>
             </div>
             <div class="table" *ngIf="dataSource">
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -68,11 +62,20 @@
                         <td mat-cell *matCellDef="let element"> {{dataSource.filteredData.indexOf(element)+1}} </td>
                     </ng-container>
 
+
+
+                    <!-- Chauffeur maintenance Column -->
+
+                    <ng-container matColumnDef="chauffeur">
+                        <th mat-header-cell *matHeaderCellDef> Chauffeur </th>
+                        <td mat-cell *matCellDef="let element"> {{element.chauffeur[0].nom }} {{element.chauffeur[0].prenom }} </td>
+                    </ng-container>
+
                     <!-- Date maintenance Column -->
 
-                    <ng-container matColumnDef="date_creation">
+                    <ng-container matColumnDef="date_maintenance">
                         <th mat-header-cell *matHeaderCellDef> Date </th>
-                        <td mat-cell *matCellDef="let element"> {{element.date_creation | date:'yyyy/mm/dd'}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.date_maintenance | date:'dd MMMM yyyy' }} </td>
                     </ng-container>
 
                     <!-- Motif Column -->

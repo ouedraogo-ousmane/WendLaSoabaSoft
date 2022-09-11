@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import { FormBuilder, UntypedFormBuilder, UntypedFormGroup, Validators, FormGroup } from '@angular/forms';
 import { Piece } from 'src/app/folderModels/modelGestMaintenance/pieces';
 import { Maintenances } from '../../folderModels/modelGestMaintenance/maintenance';
 import { InfosEnregPiece } from '../../folderModels/modelGestMaintenance/infos-enreg-pieces';
@@ -29,11 +29,11 @@ export class MaintenanceDialogueComponent implements OnInit {
   listePiece : Piece[] = [];
   listePieceGetted : Piece[] = [];
   listeMaintenance : any;
-  firstFormGroup!: UntypedFormGroup;
-  secondFormGroup!: UntypedFormGroup;
+  firstFormGroup!: FormGroup;
+  secondFormGroup!: FormGroup;
 
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private dialogue : MatDialog,
               private serviceVehicule : VehiculeService,
               private serviceMaintenance : MaintenanceService) {}

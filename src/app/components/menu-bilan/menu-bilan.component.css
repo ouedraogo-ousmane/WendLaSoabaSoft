@@ -1,0 +1,50 @@
+/*Mise en forme du div principale*/
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    height: 100%;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+
+/* Mise en forme des drawer contenener */
+
+.container {
+    width: 100%;
+    height: 400px;
+}
+
+mat-drawer-container {
+    position: absolute;
+    top: 65px;
+}
+
+mat-drawer {
+    height: 100%;
+    width: 220px;
+}
+
+mat-drawer-content {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Mise en forme des liens*/
+
+mat-list-item:hover {
+    background-color: darkgray !important;
+}
+
+span {
+    color: blue;
+}
+
+.logo {
+    color: white;
+}

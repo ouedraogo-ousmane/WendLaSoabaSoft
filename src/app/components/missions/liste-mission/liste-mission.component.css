@@ -1,0 +1,73 @@
+
+/*  footer dun tableau table */
+#kl-contenu{
+  margin-top: 50px;
+  display:flex;
+  flex-direction: row;
+}
+
+.naim-side{
+  /* border-right:2px solid rgba(0, 0, 0, 0.216); */
+  border-radius: 5px;
+  height: 100vh;
+  flex:2 1 auto;
+}
+/* creation d'un side bar */
+.kl-side-bar{
+  border-right:2px solid rgba(0, 0, 0, 0.216);
+  border-radius: 5px;
+  height: 100vh;
+  position: fixed;
+  padding: 10px;
+
+}
+
+.kl-side-bar mat-selection-list{
+  position: relative;
+}
+/* creation du main content */
+.kl-main-content{
+  flex:4 1 auto;
+  padding: 20px;
+}
+
+/* rendre un contenu scrolable */
+.kl-main-content .missions-data{
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* alignement flex box */
+.kl-main-content .missionsList-actions{
+  display: flex;
+  flex-direction: row;
+  padding:15px;
+  background-color: ghostwhite;
+}
+.missionsList-actions section{
+  flex:16 1 auto;
+}
+.missionsList-actions section+section{
+  flex:1 1 auto;
+}
+
+/* filter */
+
+.example-full-width{
+  width: 200px;
+}
+
+/* icons de pagination  */
+.missionsList-actions >section+section span{
+  margin-left:20px;
+}
+.missionsList-actions >section+section span >mat-icon {
+  font-size:30px;
+  margin-left: 8px;
+}
+
+.missionsList-actions >section+section span >mat-icon:hover {
+  cursor: pointer;
+  color: rgb(132, 138, 138);
+}

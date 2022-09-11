@@ -55,7 +55,8 @@ mat-drawer-content .button-div {
 
 table {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-left: 25px;
 }
 
 .table {
@@ -90,4 +91,8 @@ mat-list-item:hover {
 
 .demo-row-is-clicked {
     font-weight: bold;
+}
+
+mat-form-field {
+    width: 40%;
 }

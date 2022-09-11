@@ -17,17 +17,17 @@
     align-content: space-between;
 }
 
-mat-sidenav {
+mat-drawer {
     height: 100%;
     width: 225px;
 }
 
-mat-sidenav-content {
-    background-color: white;
+mat-drawer-content {
+    background-color: white !important;
 }
 
-mat-sidenav,
-mat-sidenav-content {
+mat-drawer,
+mat-drawer-content {
     padding: 8px;
 }
 
@@ -35,14 +35,95 @@ mat-list-item:hover {
     background-color: darkgray !important;
 }
 
+.principale,
+.typeMission,
+.categorieVehicule {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow: -moz-scrollbars-vertical;
+    margin-left: 20px;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 255, .2);
+}
 
-/* .content {
+
+/* .typeMission {
+    margin-top: 25px;
+} */
+
+.button {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    align-content: space-around;
-    position: absolute;
-    top: 25px;
-    left: 15px;
-    right: 35px;
-} */
+    justify-content: center;
+}
+
+button {
+    margin-right: 30px;
+    width: 180px;
+    overflow: visible;
+    border: 1px solid black !important;
+    font-size: 16px;
+    height: 40px;
+}
+
+button:hover {
+    background-color: rgb(44, 202, 68);
+}
+
+.periode {
+    display: flex;
+    flex-direction: row;
+}
+
+mat-form-field {
+    width: 240px;
+    margin-left: 25px;
+}
+
+button {
+    width: 140px;
+    margin-left: 20px;
+    height: 40px;
+    background-color: #005b8f;
+    color: white;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+}
+
+.visualisation {
+    display: flex;
+    align-content: center;
+    margin-top: 15px;
+    /* width: 35%; */
+    /* align-items: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    margin-right: 20px;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 255, .2); */
+}
+
+.table,
+.visualisation {
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow: -moz-scrollbars-vertical;
+    margin-left: 20px;
+}
+
+table {
+    width: 100%;
+}

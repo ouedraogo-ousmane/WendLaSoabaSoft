@@ -1,0 +1,38 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    position: absolute;
+    border-radius: 10px;
+    width: 70%;
+    left: 50px;
+}
+
+.title {
+    display: flex;
+    text-align: center;
+    /* align-content: center; */
+    /* align-items: center; */
+    height: 70px;
+}
+
+h2 {
+    text-align: center;
+    text-decoration: aquamarine;
+    font-size: 24px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.main {
+    display: flex;
+    /* margin-top: 80px; */
+    flex-direction: column;
+}
+
+mat-form-field {
+    margin: 20px;
+}
+
+input {
+    height: 5px;
+}

@@ -1,12 +1,13 @@
-<!-- <table>
-    <tr>
-        <td>
-            <ngx-charts-bar-vertical [results]="exercice">
+<div class="content">
+    <div class="listeExercice">
+        <ngx-charts-bar-vertical-stacked [view]="[750,300]" [results]="exercice" [xAxisLabel]="'Graphique des rentabilite par exercice'" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+            [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
+        </ngx-charts-bar-vertical-stacked>
+    </div>
 
-            </ngx-charts-bar-vertical>
-        </td>
-    </tr>
-</table> -->
+</div>
 
-<google-chart [title]="chart.title" [type]="chart.type" [data]="chart.data" [columns]="chart.columnNames" [options]="chart.options" [width]="chart.width" [height]="chart.heigt">
-</google-chart>
+<div class="button">
+    <button mat-stroked-button (click)="export()" color="primary">Exporter</button>
+    <button mat-stroked-button click()="print()" color="warn">Imprimer</button>
+</div>

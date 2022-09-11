@@ -28,10 +28,16 @@ export class ListeExerciceComponent implements OnInit {
    ngOnInit(): void {
      this.getAllExercice();
    }
+
+   loginMission(exercice:IResults){
+    // transmission de parametre à une route sans specifier la params dans AppRouting
+      this.router.navigate(
+          ['missions'], { queryParams: {'exercice':exercice.id}});
+  }
  
-   openPage(url:string){
+   openPage(url:string,exercice:IResults){
  
-     this.router.navigate([url])
+     this.router.navigate([url],{queryParams : {'exercice':exercice.id}});
  
    }
  

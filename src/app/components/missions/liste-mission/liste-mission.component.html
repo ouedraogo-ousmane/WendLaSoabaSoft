@@ -1,0 +1,93 @@
+<div  class="kl-main-content">
+  <!-- Section de filtrage  -->
+  <div class="missionsList-actions" >
+
+    <section>
+      <mat-form-field class="example-full-width">
+        <mat-label>filtre</mat-label>
+        <input type="text"
+               aria-label="filtre"
+               matInput
+             >
+      </mat-form-field>
+    </section>
+
+    <section>
+      <!-- Section choix de l'etat des mission à afficher  -->
+      <mat-button-toggle-group (change)="listerMissionParStatus(choiceStatus.value)"
+           #choiceStatus="matButtonToggleGroup" appearance="legacy">
+        <mat-button-toggle [checked]="true" [value]="true">En cours</mat-button-toggle>
+        <mat-button-toggle color="primary" [value]="false">Terminer</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <!-- pagination: par defaut 10 mission son envoyés par un get dans la bd -->
+
+        <span  *ngIf="listeMission.length>0">
+            <mat-icon (click)="getMissionListPagination(false)">first_page</mat-icon>
+            <mat-icon (click)="getMissionListPagination(true)">last_page</mat-icon>
+        </span>
+
+    </section>
+
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="missions-data">
+    <!-- Listage des missions -->
+    <mat-selection-list #selectedMultiMission
+     (selectionChange)="onSelectionMissionChange(selectedMultiMission.selectedOptions.selected)">
+      <mat-list-option  color="primary" [value]="mission"
+      *ngFor="let mission of listeMission" >
+      {{mission.chauffeur[0].nom}} {{mission.chauffeur[0].prenom}}
+    </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="missionsList-actions">
+    <section>
+      <!-- selectedOptions.selected :
+         tableau contenant la liste des missions selectionnes
+      -->
+        Selections: {{selectedMultiMission.selectedOptions.selected.length}}
+    </section>
+
+    <section>
+      <!-- Liste des actions -->
+      <!-- desactiver les boutons si le nombre de selection est superieur a 1 ou == 0 -->
+      <button mat-raised-button [disabled]="
+          selectedMultiMission.selectedOptions.selected.length>1 ||
+          selectedMultiMission.selectedOptions.selected.length==0
+          " style="margin-right:5px; background-color: lightblue;">
+         Imprimer ordre de mission
+      </button>
+
+      <button mat-raised-button  [disabled]="
+          selectedMultiMission.selectedOptions.selected.length>1 ||
+          selectedMultiMission.selectedOptions.selected.length==0
+          " style="margin-right:5px; background-color: lightblue;" (click)="openDetailMission()">
+       Detail
+      </button>
+
+      <!-- Desactive les boutons si le nbre de selection == 0 -->
+      <button mat-raised-button style="margin-right:5px"
+      (click)="openDialog(delai_animation_apparution,
+                 delai_animation_disparition,
+                'Etes-Vous sûr de vouloir modifier etat de ces missions ?')">
+         Modifier l'etat
+        </button>
+
+      <button mat-raised-button
+       style="margin-right:5px"  (click)="openDialog(delai_animation_apparution, delai_animation_disparition,
+          'Etes-Vous sûr de vouloir suppprimer ces missions ?')"
+            color="warn" >
+        Supprimer
+       </button>
+
+    </section>
+  </div>
+
+  <mat-divider></mat-divider>
+</div>
+
+<mat-divider></mat-divider>

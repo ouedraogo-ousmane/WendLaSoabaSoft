@@ -1,0 +1,171 @@
+
+<!--
+<mat-menu>
+
+</mat-menu> -->
+<mat-nav-list style="margin-left:70px; margin-top: 20px;">
+  <mat-nav-item style="display:inline-block">
+    <ng-container mat-list-item >
+      <button mat-fab  style="width:40px; height: 40px; background-color: lightblue;" (click)="print()">
+        <mat-icon><mat-icon>save </mat-icon></mat-icon>
+      </button>
+    </ng-container>
+
+  </mat-nav-item>
+
+</mat-nav-list>
+
+<div id="print-section">
+  <header class="kl-title">
+    <h1>
+      <span> COMPAGNIE WENDLASO TRANSPORT</span> <br>
+    </h1>
+
+      <hr style="padding:10px; border-radius:5px; background-color: rgba(0, 0, 255, 0.744);">
+  </header>
+
+  <main style="position:absolute; left:20px; right:10px;  margin: 0; width: auto;">
+    <div style="border:1px solid black;">
+
+      <div  style="border:2px solid black;border-radius: 8px;  padding: 3px;width: 99%;">
+        <table style=" width: 100%">
+          <thead>
+            <tr>
+              <th class="service">INFOS TRANSPORTEUR</th>
+              <th>VEHICULE</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="service">
+               <span>OUEDRAOGO Amado</span> <br><br>
+               <span>Tel: (+226) 55 34 55 66</span> <br><br>
+               <span>voyage n$: 10</span>
+              </td>
+
+              <td class="service">
+                <span>immat: AZE445Y5 / AZE777D</span> <br><br>
+                <span>Couleur: NOIR</span> <br><br>
+                <span>Marque: RENOULD</span>
+               </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+      <div style="float:left;  border:2px solid black; width: 47%; border-radius: 8px;">
+        <table style=" width: 100%" >
+          <thead>
+            <tr>
+              <th class="service">PRODUITS</th>
+              <th>QUANTITES</th>
+              <th style="text-align: right;">UNITE</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="service">Fer</td>
+              <td class="qty">26</td>
+              <td class="unit">Tonne</td>
+            </tr>
+            <tr>
+              <td class="service">bois</td>
+              <td class="qty">80</td>
+              <td class="unit">kg</td>
+            </tr>
+            <tr>
+              <td class="service">Fer</td>
+              <td class="qty">20</td>
+              <td class="unit">kg</td>
+            </tr>
+            <tr>
+              <td class="service">Training</td>
+              <td class="qty">4</td>
+              <td class="unit">tube</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div  style="float:left; padding: 3px; border:2px solid black;width: 51%; border-radius: 8px;">
+        <table style=" width: 100%">
+          <thead>
+            <tr>
+              <th class="service">LISTES DEPENSES</th>
+              <th>MONTANT</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="service"> Carburant </td>
+              <td class="qty">26</td>
+            </tr>
+            <tr>
+              <td class="service">Frais de douane</td>
+              <td class="qty">80</td>
+            </tr>
+            <tr>
+              <td class="service">Frais de voyage</td>
+              <td class="qty">20</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+
+      <div id="trajet"  style="border:2px solid black; padding: 3px; border-radius: 8px; width: 99%;">
+        <table style=" width: 100%">
+          <thead>
+            <tr>
+              <th class="service">Trajet</th>
+              <th>Date Mission</th>
+              <th>Donneur d'ordre</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="service">
+               <span>Destination 1: Bobo-Dioulasso</span> <br><br>
+               <span>Destination 2: Ouagadougou</span> <br><br>
+              </td>
+
+              <td class="service">
+                <span>Date de part: 10/11/2023</span> <br><br>
+                <span>Depart: Bobo-Dioulasso</span> <br><br>
+               </td>
+
+               <td class="service" style="text-align:right">
+                <span>Ouedraogo </span>
+                <span>Kouanda </span> <br><br>
+               </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+      <footer >
+        <mat-divider></mat-divider>
+         <div style="margin-top: 20px; width:25%; padding-left: 10px;">
+            <b>Chauffeur</b> <br> <br>
+         </div>
+      </footer>
+
+    <hr style="padding:10px; border-radius:5px; background-color: rgba(0, 0, 255, 0.744);">
+    <hr style="padding:1px;border-radius:5px; background-color: red">
+
+  </main>
+
+</div>
+

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,42 +12,39 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthentificationComponent } from './components/authentification/authentification.component';
-import { MissionComponent } from './components/missions/mission.component';
 import { ExerciceComponent } from './components/exercice/exercice.component';
-import { DepenseMissionComponent } from './components/depense-mission/depense-mission.component';
-import { ProgrammationComponent } from './components/programmation/programmation.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
-import { BilanComponent } from './components/bilan/bilan.component';
-import { BilanDepenseComponent } from './components/bilan-depense/bilan-depense.component';
-import { BilanRecetteComponent } from './components/bilan-recette/bilan-recette.component';
-import { ProgrammerDialogueComponent } from './components/programmer-dialogue/programmer-dialogue.component';
 import { MaintenanceDialogueComponent } from './components/maintenance-dialogue/maintenance-dialogue.component';
-import { RecetteComponent } from './components/recette/recette.component';
-import { ListeMissionComponent } from './components/liste-mission/liste-mission.component';
 import {  HttpClientModule } from '@angular/common/http';
 import { StatistiqueComponent } from './components/statistique/statistique.component';
 import { ListeExerciceComponent } from './components/liste-exercice/liste-exercice.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { BilanComponent } from './components/bilan/bilan.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MenuBilanComponent } from './components/menu-bilan/menu-bilan.component';
+import { ListeMissionComponent } from './components/missions/liste-mission/liste-mission.component';
+import { ProgrammerComponent } from './components/missions/programmer/programmer.component';
+import { MissionsComponent } from './components/missions/missions.component';
+import { OrdreMissionComponent } from './components/missions/ordre-mission/ordre-mission.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthentificationComponent,
-    MissionComponent,
+    MissionsComponent,
+    OrdreMissionComponent,
     ExerciceComponent,
-    DepenseMissionComponent,
-    ProgrammationComponent,
     MaintenanceComponent,
     BilanComponent,
-    BilanDepenseComponent,
-    BilanRecetteComponent,
-    ProgrammerDialogueComponent,
     MaintenanceDialogueComponent,
-    RecetteComponent,
-    ListeMissionComponent,
+    ListeMissionComponent, 
     StatistiqueComponent,
     ListeExerciceComponent,
-    SettingsComponent
+    SettingsComponent,
+    ProgrammerComponent,
+    MenuBilanComponent,
+    ProgrammerComponent
     
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
@@ -60,9 +57,14 @@ import { SettingsComponent } from './components/settings/settings.component';
     RouterModule,
     MaterialModule,
     HttpClientModule,
+    NgxChartsModule
+
+
    
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

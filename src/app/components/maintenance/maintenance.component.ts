@@ -3,14 +3,13 @@ import {Component,AfterViewInit, OnInit, ViewChild, ChangeDetectorRef} from '@an
 import { MatPaginator } from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { ProgrammerDialogueComponent } from '../programmer-dialogue/programmer-dialogue.component';
 import { MaintenanceDialogueComponent } from '../maintenance-dialogue/maintenance-dialogue.component';
 import { MaintenanceService } from '../../services/maintenance.service';
-import { Maintenances } from '../../folderModels/modelGestMaintenance/maintenance';
+import { Chauffeur, Maintenances } from '../../folderModels/modelGestMaintenance/maintenance';
 import { Piece } from 'src/app/folderModels/modelGestMaintenance/pieces';
 import {UntypedFormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -41,7 +40,10 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
 
   listeMaintenance : Maintenances[] = [];
 
-  displayedColumns: string[] = ['select','id', 'date_creation', 'motif', 'montant','reference'];
+  chauffeur : Chauffeur;
+  event :Event;
+
+  displayedColumns: string[] = ['select','id','date_maintenance', 'chauffeur', 'motif', 'montant','reference'];
   totalCost = 125000;
 
   dataSource = new MatTableDataSource<Maintenances>(this.listeMaintenance);
@@ -57,10 +59,13 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
 
+  exercice_id! : number;
+
    constructor(
     private dialog : MatDialog,
     private serviceMaintenance :MaintenanceService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route : ActivatedRoute
   ) { }
 
 
@@ -68,10 +73,9 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
 
     // Lors du demarrage du component il faut charger les données
     this.getAllMaintenance();
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
+
+    this.exercice_id = this.getId_exercice();
+  
     
   }
 
@@ -81,6 +85,11 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
   
+
+  applyFiltrer(filterValue : string){
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    
+  }
   
  // @ViewChild('paginator') paginator : MatPaginator;
   pieceSelected!: Piece;
@@ -95,6 +104,22 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
     this.dialog.open(MaintenanceDialogueComponent,{
       width:'75%'
     });
+  }
+
+/**
+ * Cette methode permet de recuperer de l'exercice concerné par la maintenance
+ */
+
+  getId_exercice():number{
+    
+    let queryParam:any;
+
+       this.route.queryParamMap  //Recuperation des parametres state d'url : ActivatedRoute
+      .subscribe((params) => {
+         queryParam = {...params }; // operateur de diffussion
+
+       });
+       return queryParam.params.exercice
   }
 
   
@@ -232,26 +257,3 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
   }
 
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];

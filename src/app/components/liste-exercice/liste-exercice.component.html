@@ -1,15 +1,15 @@
 <div class="content">
 
     <mat-card class="card" *ngFor="let data of listeExercice">
-        <mat-card-title>Exercice {{data.year }}</mat-card-title>
+        <mat-card-title>Exercice {{data.date_exercice | date:'yyyy' }}</mat-card-title>
         <mat-card-content>
             <p *ngIf="!data.etat_exercice">En cours </p>
             <p *ngIf="data.etat_exercice">Terminé </p>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="openPage('mission')">Missions</button>
-            <button mat-raised-button (click)="openPage('maintenance')">Maintenance</button>
-            <button mat-raised-button color="warn" (click)="openPage('bilan')">Bilan</button>
+            <button mat-raised-button color="primary" (click)="openPage('mission',data)">Missions</button>
+            <button mat-raised-button (click)="openPage('maintenance',data)">Maintenance</button>
+            <button mat-raised-button color="warn" (click)="openPage('bilan',data)">Bilan</button>
         </mat-card-actions>
     </mat-card>
 

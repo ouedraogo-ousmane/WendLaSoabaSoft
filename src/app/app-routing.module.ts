@@ -1,56 +1,52 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthentificationComponent } from './components/authentification/authentification.component';
-import { DepenseMissionComponent } from './components/depense-mission/depense-mission.component';
 import { ExerciceComponent } from './components/exercice/exercice.component';
-import { MissionComponent } from './components/missions/mission.component';
-import { ProgrammationComponent } from './components/programmation/programmation.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
-import { BilanComponent } from './components/bilan/bilan.component';
-import { BilanDepenseComponent } from './components/bilan-depense/bilan-depense.component';
-import { BilanRecetteComponent } from './components/bilan-recette/bilan-recette.component';
-import { RecetteComponent } from './components/recette/recette.component';
-import { ListeMissionComponent } from './components/liste-mission/liste-mission.component';
+
 import { StatistiqueComponent } from './components/statistique/statistique.component';
 import { ListeExerciceComponent } from './components/liste-exercice/liste-exercice.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { BilanComponent } from './components/bilan/bilan.component';
+import { MenuBilanComponent } from './components/menu-bilan/menu-bilan.component';
+import { ListeMissionComponent } from './components/missions/liste-mission/liste-mission.component';
+import { ProgrammerComponent } from './components/missions/programmer/programmer.component';
+import { MissionsComponent } from './components/missions/missions.component';
+import { OrdreMissionComponent } from './components/missions/ordre-mission/ordre-mission.component';
 
 const routes: Routes = [
   {path:'',component:AuthentificationComponent},
   {path:'accueil',component:AuthentificationComponent},
 
-  //exercices
-{path:'exercice',component:ExerciceComponent,
-children :[
- // {path:'statistique',component:StatistiqueComponent},
-  {path:'liste-exercices',component:ListeExerciceComponent},
-  {path:'compte',component:ListeMissionComponent}
-]},
-{path:'statistique',component:StatistiqueComponent},
+    //exercices
+  {path:'exercice',component:ExerciceComponent,
+  children :[
+    {path:'statistique',component:StatistiqueComponent},
+    {path:'liste-exercices',component:ListeExerciceComponent},
+    {path:'bilan',component:BilanComponent},
+    {path:'account',component:SettingsComponent}
+  ]},
+  //{path:'statistique',component:StatistiqueComponent},
 
 
-// Les missions
+  // Les missions
 
-{path:'mission',component:MissionComponent,
-children :[
-  {path:'programmation',component:ProgrammationComponent},
-  {path:'liste-mission',component:ListeMissionComponent},
-  {path:'recette',component:RecetteComponent}
-]},
+  {path:'mission',component:MissionsComponent},
+  {path:'ordre', component:OrdreMissionComponent},
 
-// Les maintenances
+  // Les maintenances
 
-{path:'maintenance',component:MaintenanceComponent},
+  {path:'maintenance',component:MaintenanceComponent},
 
-// Les bilans
-{path:'bilan',component:BilanComponent,
-children :[
-  {path:'bilan-depense',component:BilanDepenseComponent},
-  {path:'bilan-recette',component:BilanRecetteComponent}
-]},
+  // Les bilans
+  {path:'menu-bilan',component:MenuBilanComponent,
+  children :[
+    {path:'bilan',component:BilanComponent}
+  ]},
 
-{
-  path:'detail-exercices/:_id',component:ExerciceComponent
-}
+  {
+    path:'detail-exercices/:_id',component:ExerciceComponent
+  }
 ];
 
 @NgModule({

@@ -16,6 +16,12 @@ export class Maintenances implements Maintenance{
   montant!: number;
   date_maintenance! :Date;
   reference! : FormData;
+  chauffeur : Chauffeur;
 
 
+}
+
+export interface Chauffeur{
+  nom : string,
+  prenom : string
 }

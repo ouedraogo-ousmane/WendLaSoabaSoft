@@ -1,0 +1,268 @@
+<div id="kl-info-title">
+  <h3 class ="mat-h2">Modifier une mission</h3>
+  <span > <b style="color:black">Etat:</b>
+     <b style="color:green"> Mission En cours </b>
+   </span>
+</div>
+
+<div style="position:relative; right:-25px; margin-bottom: 25px;">
+  <mat-divider></mat-divider>
+
+    <!-- information sur les generales d'une mission -->
+    <section id="kl-info-Mission">
+      <h4>Information mission</h4>
+
+    <form [formGroup]="formMission">
+
+        <div  formGroupName="infoMission" >
+            <div>
+              <!-- date de la mission -->
+              <mat-form-field appearance="outline">
+
+                <mat-label>Choisir une date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date_mission">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker  touchUi #picker>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Annuler</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>Valider</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <!-- Nom du chauffeur -->
+              <mat-form-field appearance="outline">
+                <mat-label>Chauffeurs</mat-label>
+                <mat-select formControlName="chauffeur">
+                  <mat-option>None</mat-option>
+
+                  <mat-option *ngIf="true"  [value]="1">
+                    Kalmogo lucien
+                  </mat-option>
+
+                  <ng-container *ngIf="false">
+                    <mat-option *ngFor="let chauffeur of listeChauffeurs" [value]="chauffeur.id">
+                      {{chauffeur.chauff.nom}} {{chauffeur.chauff.prenom}}
+                    </mat-option>
+                  </ng-container>
+
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+              <!--Listes des trajets -->
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-label>Trajets</mat-label>
+                <mat-select formControlName="trajet_concerne">
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let trajet of listeTrajets" [value]="trajet.id">
+                    {{trajet.intitule}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+
+              <!-- motif de mission -->
+            <div class="kl-motif-mission">
+              <mat-label style="margin-right:10px">motif mission :</mat-label>
+              <mat-radio-group style="padding-left:10px;" color="primary" aria-label="Select an option" formControlName="motif">
+                <mat-radio-button style="padding-right:15px" value="Approvissionement">Approvissionement</mat-radio-button>
+                <mat-radio-button value="Livraison">Livraison</mat-radio-button>
+              </mat-radio-group>
+
+            </div>
+            <mat-divider></mat-divider>
+
+              <!-- type de mission: avec ou sans pesage -->
+            <div class="kl-motif-mission">
+              <mat-label>Evaluation recette: </mat-label>
+              <mat-radio-group style="padding-left:10px;" color="primary" (ngModelChange)=" change_mode_evaluation()"
+               aria-label="Select an option" formControlName="choix_mode_evaluation">
+                <mat-radio-button style="padding-right:15px" [value]="false">Sans Pesage</mat-radio-button>
+                <mat-radio-button [value]="true"> Avec Pesage</mat-radio-button>
+              </mat-radio-group>
+
+            </div>
+
+        </div>
+    </form>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- information sur les produits d'une mission -->
+    <section id="kl-info-Produits">
+        <h4>Listes des produits</h4>
+        <mat-form-field appearance="outline" style="padding-left:10px">
+          <!--
+             selection des produits a transporter
+             (closed)="onSelectionTeminer()": Evenement
+             declencher quant le selecteur ag mat se ferme
+           -->
+          <mat-label>Selectionner produits</mat-label>
+
+          <mat-select  (closed)="onSelectionTeminer()"
+           [formControl]="produitSelectionnes" multiple>
+            <mat-option *ngFor="let produit of listesProduits" [value]="produit.id">
+              {{produit.nom}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+          <!-- Ajout des field de produit transporter -->
+      <form [formGroup]="formMission">
+        <ng-container  formArrayName='liste_produits'>
+
+          <div *ngFor="let control of  produitsFieldAsFormArray.controls ;let i = index;">
+        <!--
+          produitsFieldAsFormArray.controls: tableau FormArray
+            contient tous les controleurs a ajouter
+            [formGroupName]="i" : ieme form group ajouter
+          -->
+          <div [formGroupName]="i" style="margin-bottom:15px;" >
+              <mat-grid-list cols="5" [rowspan]="nombreProduit" rowHeight="3rem" gutterSize="5px">
+                <mat-grid-tile>
+                      <!-- nom du produit -->
+                  <mat-form-field appearance="fill" >
+                    <mat-label>Intitule</mat-label>
+                    <input matInput type="text" name="nom" id="nom" formControlName="nom">
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                      <!-- quantite du produit -->
+                  <mat-form-field appearance="fill">
+                    <mat-label>quantite</mat-label>
+                    <input matInput type="number" min="0"  name="quantite" id="quantite" formControlName="quantite">
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                  <!-- cout unitaire du produit -->
+                  <mat-form-field >
+                    <mat-label>cout unitaire</mat-label>
+                    <input matInput type="number" min="0" name="cout_unitaire" id="cout_unitaire" formControlName="cout_unitaire">
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                  <mat-form-field appearance="outline">
+                    <!-- client destinataire du produit -->
+                    <mat-label>Client</mat-label>
+                    <mat-select name="client" id="client" formControlName="client" >
+                      <mat-option>None</mat-option>
+                      <mat-option *ngFor="let client of listeClients" [value]="client.id">
+                        {{client.nom}} {{client.prenom}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                  <!-- boutton de suppression d'une section de produit -->
+                  <button mat-button color="warn" (click)="supprimerProduitField(i)"
+                    aria-label="delete icon">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-grid-tile>
+              </mat-grid-list>
+              </div>
+          </div>
+        </ng-container>
+      </form>
+    </section>
+    <mat-divider></mat-divider>
+
+    <!-- information sur les poids: en cas de recette avec pesage -->
+    <section *ngIf="choix_mode_evaluation"  [formGroup]="formMission">
+      <h4> Poids Evaluer:</h4>
+      <ng-container formGroupName="infoPoids" >
+        <mat-grid-list cols="5"  [rowspan]="2" rowHeight="3rem" gutterSize="5px">
+                <mat-grid-tile>
+                  <!-- poids 1 du produit -->
+              <mat-form-field appearance="fill" >
+                <mat-label>premier poids</mat-label>
+                <input matInput type="number" formControlName="premier_poids">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <!-- poids 2 du produit -->
+              <mat-form-field appearance="fill" >
+                <mat-label>deuxieme poids</mat-label>
+                <input matInput type="number" formControlName="deuxieme_poids">
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </ng-container>
+
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <!-- information sur les depenses d'une mission -->
+    <section id="kl-info-depenses">
+      <h4>Listes des depenses</h4>
+      <mat-form-field appearance="outline" style="padding-left:10px">
+        <mat-label>Selectionner depenses</mat-label>
+
+        <mat-select  (closed)="onSelectionDepenseTeminer()" [formControl]="depenseSelectionnes" multiple>
+          <mat-option *ngFor="let depense of listesDepenses" [value]="depense.id">
+            {{depense.intitule}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <form [formGroup]="formMission">
+        <ng-container  formArrayName='liste_depenses'>
+          <div *ngFor="let control of  depensesFieldAsFormArray.controls ;let i = index;">
+              <div [formGroupName]="i" style="margin-bottom:15px;" >
+
+              <mat-grid-list cols="5" [rowspan]="nombreDepenses" rowHeight="3rem" gutterSize="5px">
+                <mat-grid-tile>
+                      <!-- intitule depense -->
+                  <mat-form-field appearance="fill">
+                    <mat-label>Intitule</mat-label>
+                    <input matInput type="text" formControlName="intitule">
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                  <!-- cout  depense -->
+                  <mat-form-field >
+                    <mat-label>Prix</mat-label>
+                    <input matInput type="number" min="0" formControlName="montant" required>
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                  <button mat-button color="warn" (click)="supprimerDepenseField(i)"
+                    aria-label="delete icon">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-grid-tile>
+              </mat-grid-list>
+            <mat-divider></mat-divider>
+            </div>
+          </div>
+    </ng-container>
+      </form>
+    </section>
+
+  <mat-divider></mat-divider>
+
+  <!-- bouttons d'enregistrement et d'annulation -->
+  <div id="kl-submit-btn">
+    <button  mat-stroked-button color="warn">Annuler</button>
+    <button  mat-stroked-button color="primary" (click)="saveMission()">Enregistrer</button>
+  </div>
+
+  <mat-divider></mat-divider>
+</div>
+
+<!-- <app-ordre-mission></app-ordre-mission> -->
+

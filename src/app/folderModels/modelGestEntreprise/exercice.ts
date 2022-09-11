@@ -1,6 +1,7 @@
 export interface IResults{
   id:number,
   year:Number,
+  date_exercice:Date,
   etat_exercice:Boolean
 }
 
