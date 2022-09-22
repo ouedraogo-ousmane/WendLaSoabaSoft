@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exercices } from 'src/app/interfaces/exercices';
 import { ExercicesService } from 'src/app/services/exercice.service';
@@ -18,6 +19,7 @@ export class ExerciceComponent implements OnInit {
 
   panelOpenState = false;
 
+  @Output() sidenavClose = new EventEmitter();
   constructor(
     private router : Router,
     private route : ActivatedRoute,
@@ -33,6 +35,12 @@ export class ExerciceComponent implements OnInit {
     this.router.navigate([url])
 
   }
+
+  public onSidenavClose = () => {
+    this.sidenavClose.emit();
+  }
+
+  
 
   openMaintenance(){
 

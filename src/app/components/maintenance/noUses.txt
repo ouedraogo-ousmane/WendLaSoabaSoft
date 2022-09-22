@@ -1,0 +1,47 @@
+<mat-spinner mode="indeterminate" *ngIf="IsWait" color="primary"></mat-spinner>
+
+
+<div class="main">
+    <div class="entete">
+        <mat-toolbar color="primary">
+
+            <span class="logo">WendLa Soaba Transport</span>
+            <span class="example-spacer"></span>
+
+
+        </mat-toolbar>
+
+
+    </div>
+
+    <mat-drawer-container class="example-container">
+        <mat-drawer mode="side" opened>
+            Menu
+            <mat-nav-list>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <a href="exercice/liste-exercices">
+                        <span><mat-icon matListIcon>home</mat-icon>Accueil</span>
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <a href="maintenance">
+                        <span><mat-icon matListIcon>build</mat-icon>Maintenance</span> </a>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <a href="accueil">
+                        <span><mat-icon matListIcon>logout</mat-icon>Se deconnecter</span>
+                    </a>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+
+
+
+
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+</div>

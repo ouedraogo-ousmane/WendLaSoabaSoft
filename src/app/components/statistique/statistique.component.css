@@ -15,6 +15,12 @@
     height: 50%;
 }
 
+.title {
+    width: 100%;
+    left: 80px;
+    position: relative;
+}
+
 .exerciceDetail {
     height: 50%;
     margin-bottom: 25px;
@@ -37,4 +43,22 @@ button {
 
 button:hover {
     background-color: rgb(44, 202, 68);
+}
+
+mat-spinner {
+    position: absolute;
+    left: 350px;
+    right: 150px;
+    top: 150px;
+    bottom: 150px;
+}
+
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+    height: 100%;
+}
+
+mat-sidenav {
+    width: 250px;
 }

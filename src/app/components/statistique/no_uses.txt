@@ -1,0 +1,68 @@
+view : number[] = [800,400]; // La taille du diagramme (largeur,hauteur)
+   // Les données à visualiser
+  scheme : any = ["#704FCA","#4B852C","#867A3D","#5B6FC8","#25706F"]; // les couleurs du diagramme
+  schemename: string = "ordinal"; // Le name d'echelle des couleurs
+  colorScheme :any = {domain:this.scheme};
+  animations : boolean = true;  // activation de l'animation
+  legend : boolean = true; // Activation de la visualisation de la legende
+  legendTitle : string = "Titre du graphique"; 
+  legendPosition : string = 'below'; // Positionnement de la legende
+  xAxisLabel : string = "Exercice"; // Visualisation de l'axe X
+  yAxisLabel : string = "Resultat"; // Visualisation de l'axe Y
+  xAxis : boolean = true; // Visualisation de l'axe X
+  yAxis : boolean = true; // Visualisation de l'axe Y
+  gradient : boolean = false;
+  showGridLines : boolean = true;
+  showDataLabel : boolean = true;
+  barPadding : number = 5;
+  tooltipDisabled : boolean = false;
+  roundEdges : boolean = false
+
+
+ 
+  columnNames = ['Browser','Percentages'];
+  options = {
+    colors : ['#e0440e','#e6693e','#ec8f6e','#f3b49f','#f6c7b6'],
+    is3D:true
+  };
+  width = 550;
+  height = 400;
+
+  exerciceData = [
+    { name: "Exercice 2022", value: 1500000 },
+    { name: "Exercice 2021", value: 2500000 },
+    { name: "Exercice 2020", value: 9020000 },
+    { name: "Exercice 2019", value: 1000000 },
+    { name: "Exercice 2018", value: 6000000 }
+  ];
+  exercice2022 = [{
+    "name" :"Depense",
+    "value":15000000
+  },
+  {
+    "name":"Recette",
+    "value":25000000
+  }
+];
+
+
+
+exerciceForm! : FormGroup;
+  selected = 'Exercice 2022';
+
+
+listeStat :Stat[] = [
+    {
+      name:"Stat",
+      series:[
+        {
+          name:"Depense",
+          value:150000
+        },
+        {
+          name:"Recette",
+          value:200000
+        }
+      ]
+    }
+  ];

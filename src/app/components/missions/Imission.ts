@@ -1,6 +1,7 @@
 
 
 export interface IMission {
+  id?:number,
   exercice_conerne:number,
   vehicule_concerne:number,
   trajet_concerne:number,
@@ -13,6 +14,14 @@ export interface IMission {
 
 export interface AcceuilMissionList{
   id:number
-  chauffeur:{nom:string, prenom:string}[],
-  etat_mission:boolean
+  chauffeur:{id:number,nom:string, prenom:string, telephone:string},
+  etat_mission:boolean,
+  vehicule:{id:number,couleur:string, immat:string,marque:string,poids_vide:number},
+  date_mission:Date,
+  motif:string,
+  depenses:{intitule_depense__intitule:string, montant:number}[],
+  produits:{client_concerne__nom:string, client_concerne__prenom:string ,
+           produit__nom:string, produit__unite:string,qte_produit:number}[],
+  trajet:{id:number, ville_arrivee:string,ville_depart:string}
+
 }

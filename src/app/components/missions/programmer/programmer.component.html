@@ -129,7 +129,7 @@
                       <!-- quantite du produit -->
                   <mat-form-field appearance="fill">
                     <mat-label>quantite</mat-label>
-                    <input matInput type="number" min="0"  name="quantite" id="quantite" formControlName="quantite">
+                    <input matInput type="number" min="0"  name="quantite" id="quantite" formControlName="qte_produit">
                   </mat-form-field>
                 </mat-grid-tile>
 
@@ -142,10 +142,10 @@
                 </mat-grid-tile>
 
                 <mat-grid-tile>
-                  <mat-form-field appearance="outline">
                     <!-- client destinataire du produit -->
+                  <mat-form-field appearance="outline">
                     <mat-label>Client</mat-label>
-                    <mat-select name="client" id="client" formControlName="client" >
+                    <mat-select name="client" id="client" formControlName="client_concerne" >
                       <mat-option>None</mat-option>
                       <mat-option *ngFor="let client of listeClients" [value]="client.id">
                         {{client.nom}} {{client.prenom}}
@@ -249,7 +249,7 @@
 
   <!-- bouttons d'enregistrement et d'annulation -->
   <div id="kl-submit-btn">
-    <button  mat-stroked-button color="warn">Annuler</button>
+    <button  mat-stroked-button color="warn" (click)="resetForm()">Annuler</button>
     <button  mat-stroked-button color="primary" (click)="saveMission()">Enregistrer</button>
   </div>
 

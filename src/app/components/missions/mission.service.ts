@@ -19,6 +19,7 @@ export class MissionService {
   public token:any;
 
   private readonly endpointDelMission ="http://127.0.0.1:8000/missions/";
+
   constructor(private http:HttpClient) {
     this.token = localStorage.getItem("token")
     this.httpOptions = {
@@ -44,6 +45,12 @@ export class MissionService {
     return this.http.patch<any>(this.endpointDelMission+data.id  + '/detail/',
                                 data, this.httpOptions)
   }
+
+  getData(url:string,id:number):Observable<any>{
+    return this.http.get<any>(
+      url + `${id}/detail`,
+      this.httpOptions
+      );}
 
 
 }

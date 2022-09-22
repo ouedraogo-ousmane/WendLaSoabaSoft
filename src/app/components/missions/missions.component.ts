@@ -18,7 +18,7 @@ export class MissionsComponent implements OnInit {
 
    //ajout
   typesOfShoes: string[] = ['ouedradrogo Amado', 'Karim Is', 'Ms  salif', 'Moccasins', 'Sneakers'];
-
+  isWait : boolean = true;
   menuMission:any[]=
   [
     {nom:'Acceuil', ulrs:'acceuil' },
@@ -55,9 +55,9 @@ export class MissionsComponent implements OnInit {
          queryParam = {...params }; // operateur de diffussion
 
        });
-
+       this.exercice_id = queryParam.params.exercice
        //recuperer la liste des missions qui lui sont relative
-       const endpointListeMission = "http://127.0.0.1:8000/missions/acceuil/?exercice="+queryParam.params.exercice
+       const endpointListeMission = "http://127.0.0.1:8000/missions/acceuil/?exercice="+this.exercice_id
        this.endPointGlobal = endpointListeMission
        this.getListeMissionAcceuil(endpointListeMission);
   }
@@ -68,7 +68,6 @@ export class MissionsComponent implements OnInit {
   listeMission:AcceuilMissionList[] = [];
   pageMissionSuivant:string= ''; // contenir l'url des pages suivant
   pageMissionPrecedent:string=''; // contenir l'url des pages precedents
-
 
   getListeMissionAcceuil(endpointListeMission:string){
     /* recuperqtion de la liste des missions */
@@ -96,6 +95,8 @@ export class MissionsComponent implements OnInit {
 
             if(settingDePagination.previous ==null) this.pageMissionPrecedent =' '; // important pour eviter les urls null
             else this.pageMissionPrecedent=settingDePagination.previous;
+
+            this.isWait = false;
         }
       )
 
@@ -260,11 +261,8 @@ export class MissionsComponent implements OnInit {
   }
 
   // go to detail des missions
-  missionSelectedDetail:AcceuilMissionList = {
-    id: 0,
-    chauffeur: [],
-    etat_mission: false
-  }
+  missionSelectedDetail!:AcceuilMissionList
+
   isdetail:boolean = false;
   openDetailMission():void{
     // reduire le tmp de deplacement

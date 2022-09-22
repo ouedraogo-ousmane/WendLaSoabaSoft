@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exercices } from 'src/app/interfaces/exercices';
 import { ExercicesService } from 'src/app/services/exercice.service';
@@ -18,6 +19,9 @@ export class ListeExerciceComponent implements OnInit {
    listeExercice : IResults[] = [];
 
    panelOpenState = false;
+   IsWait : boolean = true;
+   dataSource = new MatTableDataSource<IResults>(this.listeExercice);
+
  
    constructor(
      private router : Router,
@@ -40,6 +44,20 @@ export class ListeExerciceComponent implements OnInit {
      this.router.navigate([url],{queryParams : {'exercice':exercice.id}});
  
    }
+
+   /**
+    * Cette methode ci-dessous permet de filtrer les données 
+    */
+
+   applyFiltrer(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if(this.dataSource.paginator){
+      this.dataSource.paginator.firstPage();
+    }
+    
+  }
  
    openMaintenance(){
  
@@ -70,6 +88,7 @@ export class ListeExerciceComponent implements OnInit {
        },
        ()=>{
          console.log("Données complétés");
+         this.IsWait = false;
        }
      )
    }

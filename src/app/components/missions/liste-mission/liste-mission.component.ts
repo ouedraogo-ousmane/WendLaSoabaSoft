@@ -22,9 +22,8 @@ export class ListeMissionComponent implements OnInit {
   //ajout
  typesOfShoes: string[] = ['ouedradrogo Amado', 'Karim Is', 'Ms  salif', 'Moccasins', 'Sneakers'];
 
- menuMission:any[]=
- [
-   {nom:'Acceuil', ulrs:'acceuil' },
+ menuMission:any[]=[
+     {nom:'Acceuil', ulrs:'acceuil'},
      {nom:'Nouvelle mission', urls:'programmer'},
      {nom:'Bilan', urls:'bilan'},
      {nom:'Retour', urls:'exercices'},
@@ -253,11 +252,7 @@ export class ListeMissionComponent implements OnInit {
   }
 
   // go to detail des missions
-  missionSelectedDetail:AcceuilMissionList = {
-    id: 0,
-    chauffeur: [],
-    etat_mission: false
-  }
+  missionSelectedDetail!:AcceuilMissionList
 
   openDetailMission():void{
     // reduire le tmp de deplacement

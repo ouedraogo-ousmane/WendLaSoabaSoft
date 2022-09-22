@@ -38,7 +38,7 @@
      (selectionChange)="onSelectionMissionChange(selectedMultiMission.selectedOptions.selected)">
       <mat-list-option  color="primary" [value]="mission"
       *ngFor="let mission of listeMission" >
-      {{mission.chauffeur[0].nom}} {{mission.chauffeur[0].prenom}}
+      {{mission.chauffeur.nom}} {{mission.chauffeur.prenom}}
     </mat-list-option>
     </mat-selection-list>
   </div>

@@ -1,19 +1,17 @@
-<div class="main">
+<!--<div class="main">
+
     <div class="entete">
         <mat-toolbar color="primary">
 
             <span class="logo">WendLa Soaba Transport</span>
 
             <span class="spacer"></span>
-            <div class="barre">
+             <div class="barre">
                 <input style="color:white" matInput type="search">
             </div>
             <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
                 <mat-icon>search</mat-icon>
-            </button>
-
-
-
+            </button> 
 
         </mat-toolbar>
 
@@ -21,33 +19,7 @@
 
     <mat-drawer-container class="container">
         <mat-drawer mode="side" opened> <strong>Menu</strong>
-            <mat-nav-list>
-                <mat-divider></mat-divider>
-                <mat-list-item>
-                    <a href="accueil">
-                        <span><mat-icon matListIcon>home</mat-icon>Accueil</span> </a>
-
-                </mat-list-item>
-                <mat-list-item>
-                    <a href="exercice/statistique">
-                        <span><mat-icon matListIcon>bar_chart</mat-icon>
-                            Statistiques
-                        </span>
-                    </a>
-                </mat-list-item>
-                <mat-list-item>
-                    <a href="exercice/account">
-                        <span><mat-icon matListIcon>person</mat-icon>Compte</span>
-                    </a>
-                </mat-list-item>
-
-                <mat-list-item>
-                    <a href="deconnexion">
-                        <span><mat-icon matListIcon>logout</mat-icon>Se deconnecter</span>
-                    </a>
-                </mat-list-item>
-                <mat-divider></mat-divider>
-            </mat-nav-list>
+            
         </mat-drawer>
         <mat-drawer-content>
             <router-outlet></router-outlet>
@@ -55,4 +27,40 @@
     </mat-drawer-container>
 
 
-</div>
+</div>-->
+
+
+
+<mat-nav-list>
+
+    <a mat-list-item routerLink="/exercice" [routerLinkActiveOptions]={exact:true} routerLinkActive="active" (click)="onSidenavClose()">
+        <span class="nav-caption"><mat-icon matListIcon>home</mat-icon>Accueil</span>
+    </a>
+
+
+    <!-- <a mat-list-item routerLink="/exercice" (click)="onSidenavClose()" routerLinkActive="active">
+        <span class="nav-caption"><mat-icon matListIcon><span class="material-symbols-outlined">
+                date_range
+                </span></mat-icon>Exercices</span>
+    </a> -->
+
+
+    <a mat-list-item routerLink="/statistique" (click)="onSidenavClose()" routerLinkActive="active">
+        <span class="nav-caption"><mat-icon matListIcon>bar_chart</mat-icon>
+                Statistiques
+            </span>
+    </a>
+
+    <a style="height: 50px ;" mat-list-item href="http://127.0.0.1:8000/admin" (click)="onSidenavClose()">
+        <span class="nav-caption"><mat-icon matListIcon>
+            settings</mat-icon>
+        Administration
+        </span>
+    </a>
+
+    <a mat-list-item routerLink="deconnexion" (click)="onSidenavClose()">
+        <span class="nav-caption"><mat-icon matListIcon>logout</mat-icon>Se deconnecter</span>
+    </a>
+
+
+</mat-nav-list>

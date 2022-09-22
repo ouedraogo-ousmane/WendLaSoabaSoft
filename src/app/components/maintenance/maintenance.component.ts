@@ -10,12 +10,8 @@ import { Piece } from 'src/app/folderModels/modelGestMaintenance/pieces';
 import {UntypedFormControl} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { state, transition, trigger,style, animate } from '@angular/animations';
+
 
 export interface Maintenance {
   id                        :number;
@@ -24,13 +20,21 @@ export interface Maintenance {
   motif                     :String;
   montant                   :Number;
   date_maintenance          :Date;
-  reference                 :FormData;
+  chauffeur                 :String;
 }
 
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html',
-  styleUrls: ['./maintenance.component.css']
+  styleUrls: ['./maintenance.component.css'],
+  animations : [
+    trigger('fade',[
+      state('void',style({opacity:0})),
+      transition('void =>*',[
+        animate(2000)
+      ])
+    ])
+  ]
 })
 export class MaintenanceComponent implements OnInit,AfterViewInit  {
 
@@ -39,27 +43,25 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
    */
 
   listeMaintenance : Maintenances[] = [];
+  chauffeur! : Chauffeur;
+  event! :Event;
 
-  chauffeur : Chauffeur;
-  event :Event;
-
-  displayedColumns: string[] = ['select','id','date_maintenance', 'chauffeur', 'motif', 'montant','reference'];
+  displayedColumns: string[] = ['select', 'motif', 'chauffeur','date_maintenance', 'montant'];
+  // displayedColumns: string[] = ['select','id','date_maintenance', 'chauffeur', 'motif', 'montant','reference'];
   totalCost = 125000;
-
   dataSource = new MatTableDataSource<Maintenances>(this.listeMaintenance);
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
-
   selection = new SelectionModel<Maintenances>(true, []);
   myControl = new UntypedFormControl('');
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
 
   exercice_id! : number;
+  IsWait : boolean = true;
+  // @ViewChild('paginator') paginator : MatPaginator;
+  pieceSelected!: Piece;
+  maintenanceSelected: Maintenances;
+  clickedRows = new Set<Maintenances>();
 
    constructor(
     private dialog : MatDialog,
@@ -70,13 +72,15 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
 
 
   ngOnInit(): void {
+    this.exercice_id = this.getId_exercice();
 
     // Lors du demarrage du component il faut charger les données
     this.getAllMaintenance();
-
-    this.exercice_id = this.getId_exercice();
-  
     
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   private _filter(value: string): string[] {
@@ -84,27 +88,51 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
-  
 
-  applyFiltrer(filterValue : string){
+  /**
+   * Cette methode ci-dessous permet de filtrer les données du tableau
+   */
+  applyFiltrer(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if(this.dataSource.paginator){
+      this.dataSource.paginator.firstPage();
+    }
     
   }
-  
- // @ViewChild('paginator') paginator : MatPaginator;
-  pieceSelected!: Piece;
-  maintenanceSelected: Maintenances;
-  clickedRows = new Set<Maintenances>();
 
+
+  filterDataByExercice(id:number){
+
+    let dataFiltered = []
+
+    for(let data of this.listeMaintenance){
+
+      if(data.exerciceConcerne ==id){
+        dataFiltered.push(data);
+      }
+
+    }
+
+    console.log(dataFiltered);
+    
+    
+    return dataFiltered
+  }
+  
   
   /**
    * Ouverture du modal
    */
   openDialogue(){
     this.dialog.open(MaintenanceDialogueComponent,{
-      width:'75%'
+      width:'40%',
+      data : {id_exercice : this.exercice_id}
     });
   }
+
+  
 
 /**
  * Cette methode permet de recuperer de l'exercice concerné par la maintenance
@@ -159,10 +187,12 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
    *  toutes les maintenances
    */
    getAllMaintenance(){
+    this.IsWait = true;
     this.serviceMaintenance.getMaintenance().subscribe(
       (dataGetted:any)=>{
 
         this.listeMaintenance = dataGetted.results;
+        this.listeMaintenance = this.filterDataByExercice(this.exercice_id);
         this.dataSource.data = this.listeMaintenance;
         console.log(this.listeMaintenance)
 
@@ -172,6 +202,7 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
       },
       ()=>{
         console.log("données totalement recupérés");
+        this.IsWait = false;
       }
     )
   }

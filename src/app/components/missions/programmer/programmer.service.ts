@@ -55,4 +55,22 @@ export class ProgrammerService {
 saveMission(data:IMission):Observable<IMission>{
   console.log(data);
   return this.http.post<IMission>(this.endPointAjoutMission, data, this.httpOptions)};
+
+saveListeSansPeseeProduits(data:any):Observable<any>{
+  const endpoint:string = "http://127.0.0.1:8000/missions/recetteSansPesees/"
+  return this.http.post(endpoint, data, this.httpOptions)
+};
+
+saveListeAvecPeseeProduits(data:any):Observable<any>{
+  const endpoint:string = "http://127.0.0.1:8000/missions/recettePesees/"
+  return this.http.post(endpoint, data, this.httpOptions)
+};
+
+saveListeDepenses(data:any):Observable<any>{
+  const endpoint:string = "http://127.0.0.1:8000/missions/recetteSansPesees/"
+  return this.http.post(endpoint, data, this.httpOptions)
+};
 }
+
+
+

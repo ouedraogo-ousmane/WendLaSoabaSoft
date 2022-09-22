@@ -11,6 +11,16 @@
     flex: 1 1 auto;
 }
 
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+    height: 100%;
+}
+
+mat-sidenav {
+    width: 250px;
+}
+
 
 /* Mise en forme des drawer contenener */
 
@@ -56,14 +66,14 @@ mat-drawer-content {
     flex-direction: row;
     flex-wrap: wrap;
     position: absolute;
-    top: 15px;
-    left: 150px;
+    top: 45px;
+    left: 200px;
 }
 
 .content mat-card {
     margin-right: 50px;
-    margin-left: 10px;
-    margin-top: 20px;
+    margin-left: 40px;
+    margin-top: 40px;
     background-color: white;
 }
 
@@ -85,4 +95,12 @@ button {
 
 mat-list-item:hover {
     background-color: darkgray !important;
+}
+
+mat-spinner {
+    position: absolute;
+    left: 350px;
+    right: 150px;
+    top: 150px;
+    bottom: 150px;
 }

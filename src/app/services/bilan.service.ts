@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class BilanService {
 
-  readonly urlBilan ="http://127.0.0.1/bilan";
+  readonly urlBilan ="http://127.0.0.1:8000/exercices/stat/";
   httpOptions = {};
   public token:any;
 
@@ -27,5 +27,11 @@ export class BilanService {
   getBilan():Observable<any[]>{
    
     return this.http.get<any[]>(this.urlBilan,this.httpOptions);
+  }
+
+
+  bilanApi(url:string,exercice:number):Observable<any[]>{
+   
+    return this.http.get<any[]>(url + `${exercice}/detail`,this.httpOptions);
   }
 }

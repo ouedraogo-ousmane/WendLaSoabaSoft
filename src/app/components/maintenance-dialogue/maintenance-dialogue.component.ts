@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormBuilder, UntypedFormGroup, Validators, FormGroup } from '@angular/forms';
 import { Piece } from 'src/app/folderModels/modelGestMaintenance/pieces';
 import { Maintenances } from '../../folderModels/modelGestMaintenance/maintenance';
 import { InfosEnregPiece } from '../../folderModels/modelGestMaintenance/infos-enreg-pieces';
 import { MaintenanceService } from '../../services/maintenance.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { VehiculeService } from 'src/app/services/vehicule.service';
 import { VehiculesDuParc } from '../../folderModels/modelGestMission/vehicule-du-parc';
 import { Vehicules } from 'src/app/folderModels/modelGestMission/vehicule';
@@ -35,11 +35,13 @@ export class MaintenanceDialogueComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private dialogue : MatDialog,
+              @Inject(MAT_DIALOG_DATA) public data: {id_exercice: number},
               private serviceVehicule : VehiculeService,
               private serviceMaintenance : MaintenanceService) {}
  
 
   ngOnInit(): void {
+
     this.getAllVehicules();
     this.getAllPieces();
     this.firstFormGroup = this.formBuilder.group({
@@ -91,7 +93,7 @@ export class MaintenanceDialogueComponent implements OnInit {
     this.maintenance.montant = this.firstFormGroup.get('coutMaint')?.value;
     this.maintenance.date_maintenance = new Date(this.firstFormGroup.get('dateEntree')?.value);
     this.maintenance.motif = this.firstFormGroup.get('motif')?.value;
-    this.maintenance.exerciceConcerne = 1;
+    this.maintenance.exerciceConcerne = this.data.id_exercice;
     this.maintenance.vehiculeConcerne = this.firstFormGroup.get('vehicule')?.value;
 
 
@@ -99,9 +101,9 @@ export class MaintenanceDialogueComponent implements OnInit {
 
 
     // Sur la piece
-    this.piece.id = this.secondFormGroup.get('id_piece')?.value;
+    //this.piece.id = this.secondFormGroup.get('id_piece')?.value;
     this.piece.nom = this.secondFormGroup.get('piece')?.value;
-    this.piece.dvie_piece = this.secondFormGroup.get('dureeDevie')?.value;
+   // this.piece.dvie_piece = this.secondFormGroup.get('dureeDevie')?.value;
 
     // Les infos supplementaires
     this.infosEnreg.maintenanceConcernee = this.firstFormGroup.get('id_maint')?.value;
@@ -190,6 +192,7 @@ export class MaintenanceDialogueComponent implements OnInit {
 
     this.getFormData();
     this.infosEnreg.maintenanceConcernee = this.maintenanceAdded;
+    console.log(this.piece)
     this.serviceMaintenance.sendOrDeletePiece(this.piece,"post").subscribe(
       (value:any)=>{
         this.pieceAdded = value.id;

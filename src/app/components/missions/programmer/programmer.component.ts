@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { AcceuilMissionList, IMission } from '../Imission';
 import { IchauffeursVehicule, Iclients, Idepenses, Iproduits, Itrajets } from './iprogrammer';
@@ -59,17 +60,6 @@ export class ProgrammerComponent implements OnInit {
     this.exercice_id = this.exercice_parent();
     this.getListesChauffeurVehicules();
 
-    const mission:IMission={
-      exercice_conerne: Number(this.exercice_id),
-      vehicule_concerne: 2,
-      trajet_concerne: 1,
-      motif: "Approvissionement",
-      etat_mission: false,
-      date_mission: new Date()
-    }
-
-    // pour le moment
-      this.programmerService.saveMission(mission);
 
   }
 
@@ -179,9 +169,9 @@ export class ProgrammerComponent implements OnInit {
     return this.fb.group({
       produit:this.fb.control(nom),
       nom : this.fb.control(nom),
-      quantite:[quantite, [Validators.required]],
+      qte_produit:[quantite, [Validators.required]],
       cout_unitaire:[cout_unitaire, [Validators.required]],
-      client:['', [Validators.required]]
+      client_concerne:['', [Validators.required]]
     })
   }
 
@@ -224,7 +214,9 @@ change_mode_evaluation(){
     this.formMission.get('infoPoids')?.get('deuxieme_poids')?.setValidators(Validators.required)
   }
   else{
-    this.formMission.get('infoPoids')?.reset()
+    this.formMission.get('infoPoids')?.get('premier_poids')?.clearValidators();
+    this.formMission.get('infoPoids')?.get('deuxieme_poids')?.clearValidators();
+    this.formMission.get('infoPoids')?.reset();
   }
 
   /*
@@ -322,35 +314,72 @@ change_mode_evaluation(){
       return this.formMission.valid;
     }
 
-  saveMission(){
+    saveMission(){
 
       // construction de l'objet à envoyer
-        const mission_instance:any = {
-          exercice_conerne:Number(this.exercice_id),
-          vehicule_concerne:Number(this.formMission.get('infoMission')?.get('chauffeur')?.value) ,
-          trajet_concerne:Number(this.formMission.get('infoMission')?.get('trajet_concerne')?.value),
-          liste_produits:this.formMission.get('liste_produits')?.value,
-          liste_depenses:this.formMission.get('liste_depenses')?.value,
-          date_mission:this.formMission.get('infoMission')?.get('date_mission')?.value,
-          motif:this.formMission.get('infoMission')?.get('motif')?.value,
-          infoPesage: this.formMission.get('infoPoids')?.value // envoie meme si il est sans pesage -->bd
-        }
+      const mission_instance:any = {
+        exercice_conerne:Number(this.exercice_id),
+        vehicule_concerne:Number(this.formMission.get('infoMission')?.get('chauffeur')?.value) ,
+        trajet_concerne:Number(this.formMission.get('infoMission')?.get('trajet_concerne')?.value),
+        date_mission:moment(String(this.formMission.get('infoMission')?.value.date_mission)).format('YYYY-MM-DD'),
+        motif:this.formMission.get('infoMission')?.get('motif')?.value,
+      }
 
-        const mission:IMission={
-          exercice_conerne: Number(this.exercice_id),
-          vehicule_concerne: Number(this.formMission.get('infoMission')?.get('chauffeur')?.value),
-          trajet_concerne: Number(this.formMission.get('infoMission')?.get('trajet_concerne')?.value),
-          motif: "Approvissionement" //this.formMission.get('infoMission')?.get('motif')?.value,
-          ,
-          etat_mission: false,
-
-          date_mission: new Date()
-        }
-        // pour le moment
+        // pour le momen
         if(this.isMissionFormulaireValide){
-          //this.programmerService.saveMission(mission);
+          this.saveInfosProduit(1);
+          // let id_mission_save!:number;
+
+          // this.programmerService.saveMission(mission_instance).subscribe(
+          //   (value)=>{
+          //     id_mission_save = value.id || 0
+          //   },
+          //   (error:any)=>{
+          //     console.log(error)
+          //   },
+          //   ()=>{
+          //     if(id_mission_save!=0){
+          //        this.saveInfosProduit(id_mission_save);
+          //        this.saveInfosDepenses(id_mission_save);
+          //       }
+          //   },
+          // )
         }
     }
+        // a terminer
+    saveInfosProduit(id:number){
+
+      const listesProduits:any[] = this.formMission.get('liste_produits')?.value || []
+      listesProduits.forEach(produit=>{produit.mission = id; produit.exercice= this.exercice_parent()})
+
+      if(this.choix_mode_evaluation == false){
+
+      }else{
+        listesProduits.forEach(produit=>{
+          produit.mission = id;
+          produit.exercice= this.exercice_parent();
+          produit.premier_pese =  Number(this.formMission.get('infoPoids')?.get('premier_poids')?.value)
+          produit.deuxieme_pese= Number(this.formMission.get('infoPoids')?.get('deuxieme_poids')?.value)
+        });
+
+      }
+    }
+
+    saveInfosPesage(id:number){
+        const data = {
+          pesage: this.formMission.get('infoPoids')?.value // premier_pese, deuxieme_pese, envoie meme si il est sans pesage -->bd
+
+        }
+    }
+    saveInfosDepenses(id:number){
+      const data = {
+        liste_depenses:this.formMission.get('liste_depenses')?.value,
+      }
+    }
+   //
+   changeDatePicker(){}
+
+   resetForm(){}
    //
   ngOnDestroy(): void {
       //this.sub.unsubscribe();

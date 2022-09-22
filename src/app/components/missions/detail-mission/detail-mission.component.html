@@ -15,12 +15,13 @@
     <form [formGroup]="formMission">
 
         <div  formGroupName="infoMission" >
-            <div>
               <!-- date de la mission -->
+            <div>
               <mat-form-field appearance="outline">
 
                 <mat-label>Choisir une date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="date_mission">
+                <input matInput [matDatepicker]="picker" [(ngModel)]="missionSelectionDate"
+                 formControlName="date_mission">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker  touchUi #picker>
                   <mat-datepicker-actions>
@@ -35,19 +36,13 @@
               <!-- Nom du chauffeur -->
               <mat-form-field appearance="outline">
                 <mat-label>Chauffeurs</mat-label>
-                <mat-select formControlName="chauffeur">
+                <mat-select formControlName="chauffeur" [compareWith]="compareChauffeurFn"
+                 [(ngModel)]="Mission">
+
                   <mat-option>None</mat-option>
-
-                  <mat-option *ngIf="true"  [value]="1">
-                    Kalmogo lucien
-                  </mat-option>
-
-                  <ng-container *ngIf="false">
                     <mat-option *ngFor="let chauffeur of listeChauffeurs" [value]="chauffeur.id">
                       {{chauffeur.chauff.nom}} {{chauffeur.chauff.prenom}}
                     </mat-option>
-                  </ng-container>
-
                 </mat-select>
               </mat-form-field>
             </div>
@@ -56,7 +51,9 @@
             <div>
               <mat-form-field appearance="outline">
                 <mat-label>Trajets</mat-label>
-                <mat-select formControlName="trajet_concerne">
+                <mat-select formControlName="trajet_concerne" [compareWith]="compareTrajetFn"
+                 [(ngModel)]="Mission">
+
                   <mat-option>None</mat-option>
                   <mat-option *ngFor="let trajet of listeTrajets" [value]="trajet.id">
                     {{trajet.intitule}}
@@ -69,7 +66,9 @@
               <!-- motif de mission -->
             <div class="kl-motif-mission">
               <mat-label style="margin-right:10px">motif mission :</mat-label>
-              <mat-radio-group style="padding-left:10px;" color="primary" aria-label="Select an option" formControlName="motif">
+              <mat-radio-group style="padding-left:10px;" [(ngModel)]="motifMissionSlectionnee"
+               color="primary" aria-label="Select an option" formControlName="motif">
+
                 <mat-radio-button style="padding-right:15px" value="Approvissionement">Approvissionement</mat-radio-button>
                 <mat-radio-button value="Livraison">Livraison</mat-radio-button>
               </mat-radio-group>
@@ -80,8 +79,10 @@
               <!-- type de mission: avec ou sans pesage -->
             <div class="kl-motif-mission">
               <mat-label>Evaluation recette: </mat-label>
-              <mat-radio-group style="padding-left:10px;" color="primary" (ngModelChange)=" change_mode_evaluation()"
+              <mat-radio-group style="padding-left:10px;" color="primary"
+               (ngModelChange)="change_mode_evaluation()" [(ngModel)]="modeEvalutionMissionChoisie"
                aria-label="Select an option" formControlName="choix_mode_evaluation">
+
                 <mat-radio-button style="padding-right:15px" [value]="false">Sans Pesage</mat-radio-button>
                 <mat-radio-button [value]="true"> Avec Pesage</mat-radio-button>
               </mat-radio-group>

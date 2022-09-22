@@ -1,23 +1,45 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AcceuilMissionList } from '../Imission';
+import { MissionService } from '../mission.service';
 
 @Component({
   selector: 'app-ordre-mission',
   templateUrl: './ordre-mission.component.html',
   styleUrls: ['./ordre-mission.component.css']
 })
-export class OrdreMissionComponent implements OnInit {
+export class OrdreMissionComponent implements OnInit, OnDestroy {
   @ViewChild("child1") firstChild: ElementRef = new ElementRef("");
-
-
-  constructor(private element: ElementRef){}
-
   // ngAfterViewInit() {
   //   this.firstChild.nativeElement
   //   .setAttribute( 'style','color: white; background: red' );
   //  }
 
+  private readonly urlTrajet ="http://127.0.0.1:8000/missions/trajetsList/";
+  private readonly urlDepense ="http://127.0.0.1:8000/missions/depMissionName/";
+  private readonly urlProduit ="http://127.0.0.1:8000/missions/produits/";
+  private readonly urlChauffeur ="http://127.0.0.1:8000/missions/chauffeurs/";
+  private readonly urlVehicule ="http://127.0.0.1:8000/missions/vehiculeParcs/";
+
+  trajet ! :AcceuilMissionList["trajet"];
+  vehicule! :AcceuilMissionList["vehicule"]
+  chauffeur! :AcceuilMissionList["chauffeur"];
+  listeDepense : AcceuilMissionList["depenses"] = [];
+  listeProduit :AcceuilMissionList["produits"] = [];
+
+  constructor(private element: ElementRef,private missionService : MissionService){}
+
+  @Input('mission') mission_toPrint! : AcceuilMissionList;
+
   ngOnInit(): void {
+
+    this.chauffeur = this.mission_toPrint.chauffeur;
+    this.vehicule = this.mission_toPrint.vehicule;
+    this.trajet  = this.mission_toPrint.trajet;
+    this.listeDepense = this.mission_toPrint.depenses
+    this.listeProduit = this.mission_toPrint.produits
+
+    //this.getOrdredata();
+
 
   }
 
@@ -203,5 +225,9 @@ export class OrdreMissionComponent implements OnInit {
   popupWin?.document.close();
 }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
 
+  }
 }

@@ -1,4 +1,4 @@
-/*Mise en forme du div principale*/
+/*Mise en forme du div principalex
 
 .main {
     display: flex;
@@ -12,7 +12,7 @@
 }
 
 
-/* Mise en forme des drawer contenener */
+/* Mise en forme des drawer contenener 
 
 .container {
     width: 100%;
@@ -35,7 +35,7 @@ mat-drawer-content {
 }
 
 
-/* Mise en forme des liens*/
+/* Mise en forme des liens
 
 mat-list-item:hover {
     background-color: darkgray !important;
@@ -47,4 +47,44 @@ span {
 
 .logo {
     color: white;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48
+}
+
+.active {
+    background: rgb(66, 64, 61);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+*/
+
+.active {
+    background-color: gray;
+}
+
+a:hover,
+a:active {
+    color: rgb(12, 11, 11);
+    background-color: rgb(30, 130, 130);
+}
+
+.navigation-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+mat-toolbar {
+    border-radius: 3px;
+}
+
+@media(max-width: 959px) {
+    mat-toolbar {
+        border-radius: 0px;
+    }
 }

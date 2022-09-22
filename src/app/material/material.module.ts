@@ -25,8 +25,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { GoogleChartsModule } from 'angular-google-charts';
-
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 const materialComponents = [
@@ -54,7 +54,9 @@ const materialComponents = [
     MatGridListModule,
     MatProgressBarModule,
     MatAutocompleteModule,
-    GoogleChartsModule
+    GoogleChartsModule,
+    MatProgressSpinnerModule,
+    MatTabsModule
 
 
     

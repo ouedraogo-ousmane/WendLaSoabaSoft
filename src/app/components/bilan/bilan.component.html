@@ -1,219 +1,264 @@
-<div class="main">
-    <!-- <div class="entete">
-        <mat-toolbar color="primary">
-
-            <span>WendLa Soaba Transport</span>
-
-            <span class="example-spacer"></span>
+<!-- <mat-spinner mode="indeterminate" *ngIf="!driverAvailable && !statTypeAvailable && statExercice" color="primary"></mat-spinner> -->
+
+<app-layout>
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav role="navigation">
+            <app-exercice (sidenavClose)="sidenav.close()"></app-exercice>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+            <main>
+                <div class="content-full">
+                    <div class="exercice">
+
+                        <div id="dataExerciceToPrint">
+                            <div class="title">
+                                <h2 mat-title>Statistiques gloable de l'annee {{ exercice.annee }}</h2>
+                            </div>
+                            <div class="content">
+                                <div class="table">
+                                    <table mat-table [dataSource]="listeExercice" class="mat-elevation-z8">
 
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="annee">
+                                            <th mat-header-cell *matHeaderCellDef> Annee </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.annee}} </td>
+                                        </ng-container>
 
-        </mat-toolbar>
-    </div> -->
-    <div class="principale">
-        <!-- <div class="titre">
-            <h2>BILAN DE L'EXERCICE 2022</h2>
-        </div> -->
-        <!-- <div class="periode">
-            <form [formGroup]="filtreFormGroup">
-
-                <mat-form-field appearance="fill">
-
-                    <mat-label>Periode Debut</mat-label>
-                    <input matInput formControlName="date1" [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Periode Fin</mat-label>
-                    <input matInput formControlName="date2" [matDatepicker]="picker2">
-                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
-                </mat-form-field>
-            </form>
-            <button mat-raised-button>Valider</button>
-
-        </div> -->
-        <div class="content">
-            <div class="table">
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
+                                        <!-- Depense Column -->
+                                        <ng-container matColumnDef="totalDepenses">
+                                            <th mat-header-cell *matHeaderCellDef> Depense </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.totalDepenses}} </td>
+                                        </ng-container>
 
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef> No. </th>
-                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                    </ng-container>
+                                        <!-- Recette Column -->
+                                        <ng-container matColumnDef="totalRecette">
+                                            <th mat-header-cell *matHeaderCellDef> Recette </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.totalRecette}} </td>
+                                        </ng-container>
 
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="nom">
-                        <th mat-header-cell *matHeaderCellDef> Chauffeur </th>
-                        <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
-                    </ng-container>
+                                        <!-- Rentabilite Column -->
+                                        <ng-container matColumnDef="rentabilite">
+                                            <th mat-header-cell *matHeaderCellDef> Rentabilite </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.totalRecette - element.totalDepenses}} </td>
+                                        </ng-container>
 
-                    <!-- Depense Column -->
-                    <ng-container matColumnDef="depense">
-                        <th mat-header-cell *matHeaderCellDef> Depense </th>
-                        <td mat-cell *matCellDef="let element"> {{element.depense}} </td>
-                    </ng-container>
 
-                    <!-- Recette Column -->
-                    <ng-container matColumnDef="recette">
-                        <th mat-header-cell *matHeaderCellDef> Recette </th>
-                        <td mat-cell *matCellDef="let element"> {{element.recette}} </td>
-                    </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedExerciceColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedExerciceColumns;"></tr>
+                                    </table>
 
-                    <!-- Rentabilite Column -->
-                    <ng-container matColumnDef="rentabilite">
-                        <th mat-header-cell *matHeaderCellDef> Rentabilite </th>
-                        <td mat-cell *matCellDef="let element"> {{element.recette - element.depense}} </td>
-                    </ng-container>
 
-                    <!-- pourcentage Column -->
-                    <ng-container matColumnDef="pourcentage">
-                        <th mat-header-cell *matHeaderCellDef> Pourcentage </th>
-                        <td mat-cell *matCellDef="let element"> {{((element.recette - element.depense)/getTotal())*100 | number : '1.0-2'}} </td>
-                    </ng-container>
+                                </div>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
+                                <div class="visualisation">
 
+                                    <ngx-charts-pie-chart [view]="[570,300]" [results]="exerciceData" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true"
+                                        [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
+                                    </ngx-charts-pie-chart>
 
-            </div>
+                                </div>
 
-            <div class="visualisation">
 
-                <ngx-charts-pie-chart [view]="[570,300]" [results]="exercice2022" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true"
-                    [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
-                </ngx-charts-pie-chart>
 
-            </div>
 
+                            </div>
+                        </div>
 
 
+                        <div class="button">
+                            <button mat-stroked-button ngxPrint printSectionId="dataExerciceToPrint" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
+                        </div>
+                    </div>
 
-        </div>
-        <div class="button">
-            <button mat-stroked-button (click)="export()" color="primary">Exporter</button>
-            <button mat-stroked-button click()="print()" color="warn">Imprimer</button>
-        </div>
-    </div>
-    <div class="typeMission">
+                    <div class="principale">
 
-        <div class="content">
-            <div class="table">
-                <table mat-table [dataSource]="typeMission" class="mat-elevation-z8">
+                        <div id="dataExerciceToPrint">
+                            <div class="title">
+                                <h2 mat-title>Statistiques des chauffeurs dans l'exercice {{ exercice.annee }}</h2>
+                            </div>
+                            <div class="content">
+                                <div class="table">
+                                    <table mat-table [dataSource]="listeChauffeur" class="mat-elevation-z8">
 
 
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef> No. </th>
-                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                    </ng-container>
+                                        <!-- Immatriculation Column -->
+                                        <ng-container matColumnDef="immat">
+                                            <th mat-header-cell *matHeaderCellDef> Immatriculation </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.immat}} </td>
+                                        </ng-container>
 
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="nom">
-                        <th mat-header-cell *matHeaderCellDef> Type Mission </th>
-                        <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
-                    </ng-container>
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="chauffeur">
+                                            <th mat-header-cell *matHeaderCellDef> Chauffeur </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.chauffeur.nom}} {{element.chauffeur.prenom}} </td>
+                                        </ng-container>
 
-                    <!-- Depense Column -->
-                    <ng-container matColumnDef="valeur">
-                        <th mat-header-cell *matHeaderCellDef> Valeur </th>
-                        <td mat-cell *matCellDef="let element"> {{element.valeur}} </td>
-                    </ng-container>
+                                        <!-- Depense Column -->
+                                        <ng-container matColumnDef="total_depenses">
+                                            <th mat-header-cell *matHeaderCellDef> Depense </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.total_depenses}} </td>
+                                        </ng-container>
 
-                    <!-- Depense Column -->
-                    <ng-container matColumnDef="pourcentage">
-                        <th mat-header-cell *matHeaderCellDef> Pourcentage </th>
-                        <td mat-cell *matCellDef="let element"> {{element.pourcentage}} % </td>
-                    </ng-container>
+                                        <!-- Recette Column -->
+                                        <ng-container matColumnDef="total_recette">
+                                            <th mat-header-cell *matHeaderCellDef> Recette </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.total_recette}} </td>
+                                        </ng-container>
 
+                                        <!-- Rentabilite Column -->
+                                        <ng-container matColumnDef="rentabilite">
+                                            <th mat-header-cell *matHeaderCellDef> Rentabilite </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.total_recette - element.total_depenses}} </td>
+                                        </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayed1Columns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayed1Columns;"></tr>
-                </table>
 
 
-            </div>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsChauffeur"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsChauffeur;"></tr>
+                                    </table>
 
-            <div class="visualisation">
 
-                <ngx-charts-bar-vertical [view]="[570,300]" [results]="exercice2022" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
-                    [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
-                </ngx-charts-bar-vertical>
+                                </div>
 
-            </div>
+                                <div class="visualisation" *ngIf="chauffeurStatData.length">
 
+                                    <!-- <ngx-charts-pie-chart [view]="[570,300]" [results]="chauffeurStatData" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+                                        [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
+                                    </ngx-charts-pie-chart> -->
 
+                                    <ngx-charts-bar-vertical-stacked [view]="[570,300]" [results]="chauffeurStatData" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+                                        [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
+                                    </ngx-charts-bar-vertical-stacked>
 
-
-        </div>
-
-        <div class="button">
-            <button mat-stroked-button (click)="export()" color="primary">Exporter</button>
-            <button mat-stroked-button click()="print()" color="warn">Imprimer</button>
-        </div>
-    </div>
-
-    <div class="categorieVehicule">
-
-        <div class="content">
-            <div class="table">
-                <table mat-table [dataSource]="typeMission" class="mat-elevation-z8">
-
-
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef> No. </th>
-                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                    </ng-container>
-
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="nom">
-                        <th mat-header-cell *matHeaderCellDef> Type Mission </th>
-                        <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
-                    </ng-container>
-
-                    <!-- Depense Column -->
-                    <ng-container matColumnDef="valeur">
-                        <th mat-header-cell *matHeaderCellDef> Valeur </th>
-                        <td mat-cell *matCellDef="let element"> {{element.valeur}} </td>
-                    </ng-container>
-
-                    <!-- Depense Column -->
-                    <ng-container matColumnDef="pourcentage">
-                        <th mat-header-cell *matHeaderCellDef> Pourcentage </th>
-                        <td mat-cell *matCellDef="let element"> {{element.pourcentage}} % </td>
-                    </ng-container>
-
-
-                    <tr mat-header-row *matHeaderRowDef="displayed1Columns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayed1Columns;"></tr>
-                </table>
-
-
-            </div>
-
-            <div class="visualisation">
-
-                <ngx-charts-bar-vertical [view]="[570,300]" [results]="exercice2022" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
-                    [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
-                </ngx-charts-bar-vertical>
-
-            </div>
-
-
-
-
-        </div>
-
-        <div class="button">
-            <button mat-stroked-button (click)="export()" color="primary">Exporter</button>
-            <button mat-stroked-button click()="print()" color="warn">Imprimer</button>
-        </div>
-    </div>
-
-
-
-</div>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="button">
+                            <button mat-stroked-button ngxPrint printSectionId="dataExerciceToPrint" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
+                        </div>
+                    </div>
+
+                    <!-- Sur les types de depenses -->
+                    <div class="typeMission">
+
+                        <div id="typeMission">
+                            <div class="title">
+                                <h2 mat-title>Statistiques sur les types de depenses des missions</h2>
+                            </div>
+                            <div class="content">
+                                <div class="table">
+                                    <table mat-table [dataSource]="typeDepense" class="mat-elevation-z8">
+
+
+                                        <!-- Position Column 
+                                        <ng-container matColumnDef="id">
+                                            <th mat-header-cell *matHeaderCellDef> No. </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                                        </ng-container>-->
+
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="intitule">
+                                            <th mat-header-cell *matHeaderCellDef> Type Depense </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.intitule}} </td>
+                                        </ng-container>
+
+                                        <!-- Depense Column -->
+                                        <ng-container matColumnDef="montant">
+                                            <th mat-header-cell *matHeaderCellDef> Valeur </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.montant}} </td>
+                                        </ng-container>
+
+                                        <!-- Depense Column -->
+                                        <ng-container matColumnDef="pourcentage">
+                                            <th mat-header-cell *matHeaderCellDef> Pourcentage </th>
+                                            <td mat-cell *matCellDef="let element"> {{(element.montant/getTotal())*100 | number}} % </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayed1Columns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayed1Columns;"></tr>
+                                    </table>
+
+
+                                </div>
+
+                                <div class="visualisation" *ngIf="typeDepenseStat.length">
+
+                                    <ngx-charts-bar-vertical [view]="[400,500]" [results]="typeDepenseStat" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+                                        [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
+                                    </ngx-charts-bar-vertical>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="button">
+                            <button mat-stroked-button ngxPrint printSectionId="typeMission" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
+                        </div>
+                    </div>
+
+                    <!--<div class="categorieVehicule">
+                
+                        <div id="categorieVehicule">
+                            <div class="title">
+                                <h2 mat-title>Statistiques sur les depenses par categorie de vehicule</h2>
+                            </div>
+                            <div class="content">
+                                <div class="table">
+                                    <table mat-table [dataSource]="categorie" class="mat-elevation-z8">
+                
+                
+                                        <ng-container matColumnDef="id">
+                                            <th mat-header-cell *matHeaderCellDef> No. </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef> Categorie vehicule </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                        </ng-container>
+                
+                                        <ng-container matColumnDef="value">
+                                            <th mat-header-cell *matHeaderCellDef> Depenses Totales </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                                        </ng-container>
+                
+                
+                                        <tr mat-header-row *matHeaderRowDef="displayed2Columns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayed2Columns;"></tr>
+                                    </table>
+                
+                
+                                </div>
+                
+                                <div class="visualisation" *ngIf="categorieData.length">
+                
+                                    <ngx-charts-bar-vertical [view]="[570,300]" [results]="categorieData" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+                                        [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
+                                    </ngx-charts-bar-vertical>
+                
+                                </div>
+                
+                
+                            </div>
+                
+                        </div>
+                
+                
+                        <div class="button">
+                            <button mat-stroked-button ngxPrint printSectionId="categorieVehicule" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
+                        </div>
+                    </div>-->
+
+                </div>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</app-layout>

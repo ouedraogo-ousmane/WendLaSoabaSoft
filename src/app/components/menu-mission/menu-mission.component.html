@@ -1,0 +1,54 @@
+<div class="main">
+    <div class="entete">
+        <mat-toolbar color="primary">
+
+            <span class="logo">WendLa Soaba Transport</span>
+
+            <span class="spacer"></span>
+            <div class="barre">
+                <input style="color:white" matInput type="search">
+            </div>
+            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-toolbar>
+
+    </div>
+
+    <mat-drawer-container class="container">
+        <mat-drawer mode="side" opened> <strong>Menu</strong>
+            <mat-nav-list>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <a href="exercice/liste-exercices">
+                        <span><mat-icon matListIcon>home</mat-icon>Accueil</span> </a>
+
+                </mat-list-item>
+                <mat-list-item [active]="true">
+                    <a (click)="openPage('mission/add')">
+                        <span><mat-icon matListIcon>add</mat-icon>
+                            Nouvelle Mission
+                        </span>
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <a (click)="openPage('mission/liste-mission')">
+                        <span><mat-icon matListIcon>assignment</mat-icon>Missions</span>
+                    </a>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <a href="deconnexion">
+                        <span><mat-icon matListIcon>logout</mat-icon>Se deconnecter</span>
+                    </a>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+
+</div>

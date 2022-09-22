@@ -50,7 +50,7 @@ export class AuthentificationComponent implements OnInit {
         if (this.authService.isAuthenticated()){
           this.userLoginForm.reset()
           //this.authService.refreshToken()
-          this.route.navigate(['exercice/liste-exercices']) // navigation
+          this.route.navigate(['exercice']) // navigation
 
         }else{
           this.invalid_Hint = true;

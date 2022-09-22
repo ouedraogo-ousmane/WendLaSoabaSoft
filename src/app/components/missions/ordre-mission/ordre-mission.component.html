@@ -25,9 +25,11 @@
   </header>
 
   <main style="position:absolute; left:20px; right:10px;  margin: 0; width: auto;">
-    <div style="border:1px solid black;">
+
+    <div>
 
       <div  style="border:2px solid black;border-radius: 8px;  padding: 3px;width: 99%;">
+
         <table style=" width: 100%">
           <thead>
             <tr>
@@ -39,15 +41,15 @@
           <tbody>
             <tr>
               <td class="service">
-               <span>OUEDRAOGO Amado</span> <br><br>
-               <span>Tel: (+226) 55 34 55 66</span> <br><br>
-               <span>voyage n$: 10</span>
+               <span>{{chauffeur.nom  }} {{chauffeur.prenom}}</span> <br><br>
+               <span>Tel: (+226) {{chauffeur.telephone}}</span> <br><br>
+               <span>voyage n$: {{mission_toPrint.id}}</span>
               </td>
 
               <td class="service">
-                <span>immat: AZE445Y5 / AZE777D</span> <br><br>
-                <span>Couleur: NOIR</span> <br><br>
-                <span>Marque: RENOULD</span>
+                <span>immat : {{vehicule.immat}}</span> <br><br>
+                <span>Couleur : {{vehicule.couleur}}</span> <br><br>
+                <span>Marque : {{vehicule.marque}}</span>
                </td>
             </tr>
 
@@ -56,70 +58,48 @@
 
       </div>
 
-      <div style="float:left;  border:2px solid black; width: 47%; border-radius: 8px;">
-        <table style=" width: 100%" >
-          <thead>
-            <tr>
-              <th class="service">PRODUITS</th>
-              <th>QUANTITES</th>
-              <th style="text-align: right;">UNITE</th>
-            </tr>
-          </thead>
+      <div id="kl-data-info" style="border:2px solid black; padding: 3px; border-radius: 8px; width: 99%;" >
 
-          <tbody>
-            <tr>
-              <td class="service">Fer</td>
-              <td class="qty">26</td>
-              <td class="unit">Tonne</td>
-            </tr>
-            <tr>
-              <td class="service">bois</td>
-              <td class="qty">80</td>
-              <td class="unit">kg</td>
-            </tr>
-            <tr>
-              <td class="service">Fer</td>
-              <td class="qty">20</td>
-              <td class="unit">kg</td>
-            </tr>
-            <tr>
-              <td class="service">Training</td>
-              <td class="qty">4</td>
-              <td class="unit">tube</td>
-            </tr>
+        <div style="float:left; width: 40%; margin-right: 15px;">
 
-          </tbody>
-        </table>
+          <table style=" width: 100%" >
+            <thead>
+              <tr>
+                <th class="service">PRODUITS</th>
+                <th>QUANTITES</th>
+                <th style="text-align: right;">UNITE</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let produit of listeProduit">
+                <td class="service">{{produit.produit__nom}}</td>
+                <td class="qty">{{produit.qte_produit}}</td>
+                <td class="unit">{{produit.produit__unite}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div  style="float:left; padding: 3px; width: 51%; border-radius: 8px;">
+          <table style=" width: 100%">
+            <thead>
+              <tr>
+                <th class="service">LISTES DEPENSES</th>
+                <th>MONTANT</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let depense of listeDepense">
+                <td class="service"> {{depense.intitule_depense__intitule}} </td>
+                <td class="qty">{{depense.montant}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
       </div>
-
-      <div  style="float:left; padding: 3px; border:2px solid black;width: 51%; border-radius: 8px;">
-        <table style=" width: 100%">
-          <thead>
-            <tr>
-              <th class="service">LISTES DEPENSES</th>
-              <th>MONTANT</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td class="service"> Carburant </td>
-              <td class="qty">26</td>
-            </tr>
-            <tr>
-              <td class="service">Frais de douane</td>
-              <td class="qty">80</td>
-            </tr>
-            <tr>
-              <td class="service">Frais de voyage</td>
-              <td class="qty">20</td>
-            </tr>
-
-          </tbody>
-        </table>
-
-      </div>
-
 
       <div id="trajet"  style="border:2px solid black; padding: 3px; border-radius: 8px; width: 99%;">
         <table style=" width: 100%">
@@ -134,18 +114,18 @@
           <tbody>
             <tr>
               <td class="service">
-               <span>Destination 1: Bobo-Dioulasso</span> <br><br>
-               <span>Destination 2: Ouagadougou</span> <br><br>
+               <span>Destination 1: {{trajet.ville_depart}}</span> <br><br>
+               <span>Destination 2: {{trajet.ville_arrivee}}</span> <br><br>
               </td>
 
               <td class="service">
-                <span>Date de part: 10/11/2023</span> <br><br>
-                <span>Depart: Bobo-Dioulasso</span> <br><br>
+                <span>Date de Depart: {{mission_toPrint.date_mission}}</span> <br><br>
+                <span>Depart: {{trajet.ville_depart}} </span> <br><br>
                </td>
 
                <td class="service" style="text-align:right">
-                <span>Ouedraogo </span>
-                <span>Kouanda </span> <br><br>
+                <span>KOANDA </span>
+                <span>Abdoul </span> <br><br>
                </td>
             </tr>
 

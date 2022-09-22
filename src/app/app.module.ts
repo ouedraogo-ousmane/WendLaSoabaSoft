@@ -15,18 +15,21 @@ import { AuthentificationComponent } from './components/authentification/authent
 import { ExerciceComponent } from './components/exercice/exercice.component';
 import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 import { MaintenanceDialogueComponent } from './components/maintenance-dialogue/maintenance-dialogue.component';
-import {  HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { StatistiqueComponent } from './components/statistique/statistique.component';
 import { ListeExerciceComponent } from './components/liste-exercice/liste-exercice.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { BilanComponent } from './components/bilan/bilan.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { MenuBilanComponent } from './components/menu-bilan/menu-bilan.component';
-import { ListeMissionComponent } from './components/missions/liste-mission/liste-mission.component';
-import { ProgrammerComponent } from './components/missions/programmer/programmer.component';
+import { MenuMissionComponent } from './components/menu-mission/menu-mission.component';
+
+import { DatePipe } from '@angular/common';
+import { NgxPrintModule } from 'ngx-print';
 import { MissionsComponent } from './components/missions/missions.component';
 import { OrdreMissionComponent } from './components/missions/ordre-mission/ordre-mission.component';
-import { DatePipe } from '@angular/common';
+import { ListeMissionComponent } from './components/missions/liste-mission/liste-mission.component';
+import { ProgrammerComponent } from './components/missions/programmer/programmer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { DetailMissionComponent } from './components/missions/detail-mission/detail-mission.component';
 
 @NgModule({
   declarations: [
@@ -41,10 +44,10 @@ import { DatePipe } from '@angular/common';
     ListeMissionComponent, 
     StatistiqueComponent,
     ListeExerciceComponent,
-    SettingsComponent,
+    MenuMissionComponent,
     ProgrammerComponent,
-    MenuBilanComponent,
-    ProgrammerComponent
+    HeaderComponent,
+    DetailMissionComponent
     
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
@@ -57,12 +60,15 @@ import { DatePipe } from '@angular/common';
     RouterModule,
     MaterialModule,
     HttpClientModule,
-    NgxChartsModule
+    NgxChartsModule,
+    NgxPrintModule
 
 
    
   ],
   providers: [
+   // {provide: LOCALE_ID, useValue: "fr-FR"},
+    //{provide: DEFAULT_CURRENCY_CODE},
     DatePipe
   ],
   bootstrap: [AppComponent]

@@ -1,13 +1,34 @@
-<div class="content">
-    <div class="listeExercice">
-        <ngx-charts-bar-vertical-stacked [view]="[750,300]" [results]="exercice" [xAxisLabel]="'Graphique des rentabilite par exercice'" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+<mat-spinner mode="indeterminate" *ngIf="!isLoaded" color="primary"></mat-spinner>
+
+<app-layout>
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav role="navigation">
+            <app-exercice (sidenavClose)="sidenav.close()"></app-exercice>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+            <main>
+
+                <div class="content" id="dataToPrint" *ngIf="isLoaded">
+                    <div class="title">
+                        <h2 mat-title>Statistiques des depenses et recettes par exercice</h2>
+                    </div>
+                    <div class="listeExercice" *ngIf="listeStat.length">
+                        <!-- <ngx-charts-bar-vertical-stacked [view]="[400,500]" [results]="listeStat" [xAxisLabel]="'Graphique des rentabilite par exercice'" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
             [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
-        </ngx-charts-bar-vertical-stacked>
-    </div>
+        </ngx-charts-bar-vertical-stacked> -->
 
-</div>
+                        <ngx-charts-bar-vertical-stacked [view]="[570,300]" [results]="listeStat" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+                            [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
+                        </ngx-charts-bar-vertical-stacked>
+                    </div>
 
-<div class="button">
-    <button mat-stroked-button (click)="export()" color="primary">Exporter</button>
-    <button mat-stroked-button click()="print()" color="warn">Imprimer</button>
-</div>
+                </div>
+
+                <div class="button" *ngIf="isLoaded">
+                    <button mat-stroked-button ngxPrint printSectionId="dataToPrint" printTitle="Graphique des revenus par exercice" color="primary">Imprimer</button>
+                </div>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</app-layout>

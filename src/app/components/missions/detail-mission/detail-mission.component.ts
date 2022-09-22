@@ -1,22 +1,25 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterContentInit, OnDestroy  } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { async, Subscription } from 'rxjs';
 import { AcceuilMissionList, IMission } from '../Imission';
 import { ProgrammerService } from '../programmer/programmer.service';
 import { IchauffeursVehicule, Iclients, Idepenses, Iproduits, Itrajets } from '../programmer/iprogrammer';
+import { SdetailMissionService } from './sdetail-mission.service';
 
   // const toSelect = this.patientCategories.find(c => c.id == 3);
   // this.patientCategory.get('patientCategory').setValue(toSelect);
   // <child-selector (bookTitleCreated)=onBookAdded($event)></child-selector>
+
+
 @Component({
   selector: 'app-detail-mission',
   templateUrl: './detail-mission.component.html',
   styleUrls: ['./detail-mission.component.css']
 })
-export class DetailMissionComponent implements OnInit {
+export class DetailMissionComponent implements OnInit,  AfterContentInit, OnDestroy {
 
-  @Input() Mission!: AcceuilMissionList
+  @Input() Mission!: AcceuilMissionList  ;
   @Input() exercice_id!:number;
 
   sub!:Subscription
@@ -25,8 +28,7 @@ export class DetailMissionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb:FormBuilder,
-    private programmerService:ProgrammerService
-    ) {}
+    private programmerService:ProgrammerService) {}
 
     formMission = this.fb.group({
 
@@ -54,16 +56,54 @@ export class DetailMissionComponent implements OnInit {
     listeChauffeurs :IchauffeursVehicule [] = [];
 
     motifs_mission:any[]=['Approvissionnement', 'Livraision'];
-    listeTrajets:Itrajets[]=[];
+    listeTrajets!:Itrajets[];
     listeClients:Iclients[]=[];
     listesProduits:Iproduits[] = [];
     listesDepenses:Idepenses[] = [];
 
   ngOnInit(): void {
-    // this.getListesChauffeurVehicules();
-
+     this.getListesChauffeurVehicules();
   }
 
+  // New SECTION --> Insertion des donnees la mission a modifier dans le formulaire
+  ngAfterContentInit(): void {
+       // insertion de la motif mission, de la date de mission
+       this.missionSelectionDate = this.Mission.date_mission
+       this.motifMissionSlectionnee = this.Mission.motif
+       this.modeEvalutionMissionChoisie = (this.Mission.produits.length<0)
+
+       // insertion des depenses et produits de la mission a editer dans le template
+       this.AjoutListeDepenseMission_toUpdate();
+       this.AjoutListeProduitsMission_toUpdate();
+  }
+
+  missionConcerneeParEdition!:any;
+  missionSelectionDate!:Date; // date de la mission selectionner
+  motifMissionSlectionnee!:string;
+  modeEvalutionMissionChoisie!:boolean;
+
+  compareTrajetFn(c1: any, c2: AcceuilMissionList) {
+    return  c2.trajet.id === c1 ;
+  }
+
+  compareChauffeurFn(c1:any, c2:AcceuilMissionList){
+    return c2.vehicule.id === c1;
+  }
+
+  AjoutListeDepenseMission_toUpdate(){
+    this.Mission.depenses.forEach(element=> {
+        this.depensesFieldAsFormArray.push(
+          this.depenseControleur(element.intitule_depense__intitule,element.montant));
+
+    })
+  }
+
+  AjoutListeProduitsMission_toUpdate(){
+    this.Mission.produits.forEach(element=>{
+      this.produitsFieldAsFormArray.push(
+        this.produitsControleur(element.produit__nom,element.qte_produit, 0));
+    })
+  }
 
 /* generation automatique des champs de saisie*/
 
@@ -128,7 +168,6 @@ export class DetailMissionComponent implements OnInit {
   }
 
   //Pour Produit
-
   produitSelectionnes = new FormControl(''); //
 
   // ecouter apres chaque selection de produit
@@ -177,6 +216,7 @@ export class DetailMissionComponent implements OnInit {
     // ajout du champ au formulaire
     const produitSelectionne:any= this.produitSelectionnes.value
 
+    console.log(this.produitSelectionnes)
     if(produitSelectionne?.length!=0){
       produitSelectionne.forEach((element:any) => {
         this.produitsFieldAsFormArray.push(this.produitsControleur(element,0, 0));
@@ -185,10 +225,10 @@ export class DetailMissionComponent implements OnInit {
     }
   }
 
-supprimerProduitField(i:number):void{
-  // suppression du champs du fromulaire
-  this.produitsFieldAsFormArray.removeAt(i)
-}
+  supprimerProduitField(i:number):void{
+    // suppression du champs du fromulaire
+    this.produitsFieldAsFormArray.removeAt(i)
+  }
 
 // section evaluation des recettes
 choix_mode_evaluation:boolean = false // boolean d'ecoute du mode choisie
@@ -235,6 +275,7 @@ change_mode_evaluation(){
             setTimeout(()=>{
               this.getListeIntituleProduits(); //implementation de l'anatomicite : transaction
             }, 2000)
+
           }
         )
     }
@@ -243,6 +284,7 @@ change_mode_evaluation(){
         .subscribe(
           (data:Iproduits[])=>{
             this.listesProduits = data;
+            console.log(this.listesProduits)
           },
           error=>{
             console.log(error)
