@@ -154,6 +154,7 @@ span {
     margin-right: 50px;
     width: 90% !important;
     margin-top: 75px;
+    z-index: 0.5;
 }
 
 .loading {
@@ -173,5 +174,4 @@ mat-sidenav {
 th {
     font-size: 16px;
     font-weight: bold;
-    font-family: 'Times New Roman', Times, serif;
 }

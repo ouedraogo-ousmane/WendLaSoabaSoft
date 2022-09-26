@@ -27,7 +27,7 @@
                         <mat-card-title>Exercice {{data.date_exercice | date:'yyyy'}}</mat-card-title>
                         <mat-card-content>
                             <p *ngIf="!data.etat_exercice">(En cours) </p>
-                            <p *ngIf="data.etat_exercice">(Terminé) </p>
+                            <p *ngIf="data.etat_exercice" style="color:green">(Terminé) </p>
                         </mat-card-content>
                         <mat-card-actions>
                             <button mat-raised-button color="primary" (click)="openPage('mission',data)">Missions</button>

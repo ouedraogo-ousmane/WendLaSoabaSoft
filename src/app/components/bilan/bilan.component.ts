@@ -48,6 +48,10 @@ export class BilanComponent implements OnInit {
   statTypeAvailable : boolean = false;
   statExercice : boolean = false;
 
+  showExerciceGraphique : boolean = false;
+  showDriverGraphique : boolean = false;
+  showType : boolean = false;
+
 
   constructor(private formBuilder : FormBuilder,
               private bilanService : BilanService,
@@ -75,6 +79,32 @@ export class BilanComponent implements OnInit {
 
        });
        return queryParam.params.exercice
+  }
+
+  
+
+  showGraphiqueExercice(){
+    this.showExerciceGraphique = true;
+  }
+
+  hideGraphiqueExercice(){
+    this.showExerciceGraphique = false;
+  }
+
+  showGraphiqueDriver(){
+    this.showDriverGraphique = true;
+  }
+
+  hideGraphiqueDriver(){
+    this.showDriverGraphique = false;
+  }
+
+  showTypeGraphique(){
+    this.showType = true;
+  }
+
+  hideTypeGraphique(){
+    this.showType = false;
   }
 
 

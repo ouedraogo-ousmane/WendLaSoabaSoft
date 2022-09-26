@@ -1,15 +1,16 @@
 /* center l'element exatement au centre de la page */
 
-.content {
-    background-image: '../../../assets/images/background.jpeg' !important;
-}
+
+/* #kl-auth-dv {
+    background-color: rgba(0, 0, 0, 0.562) !important;
+} */
 
 #kl-auth-dv>mat-card {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    /* background-color: white; */
 }
 
 

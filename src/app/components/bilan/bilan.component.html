@@ -52,7 +52,7 @@
 
                                 </div>
 
-                                <div class="visualisation">
+                                <div *ngIf="showExerciceGraphique" class="visualisation">
 
                                     <ngx-charts-pie-chart [view]="[570,300]" [results]="exerciceData" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true"
                                         [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
@@ -65,6 +65,8 @@
 
 
                         <div class="button">
+                            <button mat-stroked-button (click)="showGraphiqueExercice()" *ngIf="!showExerciceGraphique" color="warn">Afficher Graphique</button>
+                            <button mat-stroked-button (click)="hideGraphiqueExercice()" *ngIf="showExerciceGraphique" color="warn">Cacher Graphique</button>
                             <button mat-stroked-button [useExistingCss]="true" ngxPrint printSectionId="dataExerciceToPrint" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
                         </div>
                     </div>
@@ -121,7 +123,7 @@
 
                                 </div>
 
-                                <div class="visualisation" *ngIf="chauffeurStatData.length">
+                                <div class="visualisation" *ngIf="chauffeurStatData.length && showDriverGraphique">
 
                                     <!-- <ngx-charts-pie-chart [view]="[570,300]" [results]="chauffeurStatData" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
                                         [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
@@ -141,6 +143,8 @@
 
 
                         <div class="button">
+                            <button mat-stroked-button (click)="showGraphiqueDriver()" *ngIf="!showDriverGraphique" color="warn">Afficher Graphique</button>
+                            <button mat-stroked-button (click)="hideGraphiqueDriver()" *ngIf="showDriverGraphique" color="warn">Cacher Graphique</button>
                             <button mat-stroked-button ngxPrint [useExistingCss]="true" printSectionId="dataChauffeurToPrint" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
                         </div>
                     </div>
@@ -189,7 +193,7 @@
 
                                 </div>
 
-                                <div class="visualisation" *ngIf="typeDepenseStat.length">
+                                <div class="visualisation" *ngIf="typeDepenseStat.length && showType">
 
                                     <ngx-charts-bar-vertical [view]="[400,500]" [results]="typeDepenseStat" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
                                         [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
@@ -202,6 +206,8 @@
 
 
                         <div class="button">
+                            <button mat-stroked-button (click)="showTypeGraphique()" *ngIf="!showType" color="warn">Afficher Graphique</button>
+                            <button mat-stroked-button (click)="hideTypeGraphique()" *ngIf="showType" color="warn">Cacher Graphique</button>
                             <button mat-stroked-button [useExistingCss]="true" ngxPrint printSectionId="typeMission" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
                         </div>
                     </div>

@@ -111,13 +111,16 @@ mat-list-item:hover {
 
 button {
     margin-right: 30px;
-    width: 180px;
     overflow: visible;
     border: 1px solid black !important;
     font-size: 16px;
     height: 40px;
     margin-bottom: 10px;
-    left: 25%;
+    left: 8%;
+    margin-top: 15px;
+    width: 200px;
+    margin-left: 20px;
+    height: 40px;
 }
 
 button:hover {
@@ -132,14 +135,6 @@ button:hover {
 mat-form-field {
     width: 240px;
     margin-left: 25px;
-}
-
-button {
-    width: 140px;
-    margin-left: 20px;
-    height: 40px;
-    color: white;
-    font-weight: bold;
 }
 
 button:hover {

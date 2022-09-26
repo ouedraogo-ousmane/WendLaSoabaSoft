@@ -73,11 +73,12 @@ a:active {
     background-color: rgb(30, 130, 130);
 }
 
-.navigation-items {
+
+/* .navigation-items {
     list-style-type: none;
     padding: 0;
     margin: 0;
-}
+} */
 
 mat-toolbar {
     border-radius: 3px;

@@ -27,6 +27,7 @@ mat-toolbar {
     margin-bottom: 55px;
     background-color: #184a73;
     overflow: hidden;
+    z-index: 1;
 }
 
 @media(max-width: 959px) {

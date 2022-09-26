@@ -77,7 +77,7 @@ mat-drawer-content {
 .card {
     max-width: 400px;
     width: 400px;
-    height: 150px;
+    height: 250px;
     margin-bottom: 70px;
 }
 
@@ -103,7 +103,7 @@ mat-drawer-content {
 }
 
 mat-card-actions {
-    margin-top: 40px;
+    margin-top: 80px;
 }
 
 button {
@@ -115,7 +115,8 @@ button {
 
 p {
     font-size: 16px;
-    margin-top: auto;
+    margin-top: 60px;
+    font-weight: bold;
 }
 
 
