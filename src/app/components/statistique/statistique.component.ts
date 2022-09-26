@@ -15,6 +15,7 @@ export class Stat {
 
 }
 
+
 @Component({
   selector: 'app-statistique',
   templateUrl: './statistique.component.html',
@@ -27,48 +28,7 @@ export class StatistiqueComponent implements OnInit,OnDestroy {
   listeStat : {name:string;series:{ name: string; value: number; }[]}[]  = [];
 
 
-  exercice  = [
-    {
-      name: "2020",
-      series: [
-        {
-          name: "Depense",
-          value: 73000000
-        },
-        {
-          name: "Recette",
-          value: 89400000
-        }
-      ]
-    },
   
-    {
-      name: "2021",
-      series: [
-        {
-          name: "Depense",
-          value: 78700000
-        },
-        {
-          name: "Recette",
-          value: 82700000
-        }
-      ]
-    },
-    {
-      name: "2022",
-      series: [
-        {
-          name: "Depense",
-          value: 8560000
-        },
-        {
-          name: "Recette",
-          value: 12500000
-        }
-      ]
-    }
-  ];
   isLoaded : boolean = false;
 
   exerciceSub! : Subscription;

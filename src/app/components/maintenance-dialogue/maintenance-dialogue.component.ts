@@ -8,6 +8,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { VehiculeService } from 'src/app/services/vehicule.service';
 import { VehiculesDuParc } from '../../folderModels/modelGestMission/vehicule-du-parc';
 import { Vehicules } from 'src/app/folderModels/modelGestMission/vehicule';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-maintenance-dialogue',
@@ -34,6 +35,7 @@ export class MaintenanceDialogueComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder,
+              private snackBar : MatSnackBar,
               private dialogue : MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: {id_exercice: number},
               private serviceVehicule : VehiculeService,
@@ -56,6 +58,20 @@ export class MaintenanceDialogueComponent implements OnInit {
       prix:this.formBuilder.control(''),
       dureeDevie:this.formBuilder.control(''),
       quantite:this.formBuilder.control('')
+    });
+  }
+
+
+
+  /**
+   * Opening snacbar method
+   */
+
+  openSnackbar(action:string){
+    this.snackBar.open('operation reussie !!!',action,{
+      verticalPosition:'bottom',
+      horizontalPosition:'start',
+      duration:5000
     });
   }
 
@@ -144,6 +160,8 @@ export class MaintenanceDialogueComponent implements OnInit {
       (value:any)=>{
         this.maintenanceAdded = value.id;
         this.maintenance.id =  this.maintenanceAdded;
+        this.getAllMaintenance();
+
         console.log(value);
         
       },
@@ -152,7 +170,7 @@ export class MaintenanceDialogueComponent implements OnInit {
       },
       ()=>{
         console.log("une operation d'envoie a été effectué");
-        this.getAllMaintenance();
+        
         
       }
     )
@@ -166,13 +184,14 @@ export class MaintenanceDialogueComponent implements OnInit {
 
     this.serviceMaintenance.sendOrDeleteMaintenance(this.maintenance,"delete").subscribe(
       (dataGetted:any)=>{
-        console.log(dataGetted);
+        //console.log(dataGetted);
+        this.openSnackbar('suppression');
+
       },
       (error)=>{
         console.log(error);
       },
       ()=>{
-        console.log("one maintenance have been deleted succesfully");
         this.firstFormGroup.reset();
       }
     )
@@ -255,6 +274,7 @@ export class MaintenanceDialogueComponent implements OnInit {
   endSaving(){
     this.getAllMaintenance();
     this.dialogue.closeAll();
+    this.openSnackbar('ajout !');
   }
 
   /**

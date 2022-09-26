@@ -19,9 +19,10 @@ export interface AcceuilMissionList{
   vehicule:{id:number,couleur:string, immat:string,marque:string,poids_vide:number},
   date_mission:Date,
   motif:string,
-  depenses:{intitule_depense__intitule:string, montant:number}[],
+  depenses:{id?:number,intitule_depense__id?:number,intitule_depense__intitule:string, montant:number}[],
   produits:{client_concerne__nom:string, client_concerne__prenom:string ,
-           produit__nom:string, produit__unite:string,qte_produit:number}[],
+           produit__nom:string, produit__unite:string,qte_produit:number,
+           client_concerne__id?:number, produit__id?:number,id?:number}[],
   trajet:{id:number, ville_arrivee:string,ville_depart:string}
 
 }

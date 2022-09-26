@@ -86,14 +86,6 @@ export class OrdreMissionComponent implements OnInit, OnDestroy {
             margin-bottom: 50px;
           }
 
-          #logo {
-            text-align: center;
-            margin-bottom: 10px;
-          }
-
-          #logo img {
-            width: 90px;
-          }
 
           h1 {
             text-align: center;
@@ -140,7 +132,7 @@ export class OrdreMissionComponent implements OnInit, OnDestroy {
           }
 
           table th {
-            padding: 5px 20px;
+            padding: 5px 5px;
             color: #5D6975;
             border-bottom: 1px solid #C1CED9;
             white-space: nowrap;
@@ -153,8 +145,9 @@ export class OrdreMissionComponent implements OnInit, OnDestroy {
           }
 
           table td {
-            padding: 10px;
             text-align: right;
+            padding:0;
+            margin:0px;
           }
 
           table td.service,
@@ -165,42 +158,17 @@ export class OrdreMissionComponent implements OnInit, OnDestroy {
           table td.unit,
           table td.qty,
           table td.total {
-            font-size: 1.2em;
+            font-size: 1.1em;
           }
 
           table td.grand {
             border-top: 1px solid #5D6975;;
           }
 
-          #notices .notice {
-            color: #5D6975;
-            font-size: 1.2em;
-          }
-
-        footer {
-          width: 92%;
-          position: relative;
-          bottom: 0;
-        /*
-          border-top: 1px solid #C1CED9; */
-          padding: 8px 0;
-          color:#5D6975;
-          font-size: 25px;
-          letter-spacing: 1px;
-        }
-
-
-          #notices:after, .notice{
-            content: "";
-            display: block;
-            clear: both;
-          }
-
-
           .kl-title>h1>span{
             font-weight: bolder;
             letter-spacing: -2px;
-            word-spacing: 8px;
+            word-spacing: 5px;
           }
 
 
@@ -214,6 +182,36 @@ export class OrdreMissionComponent implements OnInit, OnDestroy {
             margin-bottom: -5px;
           }
 
+          #trajet{
+            border:2px solid black;  border-radius: 8px; width: 90%;
+          }
+          table{
+            width: 98%
+          }
+
+          footer{
+            position:fixed;
+            bottom:0;
+            width:100%;
+          }
+
+          table td.qty{
+            text-align:left;
+          }
+
+          table td.dep{
+            text-align:center;
+          }
+          .kl-main-div-print{
+            border:2px solid black;
+            border-radius: 8px;
+            width:  90%;
+          }
+
+          #kl-div-only{
+            margin-top: 20px; padding-left: 10px; width:87%; font-size:18px;
+            display:flex; justify-content:space-between;
+          }
           </style>
         </head>
 

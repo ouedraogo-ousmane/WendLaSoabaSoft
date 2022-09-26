@@ -4,7 +4,7 @@
     "postinstall": "ng build --aot --prod",
     "scripts": {
         "ng": "ng",
-        "start": "node server.js",
+        "start": "ng serve",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
         "test": "ng test"

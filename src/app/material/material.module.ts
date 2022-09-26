@@ -27,10 +27,12 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 const materialComponents = [
     MatCheckboxModule,
+    MatSnackBarModule,
     MatRadioModule,
     ScrollingModule,
     MatFormFieldModule,

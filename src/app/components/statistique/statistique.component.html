@@ -1,5 +1,3 @@
-<mat-spinner mode="indeterminate" *ngIf="!isLoaded" color="primary"></mat-spinner>
-
 <app-layout>
     <mat-sidenav-container>
         <mat-sidenav #sidenav role="navigation">
@@ -8,6 +6,10 @@
         <mat-sidenav-content>
             <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
             <main>
+
+                <div class="chargement" *ngIf="!isLoaded">
+                    <mat-spinner mode="indeterminate" color="primary">Chargement</mat-spinner>
+                </div>
 
                 <div class="content" id="dataToPrint" *ngIf="isLoaded">
                     <div class="title">

@@ -19,6 +19,7 @@ export class ListeExerciceComponent implements OnInit {
    listeExercice : IResults[] = [];
 
    panelOpenState = false;
+   dataFiltre : any = "";
    IsWait : boolean = true;
    dataSource = new MatTableDataSource<IResults>(this.listeExercice);
 

@@ -1,12 +1,15 @@
 <div id="kl-info-title">
-  <h3 class ="mat-h2">Modifier une mission</h3>
-  <span > <b style="color:black">Etat:</b>
-     <b style="color:green"> Mission En cours </b>
-   </span>
+  <h3 class="mat-h2">
+    <a style="cursor:pointer; color:blue" (click)="gotoAcceuiMission()">Acceuil/</a>
+    <span>Modification</span>
+  </h3>
+  <span style="padding-right:2%"> <b style="color:black">Etat:</b>
+  <b style="color:green">Edition</b>
+  </span>
 </div>
+<mat-divider></mat-divider>
 
-<div style="position:relative; right:-25px; margin-bottom: 25px;">
-  <mat-divider></mat-divider>
+<div style="position:relative; margin-bottom: 25px;">
 
     <!-- information sur les generales d'une mission -->
     <section id="kl-info-Mission">
@@ -37,7 +40,7 @@
               <mat-form-field appearance="outline">
                 <mat-label>Chauffeurs</mat-label>
                 <mat-select formControlName="chauffeur" [compareWith]="compareChauffeurFn"
-                 [(ngModel)]="Mission">
+                  [(ngModel)]="Mission">
 
                   <mat-option>None</mat-option>
                     <mat-option *ngFor="let chauffeur of listeChauffeurs" [value]="chauffeur.id">
@@ -98,7 +101,7 @@
     <!-- information sur les produits d'une mission -->
     <section id="kl-info-Produits">
         <h4>Listes des produits</h4>
-        <mat-form-field appearance="outline" style="padding-left:10px">
+        <mat-form-field appearance="outline" class="kl-select-prd-dp">
           <!--
              selection des produits a transporter
              (closed)="onSelectionTeminer()": Evenement
@@ -115,7 +118,7 @@
         </mat-form-field>
 
           <!-- Ajout des field de produit transporter -->
-      <form [formGroup]="formMission">
+      <form [formGroup]="formMission" class="kl-info-prod-dep">
         <ng-container  formArrayName='liste_produits'>
 
           <div *ngFor="let control of  produitsFieldAsFormArray.controls ;let i = index;">
@@ -125,12 +128,12 @@
             [formGroupName]="i" : ieme form group ajouter
           -->
           <div [formGroupName]="i" style="margin-bottom:15px;" >
-              <mat-grid-list cols="5" [rowspan]="nombreProduit" rowHeight="3rem" gutterSize="5px">
+              <mat-grid-list cols="5" [rowspan]="nombreProduit" rowHeight="5rem" gutterSize="5px">
                 <mat-grid-tile>
                       <!-- nom du produit -->
                   <mat-form-field appearance="fill" >
                     <mat-label>Intitule</mat-label>
-                    <input matInput type="text" name="nom" id="nom" formControlName="nom">
+                    <input matInput [disabled]="true" type="text" name="nom" id="nom" formControlName="nom">
                   </mat-form-field>
                 </mat-grid-tile>
 
@@ -138,7 +141,7 @@
                       <!-- quantite du produit -->
                   <mat-form-field appearance="fill">
                     <mat-label>quantite</mat-label>
-                    <input matInput type="number" min="0"  name="quantite" id="quantite" formControlName="quantite">
+                    <input matInput type="number" min="0"  name="quantite" id="quantite" formControlName="qte_produit">
                   </mat-form-field>
                 </mat-grid-tile>
 
@@ -154,7 +157,9 @@
                   <mat-form-field appearance="outline">
                     <!-- client destinataire du produit -->
                     <mat-label>Client</mat-label>
-                    <mat-select name="client" id="client" formControlName="client" >
+
+                    <mat-select name="client" id="client" formControlName="client_concerne">
+
                       <mat-option>None</mat-option>
                       <mat-option *ngFor="let client of listeClients" [value]="client.id">
                         {{client.nom}} {{client.prenom}}
@@ -208,7 +213,7 @@
     <!-- information sur les depenses d'une mission -->
     <section id="kl-info-depenses">
       <h4>Listes des depenses</h4>
-      <mat-form-field appearance="outline" style="padding-left:10px">
+      <mat-form-field appearance="outline" class="kl-select-prd-dp">
         <mat-label>Selectionner depenses</mat-label>
 
         <mat-select  (closed)="onSelectionDepenseTeminer()" [formControl]="depenseSelectionnes" multiple>
@@ -218,7 +223,7 @@
         </mat-select>
       </mat-form-field>
 
-      <form [formGroup]="formMission">
+      <form [formGroup]="formMission" class="kl-info-prod-dep">
         <ng-container  formArrayName='liste_depenses'>
           <div *ngFor="let control of  depensesFieldAsFormArray.controls ;let i = index;">
               <div [formGroupName]="i" style="margin-bottom:15px;" >
@@ -228,7 +233,7 @@
                       <!-- intitule depense -->
                   <mat-form-field appearance="fill">
                     <mat-label>Intitule</mat-label>
-                    <input matInput type="text" formControlName="intitule">
+                    <input matInput [disabled]="true" type="text" formControlName="intitule">
                   </mat-form-field>
                 </mat-grid-tile>
 

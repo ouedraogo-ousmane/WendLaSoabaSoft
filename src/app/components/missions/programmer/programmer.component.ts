@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
@@ -15,6 +15,9 @@ import { ProgrammerService } from './programmer.service';
 
 export class ProgrammerComponent implements OnInit {
   sub!:Subscription
+
+  @Output()
+  back_to_list_mission:EventEmitter<string> = new EventEmitter();
 
   // recuperation de la mission a voir le detail
   exercice_id!:number;
@@ -34,7 +37,7 @@ export class ProgrammerComponent implements OnInit {
         chauffeur:['', {validators:[Validators.required]}],
         trajet_concerne:['', {validators:[Validators.required]}],
         choix_mode_evaluation:['',
-            {validators:[Validators.required]}
+            //{validators:[Validators.required]}
             // boolean si false: recette Sans Pesage
             // boolean si true: recette avec Pesage
         ]
@@ -108,21 +111,23 @@ export class ProgrammerComponent implements OnInit {
     return this.formMission.get('liste_depenses') as FormArray
   }
 
-  depenseControleur(intitule:string, quantite:number):any{
+  depenseControleur(intitule:string,id:number ,quantite:number):any{
     // creation du nouveau controleur à ajouter automatiquement dans le FormArray
     return this.fb.group({
+      intitule:this.fb.control(intitule), // utiiser pour l'affichage
       depense:this.fb.control(intitule),
-      intitule : [intitule, {validators:[Validators.required]}],
+      intitule_depense : [id, {validators:[Validators.required]}], // utiiser pour le sauvegard
       montant: [quantite, {validators:[Validators.required]}],
     })}
 
   AjouterDepenseField():void{
     // ajout du champ au formulaire
     const depensesSelectionne:any= this.depenseSelectionnes.value
-
     if(depensesSelectionne?.length!=0){
       depensesSelectionne.forEach((element:any) => {
-        this.depensesFieldAsFormArray.push(this.depenseControleur(element,0));
+        const depense_to_be_add = this.listesDepenses.find(dep=>dep.id==element) // recuperation du nom
+
+        this.depensesFieldAsFormArray.push(this.depenseControleur(depense_to_be_add?.intitule || ' ',element,0));
         this.depenseSelectionnes.reset()
         });
 
@@ -163,11 +168,11 @@ export class ProgrammerComponent implements OnInit {
     return this.formMission.get('liste_produits') as FormArray
   }
 
-  produitsControleur(nom:string, quantite:number, cout_unitaire:number):any{
+  produitsControleur(nom:string, id:number,quantite:number, cout_unitaire:number):any{
     // creation du nouveau controleur à ajouter automatiquement dans le FormArray
 
     return this.fb.group({
-      produit:this.fb.control(nom),
+      produit:this.fb.control(id),
       nom : this.fb.control(nom),
       qte_produit:[quantite, [Validators.required]],
       cout_unitaire:[cout_unitaire, [Validators.required]],
@@ -188,8 +193,9 @@ export class ProgrammerComponent implements OnInit {
     const produitSelectionne:any= this.produitSelectionnes.value
 
     if(produitSelectionne?.length!=0){
-      produitSelectionne.forEach((element:any) => {
-        this.produitsFieldAsFormArray.push(this.produitsControleur(element,0, 0));
+      produitSelectionne.forEach((element:any) => { // chaque element est un id
+        const prod_to_be_add = this.listesProduits.find(prod=>prod.id==element) // ajout du nom du produit
+        this.produitsFieldAsFormArray.push(this.produitsControleur(prod_to_be_add?.nom || ' ',element,0, 0));
         this.produitSelectionnes.reset()
         });
     }
@@ -327,60 +333,72 @@ change_mode_evaluation(){
 
         // pour le momen
         if(this.isMissionFormulaireValide){
-          this.saveInfosProduit(1);
-          // let id_mission_save!:number;
+          let id_mission_save!:number;
 
-          // this.programmerService.saveMission(mission_instance).subscribe(
-          //   (value)=>{
-          //     id_mission_save = value.id || 0
-          //   },
-          //   (error:any)=>{
-          //     console.log(error)
-          //   },
-          //   ()=>{
-          //     if(id_mission_save!=0){
-          //        this.saveInfosProduit(id_mission_save);
-          //        this.saveInfosDepenses(id_mission_save);
-          //       }
-          //   },
-          // )
+          this.programmerService.saveMission(mission_instance).subscribe(
+            (value)=>{
+              id_mission_save = value.id || 0
+            },
+            (error:any)=>{
+              console.log(error)
+            },
+            ()=>{
+              if(id_mission_save!=0){
+                this.saveInfosProduit(id_mission_save);
+                this.saveInfosDepenses(id_mission_save);
+                }
+            },
+          )
         }
     }
+
         // a terminer
     saveInfosProduit(id:number){
 
       const listesProduits:any[] = this.formMission.get('liste_produits')?.value || []
       listesProduits.forEach(produit=>{produit.mission = id; produit.exercice= this.exercice_parent()})
-
-      if(this.choix_mode_evaluation == false){
-
-      }else{
-        listesProduits.forEach(produit=>{
-          produit.mission = id;
-          produit.exercice= this.exercice_parent();
-          produit.premier_pese =  Number(this.formMission.get('infoPoids')?.get('premier_poids')?.value)
-          produit.deuxieme_pese= Number(this.formMission.get('infoPoids')?.get('deuxieme_poids')?.value)
-        });
-
-      }
+      this.programmerService.saveListeProduits(listesProduits).subscribe(
+        (data)=>{
+          console.log(data)
+        },
+        (error)=>{
+          console.log(error)
+        },
+        ()=>{},
+      )
     }
 
-    saveInfosPesage(id:number){
-        const data = {
-          pesage: this.formMission.get('infoPoids')?.value // premier_pese, deuxieme_pese, envoie meme si il est sans pesage -->bd
-
-        }
-    }
     saveInfosDepenses(id:number){
-      const data = {
-        liste_depenses:this.formMission.get('liste_depenses')?.value,
-      }
+      const listesDepenses:any[] = this.formMission.get('liste_depenses')?.value || []
+      listesDepenses.forEach(depense=>{depense.mission = id; depense.exercice= this.exercice_parent()})
+      this.programmerService.saveListeDepenses(listesDepenses).subscribe(
+        (data)=>{
+          console.log(data)
+        },
+        (error)=>{
+          console.log(error)
+        },
+        ()=>{
+        this.resetForm();
+
+        },
+      )
+
     }
    //
-   changeDatePicker(){}
+  changeDatePicker(){}
 
-   resetForm(){}
+  resetForm(){
+    this.formMission.reset();
+    this.depensesFieldAsFormArray.clear();
+    this.produitsFieldAsFormArray.clear();
+  }
+
    //
+
+   gotoAcceuiMission(){
+      this.back_to_list_mission.emit('Acceuil')
+   }
   ngOnDestroy(): void {
       //this.sub.unsubscribe();
   }

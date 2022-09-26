@@ -12,6 +12,7 @@ import { MenuMissionComponent } from './components/menu-mission/menu-mission.com
 import { ProgrammerComponent } from './components/missions/programmer/programmer.component';
 import { MissionsComponent } from './components/missions/missions.component';
 import { OrdreMissionComponent } from './components/missions/ordre-mission/ordre-mission.component';
+import { IsLoggedGuard } from './is-logged.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
@@ -20,12 +21,26 @@ const routes: Routes = [
     //exercices
   {path:'exercice',component:ListeExerciceComponent,
   children :[
-    {path:'statistique',component:StatistiqueComponent},
-    {path:'bilan',component:BilanComponent},
+    {
+      path:'statistique',
+      component:StatistiqueComponent,
+      canActivate:[IsLoggedGuard]
+    },
+    {
+    path:'bilan',
+    component:BilanComponent,
+    canActivate:[IsLoggedGuard]    
+    },
     
-  ]},
+  ],
+  canActivate:[IsLoggedGuard]
+},
   
-  {path:'statistique',component:StatistiqueComponent},
+  {
+    path:'statistique',
+    component:StatistiqueComponent,
+    canActivate:[IsLoggedGuard]
+  },
 
   {path:'add',component:ProgrammerComponent},
   {path:'liste-mission',component:MissionsComponent},
@@ -40,14 +55,19 @@ const routes: Routes = [
 
   // Les maintenances
 
-  {path:'maintenance',component:MaintenanceComponent},
+  {
+    path:'maintenance',
+    component:MaintenanceComponent,
+    canActivate:[IsLoggedGuard]
+  },
 
   // Les bilans
-  {path:'bilan',component:BilanComponent},
-
   {
-    path:'detail-exercices/:_id',component:ExerciceComponent
-  }
+    path:'bilan',
+    component:BilanComponent,
+    canActivate:[IsLoggedGuard]
+  },
+
 ];
 
 @NgModule({

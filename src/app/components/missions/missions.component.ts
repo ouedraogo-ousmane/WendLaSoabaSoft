@@ -78,7 +78,7 @@ export class MissionsComponent implements OnInit {
       .subscribe(
         (data:IlisteMission)=>{
           this.listeMission = data.results;
-          console.log(this.listeMission)
+          //console.log(this.listeMission)
            settingDePagination = data // stockage du resultat pour l'extration des params: next et previous
            // impossible de les affectés directement au var de pagination
         },
@@ -155,14 +155,14 @@ export class MissionsComponent implements OnInit {
     missionSelection.forEach((obj)=>{
         //modifier l'etat de la mission
 
-        if(obj.etat_mission == false){
-           obj.etat_mission = true;
+        if(obj.value.etat_mission == false){
+            obj.value.etat_mission = true;
           }
         else {
-          obj.etat_mission = false;
+          obj.value.etat_mission = false;
         }
         //
-        this.serviceMission.endMission(obj).subscribe(
+        this.serviceMission.endMission(obj.value).subscribe(
           (data:any)=>{
               console.log(data);
           },
@@ -180,9 +180,10 @@ export class MissionsComponent implements OnInit {
   onSupprimerMissions(missionSelection:any[]){
 
     // recuperer la liste des elements à supprmer
+    console.log(missionSelection)
     missionSelection.forEach((obj)=>{
 
-      this.serviceMission.deleteMission(obj.id).subscribe(
+      this.serviceMission.deleteMission(obj.value.id).subscribe(
         (data:any)=>{
             console.log(data)
         },
@@ -190,7 +191,7 @@ export class MissionsComponent implements OnInit {
             console.log(error)
         },
         ()=>{
-          this.getListeMissionAcceuil(this.endPointGlobal)
+          this.getListeMissionAcceuil("http://127.0.0.1:8000/missions/acceuil/?exercice="+this.exercice_id)
         }
       )
   })
@@ -260,13 +261,23 @@ export class MissionsComponent implements OnInit {
     }
   }
 
+  missionSelectedPrint!:AcceuilMissionList
+  openPrintMission(mission_to_be_print:AcceuilMissionList):void{
+  // reduire le tmp de deplacement
+    this.missionSelectedPrint = mission_to_be_print;
+    this.isProgrammerMission = false;
+    this.isAcceuilMission = false;
+    this.isRetour =false ;
+    this.isBilan = false;
+    this.isdetail = false;
+    this.isImprimer = true;
+}
   // go to detail des missions
   missionSelectedDetail!:AcceuilMissionList
-
   isdetail:boolean = false;
-  openDetailMission():void{
+  openDetailMission(mission_to_be_edit:AcceuilMissionList):void{
     // reduire le tmp de deplacement
-    this.missionSelectedDetail = this.missionSelected[0];
+    this.missionSelectedDetail = mission_to_be_edit;
 
     this.isProgrammerMission = false;
     this.isAcceuilMission = false;
@@ -276,71 +287,12 @@ export class MissionsComponent implements OnInit {
   }
 
   // recuperation des missions selection
-  missionSelected:AcceuilMissionList[] = [];
+  missionSelected:MatListOption[] = [];
   onSelectionMissionChange(options: MatListOption[]){
     /**
-     ** options : tableau de MatListOption contenant plusieurs option sur les valeurs
-     *            selectionnées.(MatListOption.value) contient la liste des valeurs
-     *
-     ** Algorithme de recuperation des valeurs:
-     *      options.map(selected=>console.log(selected.value));
-     *
-     **     array.filter(obj=>return (obj)) : map chaq obj de array puis retourne un tableau
-     *            uniquement un tab de obj respectant la condition
-     *
-     **     array.map(obj=> { action }) # mapper chq obj de array
+     * options contient que la liste des elements selectionnés à la fin
      */
-
-    if(this.missionSelected.length>0){
-
-        options.map((selected:any)=>{
-
-          this.missionSelected = this.missionSelected.filter((obj:AcceuilMissionList)=>{
-
-            console.log(selected.value.id)
-            return obj.id != selected.value.id
-          })
-        })
-    }
-    else  options.map(selected=>this.missionSelected.push(selected.value));
-
-  }
-    // modal de confirmation: de terminaison ou de suppression
-  delai_animation_apparution:string = '300ms';
-  delai_animation_disparition:string = '300ms';
-
-  openDialog(
-            enterAnimationDuration: string,
-            exitAnimationDuration: string,
-            textWarning:string
-          ): void {
-
-      // parametres de configuration du component modal
-      const dialogRef = this.dialog.open(ModalActionMissionComponent, {
-        width: '50%',
-        enterAnimationDuration,
-        exitAnimationDuration,
-        disableClose:true,
-        height:"250px",
-        data:textWarning,
-    });
-
-    // EventEnitter à la fermeture du modal
-    dialogRef.afterClosed().subscribe(result => {
-      if(result=='true' && this.missionSelected.length>0){
-
-        switch(textWarning){
-          case 'Etes-Vous sûr de vouloir suppprimer ces missions ?' :
-              this.onSupprimerMissions(this.missionSelected);
-          break;
-
-          case 'Etes-Vous sûr de vouloir modifier etat de ces missions ?' :
-              this.onUpdateMissionStatus(this.missionSelected);
-          break;
-        }
-      }else{}
-    });
-
+    this.missionSelected = options; // recuperation de la liste des mission selectionner dans (MatListOption.value)
   }
 
   ngOnDestroy() {

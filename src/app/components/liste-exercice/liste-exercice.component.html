@@ -1,23 +1,33 @@
-<!-- <mat-progress-bar mode="indeterminate" *ngIf="IsWait"></mat-progress-bar> -->
-
 <!-- Color options: Primary | Accent | Warn -->
 
 <app-layout>
     <mat-sidenav-container>
         <mat-sidenav #sidenav role="navigation">
             <app-exercice (sidenavClose)="sidenav.close()"></app-exercice>
+
         </mat-sidenav>
+
         <mat-sidenav-content>
             <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+
             <main>
+
+                <!-- <div class="filtre">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>filtre</mat-label>
+                        <input type="text" [(ngModel)]="dataFiltre" aria-label="filtre" matInput>
+                    </mat-form-field>
+                </div> -->
+                <mat-progress-bar mode="indeterminate" *ngIf="IsWait"></mat-progress-bar>
+
 
                 <div class="content">
 
-                    <mat-card class="card" *ngFor="let data of listeExercice">
-                        <mat-card-title>Exercice {{data.date_exercice | date:'yyyy' }}</mat-card-title>
+                    <mat-card class="card" *ngFor="let data of listeExercice | searchFilter: dataFiltre">
+                        <mat-card-title>Exercice {{data.date_exercice | date:'yyyy'}}</mat-card-title>
                         <mat-card-content>
-                            <p *ngIf="!data.etat_exercice">En cours </p>
-                            <p *ngIf="data.etat_exercice">Terminé </p>
+                            <p *ngIf="!data.etat_exercice">(En cours) </p>
+                            <p *ngIf="data.etat_exercice">(Terminé) </p>
                         </mat-card-content>
                         <mat-card-actions>
                             <button mat-raised-button color="primary" (click)="openPage('mission',data)">Missions</button>

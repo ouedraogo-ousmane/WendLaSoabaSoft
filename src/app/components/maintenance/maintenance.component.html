@@ -7,33 +7,27 @@
             <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
             <main>
 
+                <div *ngIf="IsWait" class="loading">
+                    <mat-spinner mode="indeterminate" *ngIf="IsWait" color="primary"></mat-spinner>
 
-                <div class="container">
+                </div>
+
+
+                <div *ngIf="!IsWait" class="container">
 
                     <div class="entete">
                         <mat-form-field>
                             <input (keyup)="applyFiltrer($event)" matInput placeholder="Filtrer">
                         </mat-form-field>
-                        <button id="firstButton" @fade mat-raised-button type="submit" color="warn" *ngIf="this.selection.selected.length<=0" (click)="openDialogue()">Ajouter</button>
-                        <button id="firstButton" @fade mat-raised-button type="submit" color="accent" *ngIf="this.selection.selected.length>0" (click)="deleteMaintenance()">Supprimer</button>
+                        <button id="firstButton" class="button" @fade mat-raised-button type="submit" color="warn" *ngIf="this.selection.selected.length<=0" (click)="openDialogue()">Ajouter</button>
+                        <button id="firstButton" class="button" @fade mat-raised-button type="submit" color="accent" *ngIf="this.selection.selected.length>0" (click)="deleteMaintenance()">Supprimer</button>
                     </div>
-
-
-
-
-                    <!--<div class="button-div">
-     <button id="firstButton" @fade mat-stroked-button type="submit" color="primary" *ngIf="this.selection.selected.length<=0" (click)="openDialogue()">Ajouter</button> 
-    <button id="firstButton" @fade mat-stroked-button type="submit" color="warn" *ngIf="this.selection.selected.length>0" (click)="deleteMaintenance()">Supprimer</button>
-    <button @fade mat-stroked-button color="accent">Imprimer</button>
-
-</div>-->
-                    <mat-spinner mode="indeterminate" *ngIf="IsWait" color="primary"></mat-spinner>
-
-                    <div class="mat-elevation-z8" *ngIf="!IsWait">
-                        <table @fade mat-table id="maintenanceToPrint" [dataSource]="dataSource" class="mat-elevation-z8">
+                    <div class="mat-elevation-z8" id="maintenanceToPrint" *ngIf="!IsWait">
+                        <!-- <h2 *ngIf="isPrinting">Listes des reparations effectuées</h2> -->
+                        <table @fade mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
                             <!-- Checkbox Column -->
-                            <ng-container matColumnDef="select">
+                            <ng-container *ngIf="!isPrinting" matColumnDef="select">
                                 <th mat-header-cell *matHeaderCellDef>
                                     <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                                     </mat-checkbox>
@@ -43,13 +37,6 @@
                                     </mat-checkbox>
                                 </td>
                             </ng-container>
-
-                            <!-- Id Column 
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{dataSource.filteredData.indexOf(element)+1}} </td>
-            </ng-container>-->
-
 
 
                             <!-- Chauffeur maintenance Column -->
@@ -79,42 +66,20 @@
                                 <td mat-cell *matCellDef="let element"> {{element.montant | currency }} </td>
                             </ng-container>
 
-                            <!-- Actions Column 
-            <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef> Actions </th>
-                <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="warn">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-
-                    <button mat-icon-button color="warn">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </td>
-            </ng-container>-->
-
-                            <!-- References Column -->
-                            <!-- <ng-container matColumnDef="reference">
-            <th mat-header-cell *matHeaderCellDef> References </th>
-            <td mat-cell *matCellDef="let element"> pas de references </td>
-        </ng-container> -->
-
-
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row (click)="clickedRow(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
                             </tr>
 
                         </table>
-                        <mat-paginator #paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[2,5, 10, 25, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
-                        </mat-paginator>
-
-                        <!-- <div class="button">
-        <button @fade mat-stroked-button color="warn">precedent</button>
-        <button @fade mat-stroked-button color="primary">suivant</button>
-    </div> -->
+                        <mat-paginator #paginator [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons></mat-paginator>
+                    </div>
+                    <div class="buttonPrint">
+                        <button mat-raised-button (click)="print()" ngxPrint [useExistingCss]="true" printSectionId="maintenanceToPrint" printTitle="Listes des maintenances effectuées par vehicule" color="primary">Imprimer</button>
                     </div>
                 </div>
+
             </main>
         </mat-sidenav-content>
+
     </mat-sidenav-container>
 </app-layout>

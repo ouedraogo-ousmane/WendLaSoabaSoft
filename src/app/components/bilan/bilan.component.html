@@ -1,5 +1,3 @@
-<!-- <mat-spinner mode="indeterminate" *ngIf="!driverAvailable && !statTypeAvailable && statExercice" color="primary"></mat-spinner> -->
-
 <app-layout>
     <mat-sidenav-container>
         <mat-sidenav #sidenav role="navigation">
@@ -8,15 +6,20 @@
         <mat-sidenav-content>
             <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
             <main>
-                <div class="content-full">
+                <div class="chargement" *ngIf="!driverAvailable || !statTypeAvailable || !statExercice">
+                    <mat-spinner mode="indeterminate" color="primary">Chargement</mat-spinner>
+                </div>
+                <div *ngIf="driverAvailable && statTypeAvailable && statExercice" class="content-full">
                     <div class="exercice">
 
-                        <div id="dataExerciceToPrint">
-                            <div class="title">
-                                <h2 mat-title>Statistiques gloable de l'annee {{ exercice.annee }}</h2>
-                            </div>
+                        <div>
+
                             <div class="content">
-                                <div class="table">
+
+                                <div class="table" id="dataExerciceToPrint">
+                                    <div class="title">
+                                        <h2 mat-title>Statistiques gloable de l'annee {{ exercice.annee }}</h2>
+                                    </div>
                                     <table mat-table [dataSource]="listeExercice" class="mat-elevation-z8">
 
                                         <!-- Name Column -->
@@ -43,11 +46,9 @@
                                             <td mat-cell *matCellDef="let element"> {{element.totalRecette - element.totalDepenses}} </td>
                                         </ng-container>
 
-
                                         <tr mat-header-row *matHeaderRowDef="displayedExerciceColumns"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedExerciceColumns;"></tr>
                                     </table>
-
 
                                 </div>
 
@@ -59,26 +60,25 @@
 
                                 </div>
 
-
-
-
                             </div>
                         </div>
 
 
                         <div class="button">
-                            <button mat-stroked-button ngxPrint printSectionId="dataExerciceToPrint" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
+                            <button mat-stroked-button [useExistingCss]="true" ngxPrint printSectionId="dataExerciceToPrint" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
                         </div>
                     </div>
 
                     <div class="principale">
 
-                        <div id="dataExerciceToPrint">
-                            <div class="title">
-                                <h2 mat-title>Statistiques des chauffeurs dans l'exercice {{ exercice.annee }}</h2>
-                            </div>
+                        <div>
+
                             <div class="content">
-                                <div class="table">
+
+                                <div class="table" id="dataChauffeurToPrint">
+                                    <div class="title">
+                                        <h2 mat-title>Statistiques des chauffeurs dans l'exercice {{ exercice.annee }}</h2>
+                                    </div>
                                     <table mat-table [dataSource]="listeChauffeur" class="mat-elevation-z8">
 
 
@@ -141,19 +141,21 @@
 
 
                         <div class="button">
-                            <button mat-stroked-button ngxPrint printSectionId="dataExerciceToPrint" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
+                            <button mat-stroked-button ngxPrint [useExistingCss]="true" printSectionId="dataChauffeurToPrint" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
                         </div>
                     </div>
 
                     <!-- Sur les types de depenses -->
                     <div class="typeMission">
 
-                        <div id="typeMission">
-                            <div class="title">
-                                <h2 mat-title>Statistiques sur les types de depenses des missions</h2>
-                            </div>
+                        <div>
+
                             <div class="content">
-                                <div class="table">
+
+                                <div id="typeMission" class="table">
+                                    <div class="title">
+                                        <h2 mat-title>Statistiques sur les types de depenses des missions</h2>
+                                    </div>
                                     <table mat-table [dataSource]="typeDepense" class="mat-elevation-z8">
 
 
@@ -200,62 +202,9 @@
 
 
                         <div class="button">
-                            <button mat-stroked-button ngxPrint printSectionId="typeMission" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
+                            <button mat-stroked-button [useExistingCss]="true" ngxPrint printSectionId="typeMission" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
                         </div>
                     </div>
-
-                    <!--<div class="categorieVehicule">
-                
-                        <div id="categorieVehicule">
-                            <div class="title">
-                                <h2 mat-title>Statistiques sur les depenses par categorie de vehicule</h2>
-                            </div>
-                            <div class="content">
-                                <div class="table">
-                                    <table mat-table [dataSource]="categorie" class="mat-elevation-z8">
-                
-                
-                                        <ng-container matColumnDef="id">
-                                            <th mat-header-cell *matHeaderCellDef> No. </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                                        </ng-container>
-                
-                                        <ng-container matColumnDef="name">
-                                            <th mat-header-cell *matHeaderCellDef> Categorie vehicule </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                                        </ng-container>
-                
-                                        <ng-container matColumnDef="value">
-                                            <th mat-header-cell *matHeaderCellDef> Depenses Totales </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.value}} </td>
-                                        </ng-container>
-                
-                
-                                        <tr mat-header-row *matHeaderRowDef="displayed2Columns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayed2Columns;"></tr>
-                                    </table>
-                
-                
-                                </div>
-                
-                                <div class="visualisation" *ngIf="categorieData.length">
-                
-                                    <ngx-charts-bar-vertical [view]="[570,300]" [results]="categorieData" [xAxisLabel]="'Visualisation de l\'\ exercice 2022 '" [legendTitle]="'Types'" [yAxisLabel]="'Montants'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
-                                        [yAxis]="true" [gradient]="true" [showGridLines]="true" [showDataLabel]="true">
-                                    </ngx-charts-bar-vertical>
-                
-                                </div>
-                
-                
-                            </div>
-                
-                        </div>
-                
-                
-                        <div class="button">
-                            <button mat-stroked-button ngxPrint printSectionId="categorieVehicule" printTitle="Graphique des revenus d'un exercice" color="primary">Imprimer</button>
-                        </div>
-                    </div>-->
 
                 </div>
             </main>

@@ -6,6 +6,7 @@
     border: 2px solid black;
     border-radius: 6px;
     margin: 15px;
+    margin-top: 75px;
     /* box-shadow: 3px 3px 3px 3px rgba(0, 0, 255, .2); */
 }
 
@@ -45,12 +46,19 @@ button:hover {
     background-color: rgb(44, 202, 68);
 }
 
+.chargement {
+    width: 85%;
+    background-color: white;
+    margin-bottom: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 15%;
+}
+
 mat-spinner {
-    position: absolute;
-    left: 350px;
-    right: 150px;
-    top: 150px;
-    bottom: 150px;
+    margin-left: 45%;
+    width: 15px;
+    height: 15px;
 }
 
 mat-sidenav-container,

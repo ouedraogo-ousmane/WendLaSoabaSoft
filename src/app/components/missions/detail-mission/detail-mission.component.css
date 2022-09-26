@@ -14,6 +14,12 @@
 /* section info gerale sur la mission*/
 #kl-info-Mission{
   padding-bottom: 20px;
+
+}
+
+#kl-info-Mission>form,section>h4,.mat-h2,
+.kl-info-prod-dep,.kl-select-prd-dp{
+  padding-left:5%;
 }
 
 /* couleur arriere plan des boutons de soumission */

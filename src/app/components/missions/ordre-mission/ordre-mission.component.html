@@ -1,151 +1,142 @@
-
 <!--
 <mat-menu>
 
 </mat-menu> -->
 <mat-nav-list style="margin-left:70px; margin-top: 20px;">
-  <mat-nav-item style="display:inline-block">
-    <ng-container mat-list-item >
-      <button mat-fab  style="width:40px; height: 40px; background-color: lightblue;" (click)="print()">
+    <mat-nav-item style="display:inline-block">
+        <ng-container mat-list-item>
+            <button mat-fab style="width:40px; height: 40px; background-color: lightblue;" (click)="print()">
         <mat-icon><mat-icon>save </mat-icon></mat-icon>
       </button>
-    </ng-container>
+        </ng-container>
 
-  </mat-nav-item>
+    </mat-nav-item>
 
 </mat-nav-list>
 
 <div id="print-section">
-  <header class="kl-title">
-    <h1>
-      <span> COMPAGNIE WENDLASO TRANSPORT</span> <br>
-    </h1>
+    <header class="kl-title">
+        <h1>
+            <span> COMPAGNIE WENDLASO TRANSPORT</span> <br>
+        </h1>
 
-      <hr style="padding:10px; border-radius:5px; background-color: rgba(0, 0, 255, 0.744);">
-  </header>
+        <hr style="padding:10px; border-radius:5px; background-color: rgba(0, 0, 255, 0.744);">
+    </header>
 
-  <main style="position:absolute; left:20px; right:10px;  margin: 0; width: auto;">
+    <main>
+        <div class="kl-main-div-print">
 
-    <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="service">INFOS TRANSPORTEUR</th>
+                        <th style="text-align: right;">VEHICULE</th>
+                    </tr>
+                </thead>
 
-      <div  style="border:2px solid black;border-radius: 8px;  padding: 3px;width: 99%;">
+                <tbody>
+                    <tr>
+                        <td class="service">
+                            <span>{{chauffeur.nom  }} {{chauffeur.prenom}}</span> <br>
+                            <span>Tel: (+226) {{chauffeur.telephone}}</span> <br>
+                            <span>voyage n$: {{mission_toPrint.id}}</span>
+                        </td>
 
-        <table style=" width: 100%">
-          <thead>
-            <tr>
-              <th class="service">INFOS TRANSPORTEUR</th>
-              <th>VEHICULE</th>
-            </tr>
-          </thead>
+                        <td>
+                            <div style="width: auto; float:right">
+                                <span>immat : {{vehicule.immat}}</span> <br>
+                                <span>Couleur : {{vehicule.couleur}}</span> <br>
+                                <span>Marque : {{vehicule.marque}}</span>
+                            </div>
 
-          <tbody>
-            <tr>
-              <td class="service">
-               <span>{{chauffeur.nom  }} {{chauffeur.prenom}}</span> <br><br>
-               <span>Tel: (+226) {{chauffeur.telephone}}</span> <br><br>
-               <span>voyage n$: {{mission_toPrint.id}}</span>
-              </td>
+                        </td>
+                    </tr>
 
-              <td class="service">
-                <span>immat : {{vehicule.immat}}</span> <br><br>
-                <span>Couleur : {{vehicule.couleur}}</span> <br><br>
-                <span>Marque : {{vehicule.marque}}</span>
-               </td>
-            </tr>
-
-          </tbody>
-        </table>
-
-      </div>
-
-      <div id="kl-data-info" style="border:2px solid black; padding: 3px; border-radius: 8px; width: 99%;" >
-
-        <div style="float:left; width: 40%; margin-right: 15px;">
-
-          <table style=" width: 100%" >
-            <thead>
-              <tr>
-                <th class="service">PRODUITS</th>
-                <th>QUANTITES</th>
-                <th style="text-align: right;">UNITE</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr *ngFor="let produit of listeProduit">
-                <td class="service">{{produit.produit__nom}}</td>
-                <td class="qty">{{produit.qte_produit}}</td>
-                <td class="unit">{{produit.produit__unite}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div  style="float:left; padding: 3px; width: 51%; border-radius: 8px;">
-          <table style=" width: 100%">
-            <thead>
-              <tr>
-                <th class="service">LISTES DEPENSES</th>
-                <th>MONTANT</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr *ngFor="let depense of listeDepense">
-                <td class="service"> {{depense.intitule_depense__intitule}} </td>
-                <td class="qty">{{depense.montant}}</td>
-              </tr>
-            </tbody>
-          </table>
+                </tbody>
+            </table>
 
         </div>
-      </div>
 
-      <div id="trajet"  style="border:2px solid black; padding: 3px; border-radius: 8px; width: 99%;">
-        <table style=" width: 100%">
-          <thead>
-            <tr>
-              <th class="service">Trajet</th>
-              <th>Date Mission</th>
-              <th>Donneur d'ordre</th>
-            </tr>
-          </thead>
+        <div class="kl-main-div-print">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="service">PRODUITS</th>
+                        <th>QUANTITES</th>
+                        <th style="text-align: right;">UNITE</th>
+                    </tr>
+                </thead>
 
-          <tbody>
-            <tr>
-              <td class="service">
-               <span>Destination 1: {{trajet.ville_depart}}</span> <br><br>
-               <span>Destination 2: {{trajet.ville_arrivee}}</span> <br><br>
-              </td>
+                <tbody>
+                    <tr *ngFor="let produit of listeProduit">
+                        <td class="service">{{produit.produit__nom}}</td>
+                        <td class="dep">{{produit.qte_produit}}</td>
+                        <td style="text-align: right;">{{produit.produit__unite}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-              <td class="service">
-                <span>Date de Depart: {{mission_toPrint.date_mission}}</span> <br><br>
-                <span>Depart: {{trajet.ville_depart}} </span> <br><br>
-               </td>
+        <div class="kl-main-div-print">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="service">LISTES DEPENSES</th>
+                        <th style="text-align: right;">MONTANT</th>
+                    </tr>
+                </thead>
 
-               <td class="service" style="text-align:right">
-                <span>KOANDA </span>
-                <span>Abdoul </span> <br><br>
-               </td>
-            </tr>
+                <tbody>
+                    <tr *ngFor="let depense of listeDepense">
+                        <td class="service"> {{depense.intitule_depense__intitule}} </td>
+                        <td style="text-align: right;">{{depense.montant}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-          </tbody>
-        </table>
+        <div id="trajet">
+            <table style="padding:0;">
+                <thead>
+                    <tr>
+                        <th class="service">Trajet</th>
+                        <th style="text-align: right;">Date Mission</th>
+                    </tr>
+                </thead>
 
-      </div>
-    </div>
+                <tbody>
+                    <tr>
+                        <td class="service">
+                            <span>Destination 1: {{trajet.ville_depart}}</span> <br><br>
+                            <span>Destination 2: {{trajet.ville_arrivee}}</span> <br><br>
+                        </td>
 
-      <footer >
+                        <td>
+                            <div style="width: auto; float:right">
+                                <span>Date de Depart: {{mission_toPrint.date_mission}}</span> <br><br>
+                                <span>Ville de Depart: {{trajet.ville_depart}} </span> <br><br>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <div id="kl-div-only">
+
+            <b></b>
+            <b>Donneur d'ordre</b>
+
+        </div>
+
+    </main>
+    <footer>
         <mat-divider></mat-divider>
-         <div style="margin-top: 20px; width:25%; padding-left: 10px;">
-            <b>Chauffeur</b> <br> <br>
-         </div>
-      </footer>
 
-    <hr style="padding:10px; border-radius:5px; background-color: rgba(0, 0, 255, 0.744);">
-    <hr style="padding:1px;border-radius:5px; background-color: red">
+        <hr style="padding:10px; border-radius:5px; background-color: rgba(0, 0, 255, 0.744);">
+        <hr style="padding:1px;border-radius:5px; background-color: red">
 
-  </main>
-
+    </footer>
 </div>
-

@@ -1,19 +1,20 @@
-<div id="kl-auth-dv">
-    <mat-card style="width:25%; ">
+<div id="kl-auth-dv" class="content">
+    <mat-card style="width:45%;box-shadow: 3px 3px 3px 3px black;">
+
         <mat-card-header>
             <mat-card-title>
-                Login
+                Connexion
             </mat-card-title>
         </mat-card-header>
         <form [formGroup]="userLoginForm" (ngSubmit)="onLoginAction(userLoginForm.value)">
 
             <mat-card-content>
                 <mat-form-field appearance="legacy">
-                    <input type="text" matInput placeholder="nom *" id="nom" name="nom" formControlName="username">
+                    <input type="text" matInput placeholder="Utilisateur" id="nom" name="nom" formControlName="username">
                 </mat-form-field>
 
                 <mat-form-field appearance="legacy">
-                    <input type="password" matInput placeholder="mot de passe *" id="password" name="password" formControlName="password">
+                    <input type="password" matInput placeholder="mot de passe" id="password" name="password" formControlName="password">
                 </mat-form-field>
 
                 <mat-hint *ngIf="invalid_Hint" style="color:red;"> donnee invalid </mat-hint>
@@ -21,7 +22,7 @@
 
             <mat-card-actions>
 
-                <button type="submit" style="width: 100%;" mat-flat-button color="primary">
+                <button type="submit" style="width: 100%;" mat-raised-button color="primary">
           Se connecter
         </button>
             </mat-card-actions>

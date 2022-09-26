@@ -1,73 +1,116 @@
+mat-toolbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.termine {
+    background-color: #E0E2F1;
+}
+
 
 /*  footer dun tableau table */
-#kl-contenu{
-  margin-top: 50px;
-  display:flex;
-  flex-direction: row;
+
+#kl-contenu {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
 }
 
-.naim-side{
-  /* border-right:2px solid rgba(0, 0, 0, 0.216); */
-  border-radius: 5px;
-  height: 100vh;
-  flex:2 1 auto;
+.naim-side {
+    /* border-right:2px solid rgba(0, 0, 0, 0.216); */
+    border-radius: 5px;
+    height: 100vh;
+    flex: 2 1 auto;
 }
+
+
 /* creation d'un side bar */
-.kl-side-bar{
-  border-right:2px solid rgba(0, 0, 0, 0.216);
-  border-radius: 5px;
-  height: 100vh;
-  position: fixed;
-  padding: 10px;
 
+.kl-side-bar {
+    border-right: 2px solid rgba(0, 0, 0, 0.216);
+    border-radius: 5px;
+    height: 100vh;
+    position: fixed;
+    padding: 10px;
 }
 
-.kl-side-bar mat-selection-list{
-  position: relative;
+.kl-side-bar mat-selection-list {
+    position: relative;
 }
+
+
 /* creation du main content */
-.kl-main-content{
-  flex:4 1 auto;
-  padding: 20px;
+
+.kl-main-content {
+    flex: 5 1 auto;
+    padding: 20px;
 }
+
 
 /* rendre un contenu scrolable */
-.kl-main-content .missions-data{
+
+.kl-main-content .missions-data {
     max-height: 500px;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
+
 /* alignement flex box */
-.kl-main-content .missionsList-actions{
-  display: flex;
-  flex-direction: row;
-  padding:15px;
-  background-color: ghostwhite;
+
+.missionsList-actions {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    background-color: ghostwhite;
 }
-.missionsList-actions section{
-  flex:16 1 auto;
+
+.missionsList-actions section {
+    flex: 16 1 auto;
 }
-.missionsList-actions section+section{
-  flex:1 1 auto;
+
+.missionsList-actions section+section {
+    flex: 1 1 auto;
 }
+
 
 /* filter */
 
-.example-full-width{
-  width: 200px;
+.example-full-width {
+    width: 200px;
 }
+
 
 /* icons de pagination  */
-.missionsList-actions >section+section span{
-  margin-left:20px;
-}
-.missionsList-actions >section+section span >mat-icon {
-  font-size:30px;
-  margin-left: 8px;
+
+.missionsList-actions>section+section span {
+    margin-left: 20px;
 }
 
-.missionsList-actions >section+section span >mat-icon:hover {
-  cursor: pointer;
-  color: rgb(132, 138, 138);
+.missionsList-actions>section+section span>mat-icon {
+    font-size: 30px;
+    margin-left: 8px;
+}
+
+.missionsList-actions>section+section span>mat-icon:hover {
+    cursor: pointer;
+    color: rgb(132, 138, 138);
+}
+
+.kl-impression {
+    margin-top: 50px;
+}
+
+#table_of_mission {
+    width: 100%;
+    height: 450px;
+}
+
+.ng-container {
+    box-shadow: 2px 2px 2px 2px rgb(25, 50, 25);
+    width: 80%;
+    margin-left: 25px;
+    margin-right: 25px;
 }

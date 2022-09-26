@@ -3,6 +3,7 @@
   display:flex;
   justify-content: space-between;
   flex-direction: row;
+  width:100%;
 }
 
 /* modification de la taille des form field angular materiel*/
@@ -14,7 +15,14 @@
 /* section info gerale sur la mission*/
 #kl-info-Mission{
   padding-bottom: 20px;
+
 }
+
+#kl-info-Mission>form,section>h4,.mat-h2,
+.kl-info-prod-dep,.kl-select-prd-dp{
+  padding-left:5%;
+}
+
 
 /* couleur arriere plan des boutons de soumission */
 #kl-submit-btn{
@@ -24,23 +32,13 @@
   padding: 20px;
 }
 
-#kl-submit-btn> button{
-  padding:5px ;
-  margin-right: 20px;
-  padding-left: 40px;
-  padding-right: 40px;
-  transition: border 180ms;
-
-}
-
-#kl-submit-btn> button:hover{
-  border: 1px solid blue;
-
-}
-
 /* section dds motif missions */
 
 .kl-motif-mission{
   margin-top:20px ;
   margin-bottom: 20px;
+}
+
+#kl-submit-btn>button{
+  margin-right: 15px;
 }

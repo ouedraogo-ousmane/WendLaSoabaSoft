@@ -30,6 +30,8 @@ import { ListeMissionComponent } from './components/missions/liste-mission/liste
 import { ProgrammerComponent } from './components/missions/programmer/programmer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DetailMissionComponent } from './components/missions/detail-mission/detail-mission.component';
+import { ModalActionMissionComponent } from './components/missions/modal-action-mission/modal-action-mission.component';
+import { SearchFilterPipe } from './search-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { DetailMissionComponent } from './components/missions/detail-mission/det
     MenuMissionComponent,
     ProgrammerComponent,
     HeaderComponent,
-    DetailMissionComponent
+    DetailMissionComponent,
+    ModalActionMissionComponent,
+    SearchFilterPipe
     
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
@@ -61,7 +65,7 @@ import { DetailMissionComponent } from './components/missions/detail-mission/det
     MaterialModule,
     HttpClientModule,
     NgxChartsModule,
-    NgxPrintModule
+    NgxPrintModule,
 
 
    
@@ -69,7 +73,7 @@ import { DetailMissionComponent } from './components/missions/detail-mission/det
   providers: [
    // {provide: LOCALE_ID, useValue: "fr-FR"},
     //{provide: DEFAULT_CURRENCY_CODE},
-    DatePipe
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

@@ -45,12 +45,12 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
   listeMaintenance : Maintenances[] = [];
   chauffeur! : Chauffeur;
   event! :Event;
+  isPrinting : boolean = false;
 
   displayedColumns: string[] = ['select', 'motif', 'chauffeur','date_maintenance', 'montant'];
   // displayedColumns: string[] = ['select','id','date_maintenance', 'chauffeur', 'motif', 'montant','reference'];
   totalCost = 125000;
-  dataSource = new MatTableDataSource<Maintenances>(this.listeMaintenance);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource! : MatTableDataSource<Maintenances>
   selection = new SelectionModel<Maintenances>(true, []);
   myControl = new UntypedFormControl('');
   options: string[] = ['One', 'Two', 'Three'];
@@ -58,7 +58,6 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
 
   exercice_id! : number;
   IsWait : boolean = true;
-  // @ViewChild('paginator') paginator : MatPaginator;
   pieceSelected!: Piece;
   maintenanceSelected: Maintenances;
   clickedRows = new Set<Maintenances>();
@@ -79,7 +78,14 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
     
   }
 
+  print(){
+    this.isPrinting = true;
+  }
+  @ViewChild('paginator') paginator: MatPaginator;
+
+
   ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource<Maintenances>(this.listeMaintenance);
     this.dataSource.paginator = this.paginator;
   }
 
@@ -115,7 +121,7 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
 
     }
 
-    console.log(dataFiltered);
+  //  console.log(dataFiltered);
     
     
     return dataFiltered
@@ -191,16 +197,18 @@ export class MaintenanceComponent implements OnInit,AfterViewInit  {
     this.serviceMaintenance.getMaintenance().subscribe(
       (dataGetted:any)=>{
 
+        console.log(dataGetted);
+
         this.listeMaintenance = dataGetted.results;
         this.listeMaintenance = this.filterDataByExercice(this.exercice_id);
         this.dataSource.data = this.listeMaintenance;
-        console.log(this.listeMaintenance)
 
       },
       (error)=>{
         console.log(error);
       },
       ()=>{
+        
         console.log("données totalement recupérés");
         this.IsWait = false;
       }
