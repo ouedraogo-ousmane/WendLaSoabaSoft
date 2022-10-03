@@ -175,7 +175,7 @@ label {
     flex-direction: row;
 }
 
-#maintenanceToPrint {
+#chauffeurToPrint {
     display: none;
 }
 
@@ -196,8 +196,10 @@ label {
     #displayyTable {
         display: none;
     }
-    #maintenanceToPrint {
+    #chauffeurToPrint {
         display: block;
         box-shadow: none;
+        position: absolute;
+        width: 100%;
     }
 }

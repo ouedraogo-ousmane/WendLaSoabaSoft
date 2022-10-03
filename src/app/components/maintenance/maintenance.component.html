@@ -22,12 +22,59 @@
                         <button id="firstButton" class="button" @fade mat-raised-button type="submit" color="warn" *ngIf="this.selection.selected.length<=0" (click)="openDialogue()">Ajouter</button>
                         <button id="firstButton" class="button" @fade mat-raised-button type="submit" color="accent" *ngIf="this.selection.selected.length>0" (click)="deleteMaintenance()">Supprimer</button>
                     </div>
-                    <div class="mat-elevation-z8" id="maintenanceToPrint" *ngIf="!IsWait">
-                        <!-- <h2 *ngIf="isPrinting">Listes des reparations effectuées</h2> -->
+
+                    <div class="mat-elevation-z8" id="maintenanceToPrint">
+                        <h1 style="text-align: center;" mat-dialog-title>Listes des reparations effectuées</h1>
+                        <table @fade mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                            <!-- id Column -->
+
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef> ordre </th>
+                                <td mat-cell *matCellDef="let element;let position=index"> {{position+1}}</td>
+                            </ng-container>
+
+                            <!-- Chauffeur maintenance Column -->
+
+                            <ng-container matColumnDef="chauffeur">
+                                <th mat-header-cell *matHeaderCellDef> Chauffeur </th>
+                                <td mat-cell *matCellDef="let element"> {{element.chauffeur[0].nom }} {{element.chauffeur[0].prenom }} </td>
+                            </ng-container>
+
+                            <!-- Date maintenance Column -->
+
+                            <ng-container matColumnDef="date_maintenance">
+                                <th mat-header-cell *matHeaderCellDef> Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.date_maintenance | date:'dd MMMM yyyy' }} </td>
+                            </ng-container>
+
+                            <!-- Motif Column -->
+                            <ng-container matColumnDef="motif">
+                                <th mat-header-cell *matHeaderCellDef> Motif </th>
+                                <td mat-cell *matCellDef="let element"> {{element.motif}} </td>
+                            </ng-container>
+
+
+                            <!-- Montant Column -->
+                            <ng-container matColumnDef="montant">
+                                <th mat-header-cell *matHeaderCellDef> Montant </th>
+                                <td mat-cell *matCellDef="let element"> {{element.montant | currency }} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row (click)="clickedRow(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns1;" (click)="selection.toggle(row)">
+                            </tr>
+
+                        </table>
+                        <mat-card style="text-align:end;color:white;background-color:rgba(10, 10, 10, 0.775)">Total : {{getTotal()}}</mat-card>
+                    </div>
+
+                    <div class="mat-elevation-z8" id="displayyTable">
+                        <h1 style="text-align: center;" mat-dialog-title>Listes des reparations effectuées</h1>
                         <table @fade mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
                             <!-- Checkbox Column -->
-                            <ng-container *ngIf="!isPrinting" matColumnDef="select">
+                            <ng-container class="cacher" matColumnDef="select">
                                 <th mat-header-cell *matHeaderCellDef>
                                     <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                                     </mat-checkbox>
@@ -66,15 +113,16 @@
                                 <td mat-cell *matCellDef="let element"> {{element.montant | currency }} </td>
                             </ng-container>
 
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row (click)="clickedRow(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                            <tr mat-header-row [ngClass]="{'cacher':isPrinting,'afficher':!isPrinting}" *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row [ngClass]="{'cacher':isPrinting,'afficher':!isPrinting}" (click)="clickedRow(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
                             </tr>
 
                         </table>
                         <mat-paginator #paginator [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons></mat-paginator>
                     </div>
+
                     <div class="buttonPrint">
-                        <button mat-raised-button (click)="print()" ngxPrint [useExistingCss]="true" printSectionId="maintenanceToPrint" printTitle="Listes des maintenances effectuées par vehicule" color="primary">Imprimer</button>
+                        <button mat-raised-button (click)="print()" printSectionId="maintenanceToPrint" printTitle="Listes des maintenances effectuées par vehicule" color="primary">Imprimer</button>
                     </div>
                 </div>
 
@@ -83,3 +131,110 @@
 
     </mat-sidenav-container>
 </app-layout>
+
+<ng-template #dialogRef let-mydata>
+    <h1 mat-dialog-title>Enregistrement d'une maintenance</h1>
+    <div @fade mat-dialog-content>
+        <div class="col">
+
+            <mat-vertical-stepper [linear]="true" #stepper>
+                <!-- Première etape -->
+
+                <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                        <ng-template matStepLabel>Informations sur la maintenance</ng-template>
+                        <div class="row" style="margin-top:15px;">
+                            <div class="col">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Date</mat-label>
+                                    <input matInput formControlName="dateEntree" [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Vehicule</mat-label>
+                                    <mat-select formControlName="vehicule">
+                                        <mat-option *ngFor="let data of listeVehicule;let i=index" [value]="data.id">{{data.immat}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Motif</mat-label>
+                                    <textarea matInput formControlName="motif" type="text"></textarea>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Main d'oeuvre</mat-label>
+                                    <input matInput formControlName="coutMaint" type="number">
+                                </mat-form-field>
+
+
+                            </div>
+
+                        </div>
+                    </form>
+                    <div mat-dialog-actions [align]="'end'">
+                        <button mat-raised-button style="margin-right:15px;" color="warn" [disabled]="maintenanceAdded ==0" (click)="deleteMaintenance()">Annuler</button>
+                        <button mat-raised-button style="margin-right:15px;" (click)="saveMaintenance()" [disabled]="!isValid">Ajouter</button>
+                        <button mat-raised-button style="margin-right:15px;" color="primary" [disabled]="maintenanceAdded ==0" matStepperNext>Next</button>
+
+                    </div>
+                </mat-step>
+
+                <!-- Deuxième etape -->
+
+                <mat-step [stepControl]="secondFormGroup">
+                    <form [formGroup]="secondFormGroup">
+                        <ng-template matStepLabel>Informations sur les pièces</ng-template>
+                        <div class="row">
+                            <div class="col">
+                                <!-- La pièce  -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Piece</mat-label>
+                                    <mat-select formControlName="piece">
+                                        <mat-option *ngFor="let data of listePiece;let i=index" [value]="data.id">{{data.nom}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <!-- <mat-form-field appearance="fill">
+                                    <mat-label>Piece</mat-label>
+                                    <input matInput formControlName="piece" type="text">
+                                </mat-form-field> -->
+                                <!-- La quantite  -->
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Quantite</mat-label>
+                                    <input matInput formControlName="quantite" type="number">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Prix</mat-label>
+                                    <input matInput formControlName="prix" type="number">
+                                </mat-form-field>
+
+
+                            </div>
+                        </div>
+                    </form>
+                    <div mat-dialog-actions [align]="'end'">
+                        <button mat-raised-button [disabled]="pieceAdded ==0" (click)="deletePiece()" color="warn" matStepperPrevious>Annuler</button>
+                        <button mat-raised-button [disabled]="!isValidSecondForm" (click)="savePiece()">Ajouter</button>
+                        <button mat-raised-button [disabled]="pieceAdded ==0" matStepperNext color="primary">Next</button>
+                    </div>
+                </mat-step>
+
+                <mat-step>
+                    <ng-template matStepLabel>Done</ng-template>
+                    <div mat-dialog-actions [align]="'end'">
+
+                        <button mat-raised-button (click)="endSaving()" color="primary">Tout enregistrer</button>
+                    </div>
+                </mat-step>
+
+
+
+            </mat-vertical-stepper>
+        </div>
+
+    </div>
+</ng-template>

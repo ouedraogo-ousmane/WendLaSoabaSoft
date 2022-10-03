@@ -17,6 +17,8 @@ export class Maintenances implements Maintenance{
   date_maintenance! :Date;
   reference! : FormData;
   chauffeur : Chauffeur;
+  nom! : String;
+  prenom! : String;
 
 
 }

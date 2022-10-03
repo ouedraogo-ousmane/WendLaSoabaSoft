@@ -10,7 +10,7 @@
         <mat-sidenav-content>
             <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
 
-            <main>
+            <main style="position: relative;">
 
                 <!-- <div class="filtre">
                     <mat-form-field class="example-full-width">
@@ -21,7 +21,7 @@
                 <mat-progress-bar mode="indeterminate" *ngIf="IsWait"></mat-progress-bar>
 
 
-                <div class="content">
+                <div class="content" *ngIf="!IsWait && !noData">
 
                     <mat-card class="card" *ngFor="let data of listeExercice | searchFilter: dataFiltre">
                         <mat-card-title>Exercice {{data.date_exercice | date:'yyyy'}}</mat-card-title>
@@ -36,7 +36,10 @@
                         </mat-card-actions>
                     </mat-card>
 
+                </div>
 
+                <div class="aucuneDonnee">
+                    <p>Aucune donnée</p>
                 </div>
             </main>
         </mat-sidenav-content>

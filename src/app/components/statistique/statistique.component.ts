@@ -31,8 +31,8 @@ export class StatistiqueComponent implements OnInit,OnDestroy {
   
   isLoaded : boolean = false;
 
-  exerciceSub! : Subscription;
-  exerciceStatSub! : Subscription;
+  exerciceSub : Subscription = new Subscription();
+  exerciceStatSub : Subscription = new Subscription();
 
   listeExercice :IResults[] = [];
 
@@ -58,7 +58,7 @@ export class StatistiqueComponent implements OnInit,OnDestroy {
     this.exerciceStatSub =this.serviceExercice.getExerciceStat().subscribe(
       (dataGetted:any)=>{
          let listeExerciceStat = dataGetted.results;
-        console.log(this.listeExercice)
+      //  console.log(this.listeExercice)
         let series: { name: string; value: number; }[] = [];
         let exerciceStat:{name:string;series:{ name: string; value: number; }[]}[] =[];
 
@@ -85,7 +85,7 @@ export class StatistiqueComponent implements OnInit,OnDestroy {
              // this.exercice.push(stat);
               
 
-             console.log(exerciceStat)
+            // console.log(exerciceStat)
              // console.log(this.exercice);
               
             
@@ -107,17 +107,10 @@ export class StatistiqueComponent implements OnInit,OnDestroy {
       })
   }
 
-  
-
-  createChart(){}
-
-  
-  
-  
 
 
   ngOnDestroy(): void {
-      this.exerciceSub.unsubscribe();
+      //this.exerciceSub.unsubscribe();
       this.exerciceStatSub.unsubscribe();
   }
 }

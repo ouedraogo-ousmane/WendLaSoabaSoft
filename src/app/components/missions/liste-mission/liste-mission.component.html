@@ -1,108 +1,118 @@
-<ng-container>
+<ng-container >
 
-    <div class="missionsList-actions">
-        <!-- Input de filtrage des mission -->
-        <section style="padding-left: 25px;">
-            <mat-button-toggle-group [formControl]="navigationSelected" (change)="openMenuSeleted()">
-                <mat-button-toggle *ngFor="let mission of menuMission ;" [value]="mission.nom" [checked]=" mission.nom === 'Acceuil' ">
-                    {{mission.nom}}
-                </mat-button-toggle>
-            </mat-button-toggle-group>
+  <div class="missionsList-actions" >
+  <!-- Input de filtrage des mission -->
+    <section style="padding-left: 25px;">
+      <mat-button-toggle-group [formControl]="navigationSelected" (change)="openMenuSeleted()">
+        <mat-button-toggle   *ngFor="let mission of menuMission ;"
+        [value]="mission.nom" [checked]=" mission.nom === 'Acceuil' ">
+          {{mission.nom}}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
 
-            <mat-form-field style="margin-left:10%;" class="example-full-width">
-                <mat-label>filtre</mat-label>
-                <input type="text" [(ngModel)]="dataFiltre" aria-label="filtre" matInput>
-            </mat-form-field>
-        </section>
+      <mat-form-field style="margin-left:10%;" class="example-full-width">
+        <mat-label>filtre</mat-label>
+        <input type="text"
+              aria-label="filtre"
+              matInput
+            >
+      </mat-form-field>
+    </section>
 
-        <!-- Section choix de l'etat des mission à afficher  -->
-        <section>
-            <mat-button-toggle-group (change)="listerMissionParStatus(choiceStatus.value)" #choiceStatus="matButtonToggleGroup">
-                <mat-button-toggle [value]="true">En cours</mat-button-toggle>
-                <mat-button-toggle style="background-color:rgba(255, 0, 0, 0.387);" [value]="false">Terminer</mat-button-toggle>
-            </mat-button-toggle-group>
+      <!-- Section choix de l'etat des mission à afficher  -->
+    <section>
+      <mat-button-toggle-group (change)="listerMissionParStatus(choiceStatus.value)"
+          #choiceStatus="matButtonToggleGroup">
+        <mat-button-toggle [value]="true">En cours</mat-button-toggle>
+        <mat-button-toggle color="primary" [value]="false">Terminer</mat-button-toggle>
+      </mat-button-toggle-group>
 
-            <!-- pagination: par defaut 10 mission son envoyés par un get dans la bd -->
-            <span *ngIf="listeMission.length>0">
+      <!-- pagination: par defaut 10 mission son envoyés par un get dans la bd -->
+      <span  *ngIf="listeMission.length>0">
         <mat-icon (click)="getMissionListPagination(false)">first_page</mat-icon>
         <mat-icon (click)="getMissionListPagination(true)">last_page</mat-icon>
       </span>
-        </section>
+    </section>
 
-        <mat-divider></mat-divider>
-    </div>
+    <mat-divider></mat-divider>
+  </div>
 
     <!-- Listage des missions -->
-    <div class="missions-data" id="table_of_mission" style="position: relative;">
-        <div *ngIf="listeMission.length==0">
+  <div class="missions-data" id="table_of_mission" style="position: relative;">
+    <div *ngIf="listeMission.length==0" >
 
-            <div *ngIf="!isWait" style="text-align:center">
-                <div>
-                    Aucune mission
-                </div>
-            </div>
-            <div style="position:absolute; height:440px; width:100%; ">
-
-                <div *ngIf="isWait" style="display: flex; justify-content:center; align-items:center;
-              flex-direction:row;height:100%; background-color:rgba(173, 216, 230, 0.141)">
-                    <div>
-                        <mat-spinner [diameter]="50"></mat-spinner>
-                    </div>
-                </div>
-            </div>
+      <div *ngIf="!isWait" style="text-align:center">
+        <div>
+          Aucune mission
         </div>
+      </div>
+        <div style="position:absolute; height:440px; width:100%; ">
 
-        <mat-selection-list #selectedMultiMission style="padding-left: 25px;" (selectionChange)="onSelectionMissionChange(selectedMultiMission.selectedOptions.selected)">
-            <mat-list-option [ngClass]="{'enCours': !mission.etat_mission,'termine':mission.etat_mission}" color="primary" [value]="mission" *ngFor="let mission of listeMission | searchFilter: dataFiltre">
-
-                {{mission.chauffeur.nom}} {{mission.chauffeur.prenom}}
-
-            </mat-list-option>
-        </mat-selection-list>
+          <div *ngIf="isWait" style="display: flex; justify-content:center; align-items:center;
+              flex-direction:row;height:100%; background-color:rgba(173, 216, 230, 0.141)">
+              <div>
+                <mat-spinner [diameter]="50" ></mat-spinner>
+              </div>
+          </div>
+        </div>
     </div>
-    <mat-divider></mat-divider>
 
-    <div class="missionsList-actions">
-        <section>
-            <!-- selectedOptions.selected :
+    <mat-selection-list #selectedMultiMission style="padding-left: 25px;"
+      (selectionChange)="onSelectionMissionChange(selectedMultiMission.selectedOptions.selected)">
+      <mat-list-option  color="primary" [value]="mission"
+      *ngFor="let mission of listeMission" >
+
+      {{mission.chauffeur.nom}} {{mission.chauffeur.prenom}}
+
+    </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="missionsList-actions">
+    <section>
+      <!-- selectedOptions.selected :
         tableau contenant la liste des missions selectionnes
       -->
-            Selections: {{selectedMultiMission.selectedOptions.selected.length}}
-        </section>
+        Selections: {{selectedMultiMission.selectedOptions.selected.length}}
+    </section>
 
-        <section>
-            <!-- Liste des actions -->
-            <!-- desactiver les boutons si le nombre de selection est superieur a 1 ou == 0 -->
-            <button mat-raised-button (click)="openImprimerMission()" [disabled]="
+    <section>
+      <!-- Liste des actions -->
+      <!-- desactiver les boutons si le nombre de selection est superieur a 1 ou == 0 -->
+      <button mat-raised-button (click)="openImprimerMission()" [disabled]="
           selectedMultiMission.selectedOptions.selected.length>1 ||
           selectedMultiMission.selectedOptions.selected.length==0
           " style="margin-right:5px; background-color: lightblue;">
         Imprimer ordre de mission
       </button>
 
-            <!-- Bouton detail -->
-            <button mat-raised-button [disabled]="
+      <!-- Bouton detail -->
+      <button mat-raised-button  [disabled]="
           selectedMultiMission.selectedOptions.selected.length>1 ||
           selectedMultiMission.selectedOptions.selected.length==0
           " style="margin-right:5px; background-color: lightblue;" (click)="openDetailMission()">
         Detail
       </button>
 
-            <!--
+      <!--
         Bouton: imprimer + aller au detail
         Desactive les boutons si le nbre de selection == 0
       -->
-            <button mat-raised-button style="margin-right:5px" (click)="openDialog(delai_animation_apparution,
+      <button mat-raised-button style="margin-right:5px"
+      (click)="openDialog(delai_animation_apparution,
                 delai_animation_disparition,
                 'Etes-Vous sûr de vouloir modifier etat de ces missions ?')">
           Modifier l'etat
         </button>
 
-            <button mat-raised-button style="margin-right:5px" (click)="openDialog(delai_animation_apparution, delai_animation_disparition,
-          'Etes-Vous sûr de vouloir suppprimer ces missions ?')" color="warn">
+      <button mat-raised-button
+        style="margin-right:5px"  (click)="openDialog(delai_animation_apparution, delai_animation_disparition,
+          'Etes-Vous sûr de vouloir suppprimer ces missions ?')"
+            color="warn" >
         Supprimer
       </button>
 
-        </section>
-    </div>
-</ng-container>
+    </section>
+  </div>
+  </ng-container>

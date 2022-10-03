@@ -6,7 +6,7 @@
     <mat-nav-item style="display:inline-block">
         <ng-container mat-list-item>
             <button mat-fab style="width:40px; height: 40px; background-color: lightblue;" (click)="print()">
-        <mat-icon><mat-icon>save </mat-icon></mat-icon>
+        <mat-icon>save </mat-icon>
       </button>
         </ng-container>
 
@@ -17,7 +17,7 @@
 <div id="print-section">
     <header class="kl-title">
         <h1>
-            <span> COMPAGNIE WENDLASO TRANSPORT</span> <br>
+            <span>WENDLA SOABA TRANSPORT</span> <br>
         </h1>
 
         <hr style="padding:10px; border-radius:5px; background-color: rgba(0, 0, 255, 0.744);">
@@ -29,7 +29,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="service">INFOS TRANSPORTEUR</th>
+                        <th class="service">INFOS CHAUFFEUR</th>
                         <th style="text-align: right;">VEHICULE</th>
                     </tr>
                 </thead>
@@ -37,16 +37,17 @@
                 <tbody>
                     <tr>
                         <td class="service">
-                            <span>{{chauffeur.nom  }} {{chauffeur.prenom}}</span> <br>
-                            <span>Tel: (+226) {{chauffeur.telephone}}</span> <br>
-                            <span>voyage n$: {{mission_toPrint.id}}</span>
+                            <span>Nom      :{{chauffeur.nom  }} </span> <br>
+                            <span>Prenom   :{{chauffeur.prenom}}</span> <br>
+                            <span>Tel      :(+226) {{chauffeur.telephone}}</span> <br>
+                            <span>voyage n$:{{mission_toPrint.id}}</span>
                         </td>
 
                         <td>
                             <div style="width: auto; float:right">
-                                <span>immat : {{vehicule.immat}}</span> <br>
+                                <span>immat   : {{vehicule.immat}}</span> <br>
                                 <span>Couleur : {{vehicule.couleur}}</span> <br>
-                                <span>Marque : {{vehicule.marque}}</span>
+                                <span>Marque  : {{vehicule.marque}}</span>
                             </div>
 
                         </td>
@@ -81,7 +82,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="service">LISTES DEPENSES</th>
+                        <th class="service">LISTES DES DEPENSES</th>
                         <th style="text-align: right;">MONTANT</th>
                     </tr>
                 </thead>
@@ -99,7 +100,7 @@
             <table style="padding:0;">
                 <thead>
                     <tr>
-                        <th class="service">Trajet</th>
+                        <th class="service">Infos sur le trajet</th>
                         <th style="text-align: right;">Date Mission</th>
                     </tr>
                 </thead>
@@ -113,7 +114,7 @@
 
                         <td>
                             <div style="width: auto; float:right">
-                                <span>Date de Depart: {{mission_toPrint.date_mission}}</span> <br><br>
+                                <span>Date de Depart : {{mission_toPrint.date_mission}}</span> <br><br>
                                 <span>Ville de Depart: {{trajet.ville_depart}} </span> <br><br>
                             </div>
                         </td>

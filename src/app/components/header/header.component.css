@@ -3,6 +3,10 @@ a {
     color: white;
 }
 
+.spacer {
+    flex: 1 1 auto;
+}
+
 .logo {
     color: white;
     font-weight: bold;

@@ -1,0 +1,36 @@
+.example-action-buttons {
+    padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.rouge {
+    background-color: rgba(211, 139, 39, 0.55);
+}
+
+.lightblue {
+    background-color: lightblue;
+}
+
+#kl-noti-title {
+    display: flex;
+    justify-content: space-between
+}
+
+#kl-div-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.kl_loading_div {
+    text-align: center;
+}

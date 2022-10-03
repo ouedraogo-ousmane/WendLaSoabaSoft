@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListOption } from '@angular/material/list';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AcceuilMissionList } from '../Imission';
@@ -31,20 +30,18 @@ export class ListeMissionComponent implements OnInit {
   isWait : boolean = true;
   exercice_id:number = -1; // exercice parent à la mission
 
-  dataFiltre : any ="";
-
   //ajout
  typesOfShoes: string[] = ['ouedradrogo Amado', 'Karim Is', 'Ms  salif', 'Moccasins', 'Sneakers'];
 
  menuMission:any[]=[
-     {nom:'Accueil', ulrs:'acceuil'},
+     {nom:'Acceuil', ulrs:'acceuil'},
      {nom:'Nouvelle mission', urls:'programmer'},
+     {nom:'Bilan', urls:'bilan'},
  ];
 
  endPointGlobal:string = '';
  navigationSelected = new FormControl('');
   fontStyle?: string;
-
 
  constructor
  (
@@ -61,8 +58,6 @@ export class ListeMissionComponent implements OnInit {
   choiceMission(missionSelected:any){
     console.log(missionSelected)
   }
-
-  
   // recuperation de l'exercice choisi
 
   exercice_parent():void{
@@ -88,16 +83,6 @@ export class ListeMissionComponent implements OnInit {
   listeMission:AcceuilMissionList[] = [];
   pageMissionSuivant:string= ''; // contenir l'url des pages suivant
   pageMissionPrecedent:string=''; // contenir l'url des pages precedents
-  dataSource = new MatTableDataSource<AcceuilMissionList>(this.listeMission);
-
-  /**
-   * Cette methode ci-dessous permet de filtrer les données du tableau
-   */
-   applyFiltrer(event: Event){
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    
-  }
 
   getListeMissionAcceuil(endpointListeMission:string){
     /* recuperqtion de la liste des missions */
@@ -108,7 +93,6 @@ export class ListeMissionComponent implements OnInit {
       .subscribe(
         (data:IlisteMission)=>{
           this.listeMission = data.results;
-          this.dataSource.data = this.listeMission;
           //console.log(this.listeMission)
            settingDePagination = data // stockage du resultat pour l'extration des params: next et previous
            // impossible de les affectés directement au var de pagination
@@ -251,6 +235,7 @@ export class ListeMissionComponent implements OnInit {
   }
   openMenuSeleted():void{
     if(this.navigationSelected.value === "Nouvelle mission") this.go_menu_acceil.emit('programmer');
+    if(this.navigationSelected.value === "Bilan") this.go_menu_acceil.emit('bilan');
   }
 
   // recuperation des missions selection

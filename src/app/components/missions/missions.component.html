@@ -20,7 +20,7 @@
                     <!-- contenu de l'ecran-->
                     <div id="kl-contenu">
                         <!-- div pour creer separer l'ecran
-    <div class="naim-side"></div> -->
+                        <div class="naim-side"></div> -->
 
                         <div class="kl-main-content">
                             <ng-container class="kl-main-content" *ngIf="isAcceuilMission">
@@ -67,20 +67,7 @@
     <div *ngIf="isImprimer" (click)="gotoMenuItem('acceuil')" style="position:fixed; top: 48px;  margin-top: 10px;">
         <!-- bouton de retour à l'acceuil -->
         <button mat-fab style="width:40px; height: 40px; background-color: lightblue;">
-    <mat-icon><mat-icon>arrow_back </mat-icon></mat-icon>
-  </button>
+        <mat-icon><mat-icon>arrow_back </mat-icon></mat-icon>
+      </button>
     </div>
 </app-layout>
-
-<!-- Sous bar de navigation vertical
-  <div *ngIf="!isImprimer">
-      <div class='kl-side-bar'>
-      <mat-selection-list  #missions [multiple]="false">
-        <mat-list-option (click)="gotoMenuItem(mission.urls)"
-         *ngFor="let mission of menuMission ; " [value]="mission.nom">
-          {{mission.nom}}
-        </mat-list-option>
-        <mat-hint></mat-hint>
-      </mat-selection-list>
-    </div>
-  </div>-->

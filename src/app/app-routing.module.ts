@@ -13,33 +13,28 @@ import { ProgrammerComponent } from './components/missions/programmer/programmer
 import { MissionsComponent } from './components/missions/missions.component';
 import { OrdreMissionComponent } from './components/missions/ordre-mission/ordre-mission.component';
 import { IsLoggedGuard } from './is-logged.guard';
+import { ChauffeurComponent } from './components/chauffeur/chauffeur.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
   {path:'accueil',component:AuthentificationComponent},
 
     //exercices
-  {path:'exercice',component:ListeExerciceComponent,
-  children :[
-    {
-      path:'statistique',
-      component:StatistiqueComponent,
-      canActivate:[IsLoggedGuard]
-    },
-    {
-    path:'bilan',
-    component:BilanComponent,
-    canActivate:[IsLoggedGuard]    
-    },
-    
-  ],
-  canActivate:[IsLoggedGuard]
-},
+  {
+    path:'exercice',component:ListeExerciceComponent,
+    canActivate:[IsLoggedGuard]
+  },
   
   {
     path:'statistique',
     component:StatistiqueComponent,
     canActivate:[IsLoggedGuard]
+  },
+  // Les bilans
+  {
+    path:'bilan',
+    component:BilanComponent,
+    canActivate:[IsLoggedGuard]    
   },
 
   {path:'add',component:ProgrammerComponent},
@@ -48,10 +43,16 @@ const routes: Routes = [
 
   // Les missions
 
-  {path:'mission',component:MissionsComponent,
-    
+  {
+    path:'mission',
+    component:MissionsComponent,
+    canActivate:[IsLoggedGuard]
   },
-  {path:'ordre', component:OrdreMissionComponent},
+  {
+    path:'ordre', 
+    component:OrdreMissionComponent,
+    canActivate:[IsLoggedGuard]
+  },
 
   // Les maintenances
 
@@ -67,6 +68,14 @@ const routes: Routes = [
     component:BilanComponent,
     canActivate:[IsLoggedGuard]
   },
+    // Les chauffeurs
+    {
+      path:'chauffeur',
+      component:ChauffeurComponent,
+      canActivate:[IsLoggedGuard]
+    }
+
+
 
 ];
 

@@ -21,6 +21,7 @@ export class ListeExerciceComponent implements OnInit {
    panelOpenState = false;
    dataFiltre : any = "";
    IsWait : boolean = true;
+   noData : boolean = false;
    dataSource = new MatTableDataSource<IResults>(this.listeExercice);
 
  
@@ -80,9 +81,7 @@ export class ListeExerciceComponent implements OnInit {
      this.exerciceService.getListeExercices().subscribe(
        (dataGetted:any)=>{
          this.listeExercice = dataGetted.results;
-         
-         
-         console.log(this.listeExercice);
+         //console.log(this.listeExercice);
        },
        (error)=>{
          console.log("Erreur detecté de type ",error);
@@ -90,6 +89,9 @@ export class ListeExerciceComponent implements OnInit {
        ()=>{
          console.log("Données complétés");
          this.IsWait = false;
+         if(this.listeExercice.length ==0){
+          this.noData = true;
+         }
        }
      )
    }

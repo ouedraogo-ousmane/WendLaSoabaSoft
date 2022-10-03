@@ -28,7 +28,7 @@ import { GoogleChartsModule } from 'angular-google-charts';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import {MatBadgeModule} from '@angular/material/badge';
 
 const materialComponents = [
     MatCheckboxModule,
@@ -58,10 +58,9 @@ const materialComponents = [
     MatAutocompleteModule,
     GoogleChartsModule,
     MatProgressSpinnerModule,
-    MatTabsModule
-
-
-    
+    MatTabsModule,
+    MatExpansionModule,
+    MatBadgeModule    
 ]
 
 @NgModule({

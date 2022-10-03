@@ -32,6 +32,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { DetailMissionComponent } from './components/missions/detail-mission/detail-mission.component';
 import { ModalActionMissionComponent } from './components/missions/modal-action-mission/modal-action-mission.component';
 import { SearchFilterPipe } from './search-filter.pipe';
+import { ListeChauffeurComponent } from './components/liste-chauffeur/liste-chauffeur.component';
+import { AddChauffeurComponent } from './components/add-chauffeur/add-chauffeur.component';
+import { ChauffeurComponent } from './components/chauffeur/chauffeur.component';
+import { NotificationsComponent } from './components/missions/notifications/notifications.component';
+import { BilanMissionsComponent } from './components/missions/bilan-missions/bilan-missions.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +56,12 @@ import { SearchFilterPipe } from './search-filter.pipe';
     HeaderComponent,
     DetailMissionComponent,
     ModalActionMissionComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    ListeChauffeurComponent,
+    AddChauffeurComponent,
+    ChauffeurComponent,
+    NotificationsComponent,
+    BilanMissionsComponent
     
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
@@ -72,8 +82,7 @@ import { SearchFilterPipe } from './search-filter.pipe';
   ],
   providers: [
    // {provide: LOCALE_ID, useValue: "fr-FR"},
-    //{provide: DEFAULT_CURRENCY_CODE},
-    DatePipe,
+
   ],
   bootstrap: [AppComponent]
 })

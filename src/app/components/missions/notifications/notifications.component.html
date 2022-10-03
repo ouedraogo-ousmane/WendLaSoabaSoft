@@ -1,0 +1,78 @@
+<h3 id="kl-noti-title">
+    <span>Documents vehicules </span>
+    <button mat-raised-button color='primary' mat-dialog-close>Fermer</button>
+</h3>
+
+<mat-divider></mat-divider>
+<mat-dialog-content class="mat-typography" style="min-height: 200px;">
+
+    <div class="example-action-buttons" style="margin-bottom:5px;  padding:10px">
+        <!-- <button mat-button (click)="accordion.openAll()">Etendre( Tout ) </button> -->
+        <button mat-button (click)="accordion.closeAll()">
+          <mat-icon>arrow_downward</mat-icon>
+        </button>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-accordion class="example-headers-align">
+        <div style="position:relative; " [ngClass]="{kl_loading_div:is_data_there}">
+
+            <span *ngIf="is_data_there">chargement ... </span>
+            <div id="kl-div-loading" *ngIf="is_data_there">
+                <mat-spinner [diameter]="40"></mat-spinner>
+            </div>
+
+            <div *ngIf="!is_data_there">
+
+                <ng-container *ngFor="let docs of listeDocuentvehicule ;let i = index;">
+                    <mat-expansion-panel [hideToggle]="true" (opened)="setForcontrol(i)" (closed)="delFormControl(i)" [ngClass]="{rouge:is_nbre_moisFar(docs.nbreMoisRestant), lightblue:isDate_proche}">
+
+                        <mat-expansion-panel-header>
+                            <!-- titre -->
+                            <mat-panel-title>
+                                <mat-icon color="primary">account_circle</mat-icon>
+                                <span style="margin-left:10px;">
+                            {{docs.chauffeur.nom}}
+                            {{docs.chauffeur.prenom}}
+                          </span>
+
+                            </mat-panel-title>
+                            <!-- desc -->
+                            <mat-panel-description>
+                                details: {{docs.nbreJoursRestant}} jours restant/ ({{docs.nbreMoisRestant}} mois)
+
+                                <span> Titre : {{docs.intitule}} </span>
+                            </mat-panel-description>
+
+                        </mat-expansion-panel-header>
+                        <!-- contenu -->
+                        <form [formGroup]="formDate" style="padding-left: 20px; padding-top: 20px; background-color:#fff;">
+
+                            <mat-form-field class="example-full-width" appearance="fill" *ngIf="is_date_panel_expand[i]">
+
+                                <mat-label>Nouvelle Date Exp.</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="date_expiration">
+                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                            <button [disabled]="formDate.invalid" mat-stroked-button (click)="updateListeDocsVehicule()" *ngIf="is_date_panel_expand[i]" style="margin-left:20px;border:1px solid green">
+                          <mat-icon>done</mat-icon> Valider
+                        </button>
+                        </form>
+                    </mat-expansion-panel>
+                </ng-container>
+            </div>
+        </div>
+
+    </mat-accordion>
+    <mat-divider></mat-divider>
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-actions align="end">
+    <button mat-button color='warn' [disabled]="pagination_arr_url== '' " (click)="getPreviousData()">precedent</button>
+    <button mat-button [disabled]="pagination_avt_url== '' " (click)="getNextData()">Suivant</button>
+</mat-dialog-actions>

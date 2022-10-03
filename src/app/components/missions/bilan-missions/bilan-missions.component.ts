@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'app-bilan-missions',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BilanMissionsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  openDialog() {
+    const dialogRef = this.dialog.open(NotificationsComponent,  {
+      width: '55%',
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      // console.log(`Dialog result: ${result}`);
+      
+    });
   }
-
 }

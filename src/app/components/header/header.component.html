@@ -6,5 +6,14 @@
     </div>
     <span class="logo">Wendla Soaba Transport</span>
 
+    <span class="spacer"></span>
+
+    <!-- <button mat-raised-button color="warn" >Notifications</button> -->
+
+    <button mat-icon-button class="example-icon" (click)="openDialog()" aria-label="Example icon-button with share icon">
+        <mat-icon [matBadge]="nombreNotification" matBadgeColor="warn">notifications</mat-icon>
+      </button>
+
+
 
 </mat-toolbar>

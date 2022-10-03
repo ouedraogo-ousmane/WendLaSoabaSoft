@@ -1,0 +1,230 @@
+<!-- Color options: Primary | Accent | Warn -->
+
+<app-layout>
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav role="navigation">
+            <app-exercice (sidenavClose)="sidenav.close()"></app-exercice>
+
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+
+            <main>
+
+
+
+                <div *ngIf="isLoading" class="loading">
+                    <mat-spinner mode="indeterminate" *ngIf="isLoading" color="primary"></mat-spinner>
+
+                </div>
+
+
+                <div *ngIf="!isLoading" class="container">
+
+                    <div class="entete">
+                        <mat-form-field>
+                            <input (keyup)="applyFiltrer($event)" matInput placeholder="Filtrer">
+                        </mat-form-field>
+                        <button id="firstButton" class="button" @fade mat-stroked-button type="submit" color="warn" *ngIf="this.selection.selected.length<=0" (click)="openDialogue()">Ajouter</button>
+                    </div>
+
+
+
+                    <div class="mat-elevation-z8" id="displayyTable">
+                        <h1 style="text-align: center;font: size 20px;" mat-dialog-title>Listes des chauffeurs de Wendla Soaba Transport</h1>
+                        <table @fade mat-table [dataSource]="dataSource">
+
+                            <!-- Checkbox Column -->
+                            <ng-container class="cacher" matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+
+
+                            <!-- id Column -->
+
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef> ordre </th>
+                                <td mat-cell *matCellDef="let element;let position=index"> {{position}}</td>
+                            </ng-container>
+
+                            <!-- nom Column -->
+
+                            <ng-container matColumnDef="nom">
+                                <th mat-header-cell *matHeaderCellDef> Nom </th>
+                                <td mat-cell *matCellDef="let element"> {{element.nom }} </td>
+                            </ng-container>
+
+                            <!-- Prenom Column -->
+
+                            <ng-container matColumnDef="prenom">
+                                <th mat-header-cell *matHeaderCellDef> Prenom </th>
+                                <td mat-cell *matCellDef="let element"> {{element.prenom }} </td>
+                            </ng-container>
+
+                            <!-- vehicule Column -->
+                            <ng-container matColumnDef="vehicule">
+                                <th mat-header-cell *matHeaderCellDef> Vehicule </th>
+                                <td mat-cell *matCellDef="let element"> {{element.vehiculeInfos.immat}} </td>
+                            </ng-container>
+
+
+                            <!-- telephone Column -->
+                            <ng-container matColumnDef="telephone">
+                                <th mat-header-cell *matHeaderCellDef> Telephone </th>
+                                <td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+                            </ng-container>
+
+                            <!-- Salaire Column -->
+                            <ng-container matColumnDef="salaire">
+                                <th mat-header-cell *matHeaderCellDef> Salaire </th>
+                                <td mat-cell *matCellDef="let element"> {{element.salaire | currency }} </td>
+                            </ng-container>
+
+                            <!-- Actions Column -->
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span>
+                                        <button mat-icon-button color="primary" (click)="onEdit()" class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="warn" (click)="onDelete()" class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row (click)="clickedRow(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                            </tr>
+
+                        </table>
+                        <!-- <mat-paginator #paginator [pageSizeOptions]="[2, 4, 6]" showFirstLastButtons></mat-paginator> -->
+                    </div>
+
+                    <div class="mat-elevation-z8" id="chauffeurToPrint">
+                        <h1 style="text-align: center;" mat-dialog-title>Listes des chauffeurs de WENDLA SOABA TRANSPORT</h1>
+                        <table @fade mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                            <!-- id Column -->
+
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef> ordre </th>
+                                <td mat-cell *matCellDef="let element;let position=index"> {{position+1}}</td>
+                            </ng-container>
+
+                            <!-- nom Column -->
+
+                            <ng-container matColumnDef="nom">
+                                <th mat-header-cell *matHeaderCellDef> Nom </th>
+                                <td mat-cell *matCellDef="let element"> {{element.nom }} </td>
+                            </ng-container>
+
+                            <!-- Prenom Column -->
+
+                            <ng-container matColumnDef="prenom">
+                                <th mat-header-cell *matHeaderCellDef> Prenom </th>
+                                <td mat-cell *matCellDef="let element"> {{element.prenom }} </td>
+                            </ng-container>
+
+                            <!-- vehicule Column -->
+                            <ng-container matColumnDef="vehicule">
+                                <th mat-header-cell *matHeaderCellDef> Vehicule </th>
+                                <td mat-cell *matCellDef="let element"> {{element.vehiculeInfos.immat}} </td>
+                            </ng-container>
+
+
+                            <!-- telephone Column -->
+                            <ng-container matColumnDef="telephone">
+                                <th mat-header-cell *matHeaderCellDef> Telephone </th>
+                                <td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+                            </ng-container>
+
+                            <!-- Salaire Column -->
+                            <ng-container matColumnDef="salaire">
+                                <th mat-header-cell *matHeaderCellDef> Salaire </th>
+                                <td mat-cell *matCellDef="let element"> {{element.salaire | currency }} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                            <tr mat-row (click)="clickedRow(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns1;" (click)="selection.toggle(row)">
+                            </tr>
+
+
+                        </table>
+
+                    </div>
+
+                    <div class="buttonPrint">
+                        <button mat-raised-button (click)="print()" color="primary">Imprimer</button>
+                    </div>
+                </div>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</app-layout>
+
+<ng-template #dialogRef let-mydata>
+    <h2 mat-dialog-title *ngIf="chauffeurSelected.id ==null">Enregistrement d'un chauffeur</h2>
+    <h2 mat-dialog-title *ngIf="chauffeurSelected.id !=null">Modification d'un chauffeur</h2>
+    <div @fade mat-dialog-content class="col">
+        <form [formGroup]="chauffeurFormGroup">
+            <!-- La vehicule  -->
+            <mat-form-field appearance="fill">
+                <mat-label>Vehicule</mat-label>
+                <mat-select formControlName="vehicule">
+                    <mat-option *ngFor="let data of listeVehicule;" [value]="data.id">{{data.immat}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!-- Le nom du chauffeur -->
+            <mat-form-field appearance="fill">
+                <mat-label>Nom</mat-label>
+                <input matInput formControlName="nom" type="text">
+            </mat-form-field>
+            <!-- Le prenom  -->
+            <mat-form-field appearance="fill">
+                <mat-label>Prenom</mat-label>
+                <input matInput formControlName="prenom" type="text">
+            </mat-form-field>
+            <!-- Le telephone -->
+            <mat-form-field appearance="fill">
+                <mat-label>Telephone</mat-label>
+                <input matInput formControlName="telephone" type="text">
+            </mat-form-field>
+            <!-- Le salaire -->
+            <mat-form-field appearance="fill">
+                <mat-label>Salaire</mat-label>
+                <input matInput formControlName="salaire" type="text">
+            </mat-form-field>
+        </form>
+
+    </div>
+    <div mat-dialog-actions [align]="'center'">
+        <button mat-raised-button *ngIf="chauffeurSelected.id !=null" [disabled]="!isValidchauffeurFormGroup" (click)="updateChauffeur()" color="warn">Modifier</button>
+        <button mat-raised-button *ngIf="chauffeurSelected.id ==null" [disabled]="!isValidchauffeurFormGroup" color="primary" (click)="sendChauffeur()">Ajouter</button>
+    </div>
+</ng-template>
+
+<ng-template #dialogRefDel let-mydata>
+    <h2 mat-dialog-title>Suppression d'un chauffeur</h2>
+    <div @fade mat-dialog-content class="col">
+
+        <h3 style="color:red;font-size: 16px;">Voulez-vous vraiment supprimer ce chauffeur ?</h3>
+
+    </div>
+    <div mat-dialog-actions [align]="'center'">
+        <button mat-stroked-button (click)="updateChauffeur('delete')" color="primary">Oui</button>
+        <button mat-stroked-button color="warn">Non</button>
+    </div>
+</ng-template>
+
+<!-- <mat-spinner mode="indeterminate" *ngIf="isLoading" color="primary"></mat-spinner> -->

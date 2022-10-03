@@ -13,7 +13,6 @@ export class ProgrammerService {
 
   readonly endPointAjoutMission="http://127.0.0.1:8000/missions/creer/";
 
-
 constructor(private http:HttpClient) {
     this.token = localStorage.getItem("token")
     this.httpOptions = {
@@ -56,29 +55,14 @@ saveMission(data:IMission):Observable<IMission>{
   return this.http.post<IMission>(this.endPointAjoutMission, data, this.httpOptions)
 };
 
-updateMission(data:IMission):Observable<IMission>{
-  return this.http.put<any>(this.endPointAjoutMission + `${data.id}/detail`,this.httpOptions);
-};
-
 saveListeProduits(data:any):Observable<any>{
   const endpoint:string = "http://127.0.0.1:8000/missions/recetteGlobale/"
   return this.http.post(endpoint, data, this.httpOptions)
 };
 
-updateListeProduits(data:any):Observable<any>{
-  const endpoint:string = "http://127.0.0.1:8000/missions/recetteGlobale/"
-  return this.http.put<any>(endpoint + `${data.id}/detail`,this.httpOptions);
-};
-
 saveListeDepenses(data:any):Observable<any>{
   const endpoint:string = "http://127.0.0.1:8000/missions/depensesMissions/"
   return this.http.post(endpoint, data, this.httpOptions)
-};
-
-updateListeDepenses(data:any):Observable<any>{
-  const endpoint:string = "http://127.0.0.1:8000/missions/depensesMissions/"
-  return this.http.put<any>(endpoint + `${data.id}/detail`,this.httpOptions);
-
 };
 
 

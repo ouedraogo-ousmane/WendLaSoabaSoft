@@ -1,36 +1,3 @@
-<!--<div class="main">
-
-    <div class="entete">
-        <mat-toolbar color="primary">
-
-            <span class="logo">WendLa Soaba Transport</span>
-
-            <span class="spacer"></span>
-             <div class="barre">
-                <input style="color:white" matInput type="search">
-            </div>
-            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-                <mat-icon>search</mat-icon>
-            </button> 
-
-        </mat-toolbar>
-
-    </div>
-
-    <mat-drawer-container class="container">
-        <mat-drawer mode="side" opened> <strong>Menu</strong>
-            
-        </mat-drawer>
-        <mat-drawer-content>
-            <router-outlet></router-outlet>
-        </mat-drawer-content>
-    </mat-drawer-container>
-
-
-</div>-->
-
-
-
 <mat-nav-list style="margin: bottom 25px;">
 
     <a mat-list-item routerLink="/exercice" [routerLinkActiveOptions]={exact:true} routerLinkActive="active" (click)="onSidenavClose()">
@@ -38,17 +5,15 @@
     </a>
 
 
-    <!-- <a mat-list-item routerLink="/exercice" (click)="onSidenavClose()" routerLinkActive="active">
-        <span class="nav-caption"><mat-icon matListIcon><span class="material-symbols-outlined">
-                date_range
-                </span></mat-icon>Exercices</span>
-    </a> -->
+    <a mat-list-item routerLink="/chauffeur" (click)="onSidenavClose()" routerLinkActive="active">
+        <span class="nav-caption"><mat-icon matListIcon>person</mat-icon>Chauffeurs</span>
+    </a>
 
 
     <a mat-list-item routerLink="/statistique" (click)="onSidenavClose()" routerLinkActive="active">
         <span class="nav-caption"><mat-icon matListIcon>bar_chart</mat-icon>
                 Statistiques
-            </span>
+        </span>
     </a>
 
     <a style="height: 50px ;" mat-list-item href="http://127.0.0.1:8000/admin" (click)="onSidenavClose()">
